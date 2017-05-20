@@ -1,0 +1,452 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="images/icon.png" />
+        <title> JDK Aerolinea </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Datepicker -->
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!--Fuentes de Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy" rel="stylesheet"
+
+        <!-- CSS propio -->
+        <link rel="stylesheet" title="estiloIndex" type="text/css" href="css/estilo.css">
+
+        <!-- JS propio -->
+        <script type="text/javascript" src="js/Ciudad.js"></script>
+        <script type="text/javascript" src="js/Avion.js"></script>
+        <script type="text/javascript" src="js/Vuelo.js"></script>
+        <script type="text/javascript" src="js/Viaje.js"></script>
+        <script type="text/javascript" src="js/Proxy.js"></script>
+        <script type="text/javascript" src="js/JsonUtils.js"></script>
+
+    </head>
+
+    <body>
+
+        <!--BARRA DE MENÚ-->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-plane"></span> JDK Aerolíneas </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sobre nosotros <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#Referentes">Referentes institucionales</a></li>
+                                <li><a href="#Historia">Historia</a></li>
+                                <li><a href="#PgFooter">Contáctenos</a></li>
+                            </ul>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!--CAROUSEL OFERTAS DE VUELOS-->
+        <div id="myCarousel" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators"></ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox"></div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <!-- FORMULARIO DE BÚSQUEDA DE VUELO -->
+        <div class="bs-docs-featurette center" id="divBusqueda">
+            <div class="container center" id="contbusqueda">
+                <div class="jumbotron center">
+                    <p id="jumbotronHeader">
+                    <h2>Elija los vuelos de su preferencia </h2></p><br>
+                    <form class="form-inline" id="formulario" action="javascript:doSubmit();">
+                        <div class="radio">
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioIR" checked="checked"> Ida y regreso</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioID"> Solo Ida</label>
+                        </div><br><br>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i> Origen: </span>
+                            <select class="form-control" id="sel1">
+                                <option selected disabled>Ciudad o aeropuerto</option>
+                            </select>
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i> Destino: </span>
+                            <select class="form-control" id="sel2">
+                                <option selected disabled>Ciudad o aeropuerto</option>
+                            </select>
+                        </div> <br> <br>
+
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha ida: </span>
+                                <input type="text" id="datetimepicker1" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class='input-group date' id="regreso">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha regreso: </span>
+                                <input type="text" id="datetimepicker2" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="fa fa-users"></i> Cantidad de pasajeros: </span>
+                            <div class="input-group spinner">
+                                <input type="text" class="form-control" value="1" min="1" max="10" id="mySpinner"></input>
+                                <div class="input-group-btn-vertical">
+                                    <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                                    <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br><br>
+                        <div class="btn-group btn-group-lg" id="buscarLimpiar">
+                            <button type="submit" class="btn btn-primary" id="btnBuscar">Buscar</button>
+                            <button type="reset" class="btn btn-warning" id="btnReset">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <!--SECCIÓN DE REFERENTES INSTITUCIONALES-->
+        <div class="bs-docs-featurette" id="Referentes">
+            <div class="container">
+                <h1> Referentes institucionales	</h1>
+                <br><br>
+                <div class="row slideanim">
+                    <div class="col-sm-3">
+                        <span class="glyphicon glyphicon-ok-sign"></span>
+                        <h3>MISIÓN</h3>
+                        <p>Brindar una conexión internacional de viajes que fomente el turismo costarricense y a su vez permita a los ciudadanos conocer el resto del mundo.</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <span class="glyphicon glyphicon-ok-sign"></span>
+                        <h3>VISIÓN</h3>
+                        <p>Ser la aerolínea líder de Costa Rica, reconocida internacionalmente brindando una experiencia única y segura.</p>
+                    </div>
+                    <div class="col-sm-3 val">
+                        <span class="glyphicon glyphicon-heart"></span>
+                        <h3>VALORES</h3>
+                        <p> Honestidad <br> Respeto <br> Integridad <br> Confiabilidad </p>
+                    </div>
+                    <div class="col-sm-3 val">
+                        <span class="glyphicon glyphicon-star"></span>
+                        <h3>COMPROMISOS</h3>
+                        <p> Seguridad <br> Satisfacción del cliente <br> Ambiente positivo <br> Mejora continua</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <!--SECCIÓN DE HISTORIA-->
+        <div class=bs-docs-featurette id="Historia">
+            <div class="container">
+                <h1> Historia	</h1>
+                <br><br>
+                <div class="container">
+                    <img src="images/cr.png" class="cr">&nbsp &nbsp &nbsp
+                    <img src="images/agenda.png">
+                    <img src="images/mundo.png">
+                    <br>
+                    <p> JDK Aerolíneas es una aerolínea de bajo costo, con servicio punto a punto que opera en Costa Rica. Desde que comenzó a operar en abril del 2017, JDK ha incrementado sus rutas de 5 a más de 50 y su flota de 4 a 30 aeronaves. JDK ofrece más de 100 segmentos
+                        de vuelos diarios, conectando a Costa Rica con ciudades de América, Europa y Asia.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
+    <footer id="PgFooter">
+        <div class="container">
+            <h2><b>Detalle de Contacto</b></h2>
+            <div class="footerp">
+                <h3><b>JDK Aerolíneas</b></h3>
+                <p><b>Email id:</b> <a href="#">aerolineasJDK@aerolíneas.com</a></p>
+                <p><b>Números de ayuda(8AM a 10PM):</b> +506-66666666, +506-99999999</p>
+                <p><b>Números Telefónicos: </b> 011-27568832, 9868387223 </p>
+            </div>
+        </div>
+    </footer>
+
+    
+<script>
+    //Modelo
+    function IndexModelo() {
+        this.IndexModelo();
+    }
+    IndexModelo.prototype = {
+        IndexModelo: function () {}
+    };
+</script>
+
+<script>
+    //Control
+
+    function IndexControl(modelo, vista) {
+        this.IndexControl(modelo, vista);
+    }
+
+    IndexControl.prototype = {
+        IndexControl: function (modelo, vista) {
+            this.modelo = modelo;
+            this.vista = vista;
+            
+            Proxy.getCiudades(function(result){
+                    modelo.ciudades = result;
+                    vista.cargarCiudades(); //magia
+                }
+            );
+            Proxy.getPromo(function(result) {
+                    modelo.promos = result;
+                    vista.cargarCarousel();
+                }
+            );
+        },
+        pasarDatos: function (origen, destino, fechaIda, fechaRegreso, pasajeros) {
+            /*Esto guarda en el local storage*/
+            localStorage.setItem('origen', origen);
+            localStorage.setItem('destino', destino);
+            localStorage.setItem('fechaIda', fechaIda);
+            localStorage.setItem('fechaRegreso', fechaRegreso);
+            localStorage.setItem('pasajeros', pasajeros);
+        }
+    }
+</script>
+
+<script>
+    //Vista
+    var modelo;
+    var controlador;
+
+    function cargarPagina(event) {
+        modelo = new IndexModelo();
+        controlador = new IndexControl(modelo, window);
+        var formulario = document.getElementById("formulario");
+        formulario.reset();
+        formulario.addEventListener("submit", validar);
+        formulario.addEventListener("reset", limpiar);
+        //cargarInicio();
+    }
+
+    function limpiar(event) {
+        //Quitar estilo de datos inválidos en todos los inputs
+        var origen = document.getElementById("sel1");
+        var destino = document.getElementById("sel2");
+        var fechaIda = document.getElementById("datetimepicker1");
+        var fechaRegreso = document.getElementById("datetimepicker2");
+        origen.classList.remove("invalid");
+        destino.classList.remove("invalid");
+        fechaIda.classList.remove("invalid");
+        fechaRegreso.classList.remove("invalid");
+
+        //Quitar límites (minDate-maxDate) de fechas seleccionadas
+        var dt = new Date();
+        dt.setDate(dt.getDate() - 1);
+        $('#datetimepicker1').data("DateTimePicker").setMinDate(true);
+        $('#datetimepicker1').data("DateTimePicker").setMaxDate("");
+        $('#datetimepicker2').data("DateTimePicker").setMinDate(true);
+        $('#datetimepicker1').data("DateTimePicker").setMinDate(dt);
+        $('#datetimepicker2').data("DateTimePicker").setMinDate(dt);
+    }
+
+    function validar(event) {
+        var origen = document.getElementById("sel1");
+        var destino = document.getElementById("sel2");
+        var idaRegreso = document.getElementById("radioIR");
+        var fechaIda = document.getElementById("datetimepicker1");
+        var fechaRegreso = document.getElementById("datetimepicker2");
+        var error = false;
+
+        origen.classList.remove("invalid");
+        if (origen.value == "Ciudad o aeropuerto") {
+            origen.classList.add("invalid");
+            error = true;
+        }
+
+        destino.classList.remove("invalid");
+        if (destino.value == "Ciudad o aeropuerto") {
+            destino.classList.add("invalid");
+            error = true;
+        }
+
+        fechaIda.classList.remove("invalid");
+        if (fechaIda.value.length == 0) {
+            fechaIda.classList.add("invalid");
+            error = true;
+        }
+
+        if (idaRegreso.checked) {
+            fechaRegreso.classList.remove("invalid");
+            if (fechaRegreso.value.length == 0) {
+                fechaRegreso.classList.add("invalid");
+                error = true;
+            }
+        }
+
+        if (error) {
+            window.alert("Error: Espacios vacios");
+            event.preventDefault();
+        } else if (origen.value == destino.value) {
+            origen.classList.add("invalid");
+            destino.classList.add("invalid");
+            window.alert("Error: Ciudades iguales");
+            event.preventDefault();
+        }
+    }
+
+    function doSubmit() {
+        //-->OBTENER DATOS DEL FORM<---
+        var origen = $("#sel1").val();
+        var destino = $("#sel2").val();
+        var fechaIda = $("#datetimepicker1").val();
+        var fechaRegreso = "NA";
+        if ($('#radioIR').is(':checked'))
+            fechaRegreso = $("#datetimepicker2").val();
+        var pasajeros = $("#mySpinner").val();
+        
+        
+        controlador.pasarDatos(origen, destino, fechaIda, fechaRegreso, pasajeros);
+        location.href = "busqueda.html";
+    }
+
+    $(document).ready(function () {
+        $('#btnReset').click(function () {
+            $("#regreso").show();
+        });
+        // Validación de radio buttons
+        $('#radioID').click(function () {
+            $("#regreso").hide();
+        });
+        $('#radioIR').click(function () {
+            $("#regreso").show();
+        });
+    });
+
+
+    //Calendarios
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY',
+            pickTime: false
+        });
+        $('#datetimepicker2').datetimepicker({
+            format: 'DD/MM/YYYY',
+            pickTime: false
+        });
+        var dt = new Date();
+        dt.setDate(dt.getDate() - 1);
+        $('#datetimepicker1').data("DateTimePicker").setMinDate(dt);
+        $('#datetimepicker2').data("DateTimePicker").setMinDate(dt);
+        $("#datetimepicker1").on("dp.change", function (e)  {
+            $('#datetimepicker2').data("DateTimePicker").setMinDate(e.date);
+        });
+        $("#datetimepicker2").on("dp.change", function (e)  {
+            $('#datetimepicker1').data("DateTimePicker").setMaxDate(e.date);
+        });
+    });
+
+    //Spinner
+    $(function () {
+        $('.spinner .btn:first-of-type').on('click', function () {
+            var btn = $(this);
+            var input = btn.closest('.spinner').find('input');
+            if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+                input.val(parseInt(input.val(), 10) + 1);
+            } else {
+                btn.next("disabled", true);
+            }
+        });
+        $('.spinner .btn:last-of-type').on('click', function () {
+            var btn = $(this);
+            var input = btn.closest('.spinner').find('input');
+            if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+                input.val(parseInt(input.val(), 10) - 1);
+            } else {
+                btn.prev("disabled", true);
+            }
+        });
+    });
+
+    function cargarCarousel() {
+
+        var nameO = "NA"; 
+        var nameD = "NA";
+        var descripcion = "NA";
+        var item = "NA";
+        var descuento = 0;
+
+        for (var i = 0; i < modelo.promos.length; i++) { //El destino es la promoción
+            descuento = modelo.promos[i].descuento;
+            if (descuento > 0) {
+                nameO = modelo.promos[i].origen.nombre;
+                nameD = modelo.promos[i].destino.nombre;
+                descripcion = descuento + "% - Precios desde $150";
+                var item = '<div class="item"><img src="images/' + nameD + '.jpg"><div class="carousel-caption flex"><div class="tituloOferta"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> ' + nameO +" - "+ nameD +
+                        '</div><br><div class="infoDesc">' + descripcion + '<br><div class="btn-group"><button type="button" class="btn btn-success">Ver oferta</button></div></div></div></div>';
+
+                $(item).appendTo('.carousel-inner');
+                $('<li data-target="#myCarousel" data-slide-to="' + i + '"></li>').appendTo('.carousel-indicators');
+            }
+        }
+        $('.item').first().addClass('active');
+        $('.carousel-indicators > li').first().addClass('active');
+    }
+    
+    function cargarCiudades() {
+        for (var i = 0; i < modelo.ciudades.length; i++) {
+            name = modelo.ciudades[i].nombre;
+            $('#sel1').append($('<option>', {
+                value: name,
+                text: name
+            }));
+            $('#sel2').append($('<option>', {
+                value: name,
+                text: name
+            }));
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarPagina);
+</script>
+
+</html>
+

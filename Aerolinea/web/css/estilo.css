@@ -1,0 +1,274 @@
+body {
+  background-color: white;
+}
+
+.glyphicon {
+  color: gray !important;
+}
+
+
+/*---------------------------------MENU BAR------------------------------------*/
+.navbar-brand {
+  font-size: 20px;
+  pointer-events: none;
+  cursor: default;
+  color: #ffffff !important;
+}
+.navbar-nav {
+  font-size: 20px;
+}
+@media (max-width: 991px) {
+  .navbar-header {
+    float: none;
+  }
+  .navbar-left, .navbar-right {
+    float: none !important;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+  .navbar-collapse {
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+    display: none!important;
+  }
+  .navbar-nav {
+    float: none!important;
+    margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+    float: none;
+  }
+  .navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .collapse.in {
+    display: block !important;
+  }
+}
+.dropdown-menu, .dropdown-menu li a {
+  background-color: #333;
+  color: white;
+}
+/*---------------------------------MENU BAR------------------------------------*/
+
+
+/*---------------------------------CAROUSEL------------------------------------*/
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  min-width: 350px;
+  margin: auto;
+}
+
+.carousel-caption {
+  text-align: center;
+  align-items: center;
+  position: absolute;
+  max-width: 100%;
+  width: 100%;
+  top: 5%;
+  left: 0;
+  z-index: 20;
+  color: white;
+  font-family: "Arial";
+  margin: 0px;
+  background-image: -webkit-linear-gradient(rgba(0, 0, 0, .5) 10%, transparent 35%);
+  background-image: linear-gradient(rgba(0, 0, 0, .5) 10%, transparent 35%);
+}
+
+.tituloOferta{
+  font-family: 'Satisfy', cursive; /*poner otra fuente*/
+  font-style: bold;
+  font-size: 40px;
+  padding-top: 10%;
+  font-size: 400%;
+}
+
+.infoDesc {
+  font-size: 30px;
+  padding-top: 0;
+}
+
+/*@media (max-width: @screen-xs) {
+  .tituloOferta{ font-size: 20px; }
+}
+
+@media (max-width: @screen-sm) {
+  .tituloOferta{ font-size: 20px; }
+}*/
+
+/*---------------------------------CAROUSEL------------------------------------*/
+
+
+
+/*----------------------------------SPINNER------------------------------------*/
+.spinner { width: 100%; }
+.spinner input {
+  text-align: right;
+  width: 300%;
+}
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+.input-group-btn-vertical> .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  margin-left: -1px;
+  position: relative;
+  border-radius: 0;
+}
+.input-group-btn-vertical>.btn:first-child {
+  border-top-right-radius: 4px;
+}
+.input-group-btn-vertical>.btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+.input-group-btn-vertical i {
+  position: absolute;
+  top: 0;
+  left: 4px;
+}
+/*----------------------------------SPINNER------------------------------------*/
+
+
+/*------------------------------------TAGS-------------------------------------*/
+i {
+  align-items: center;
+}
+hr {
+    border: 2px solid gray;
+    color: gray;
+    padding: 0px;
+    margin: 0px;
+}
+h3 {
+    font-family: 'Sanchez', serif;
+}
+.item span { /*ICONS*/
+  color: white !important;
+  font-size: 30px;
+}
+.container h2 {  /*TITULO DE FORM DE BÚSQUEDA*/
+  color: gray;
+  font-family: 'Sanchez', serif, bold;
+  font-size: 300%;
+}
+#jumbotronHeader {
+  color: #f0ad4e;
+}
+table, table.table-striped thead th {
+  text-align: center;
+}
+.fa { /*ICONS*/
+  color: gray;
+}
+.center {
+  text-align: center;
+}
+input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
+#divBusqueda, select option {
+  font-family: arial;
+  padding-top: 25px;
+}
+
+.btn-primary{
+    background-color: gray;
+    border-color: gray;
+    
+}
+
+.btn-warning{
+    background-color: grey;
+    border-color: grey;
+}
+/*------------------------------------TAGS-------------------------------------*/
+
+
+/*------------------------------------ID'S-------------------------------------*/
+#Referentes {
+  text-align: center;
+  background-color: #ffffff;
+  color: gray;
+  height: 400%;
+  min-height: 750px;
+}
+#Referentes h1, #Historia h1{
+  font-family: 'Sanchez', serif;
+  font-style: bold;
+  font-size: 400%;
+}
+
+#Historia {
+  background-color: #ffffff;
+  color: gray;
+  height: 400%;
+  min-height: 750px;
+  text-align: center;
+}
+/*------------------------------------ID'S-------------------------------------*/
+
+
+
+/*---------------------------------SECCIONES-----------------------------------*/
+.slideanim{
+  padding-top: 10%;
+}
+.slideanim > .col-sm-3 > .glyphicon{
+  font-size: 40px;
+}
+.slideanim > .col-sm-3 > p{
+  font-size: 120%;
+}
+.bs-docs-featurette {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.bs-docs-featurette > .container > .container > img{
+  width: 20%;
+  height: 20%;
+  max-width: 200px;
+  max-height: 200px;
+}
+.bs-docs-featurette > .container > .container > .cr{
+  width: 18%;
+  height: 18%;
+  max-width: 150px;
+  max-height: 150px;
+}
+.bs-docs-featurette > .container > .container > p{
+  font-size: 130%;
+}
+/*---------------------------------SECCIONES-----------------------------------*/
+
+
+/*-------------------------------PIE DE PÁGINA---------------------------------*/
+footer {
+  background-color: gray;
+  color: white;
+}
+
+.footerp a {
+  color: white;
+}
+
+footer .container {
+  text-align: right;
+}
+/*-------------------------------PIE DE PÁGINA---------------------------------*/
