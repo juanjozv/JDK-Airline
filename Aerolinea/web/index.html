@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy" rel="stylesheet"
+        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy|Lato" rel="stylesheet"
 
         <!-- CSS propio -->
         <link rel="stylesheet" title="estiloIndex" type="text/css" href="css/estilo.css">
@@ -62,7 +62,7 @@
                             </ul>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
+                        <li><a href="login.html"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
                     </ul>
                 </div>
@@ -238,6 +238,7 @@
             Proxy.getPromo(function(result) {
                     modelo.promos = result;
                     vista.cargarCarousel();
+                    vista.agregarEventosCarou();
                 }
             );
         },
@@ -410,18 +411,23 @@
 
         var nameO = "NA"; 
         var nameD = "NA";
+        var codigoO = "NA";
+        var codigoD = "NA";
         var descripcion = "NA";
         var item = "NA";
         var descuento = 0;
 
-        for (var i = 0; i < modelo.promos.length; i++) { //El destino es la promoción
+        for (var i = 0; i < modelo.promos.length; i++) { 
             descuento = modelo.promos[i].descuento;
             if (descuento > 0) {
                 nameO = modelo.promos[i].origen.nombre;
                 nameD = modelo.promos[i].destino.nombre;
+                codigoO = modelo.promos[i].origen.codigo;
+                codigoD = modelo.promos[i].destino.codigo;
                 descripcion = descuento + "% - Precios desde $150";
                 var item = '<div class="item"><img src="images/' + nameD + '.jpg"><div class="carousel-caption flex"><div class="tituloOferta"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> ' + nameO +" - "+ nameD +
-                        '</div><br><div class="infoDesc">' + descripcion + '<br><div class="btn-group"><button type="button" class="btn btn-success">Ver oferta</button></div></div></div></div>';
+                        '</div><br><div class="infoDesc">' + descripcion + '<br><div class="btn-group"><button type="button" class="btn btn-success" id="butt'
+                        + codigoO + codigoD +'">Ver oferta</button></div></div></div></div>';
 
                 $(item).appendTo('.carousel-inner');
                 $('<li data-target="#myCarousel" data-slide-to="' + i + '"></li>').appendTo('.carousel-indicators');
@@ -433,7 +439,7 @@
     
     function cargarCiudades() {
         for (var i = 0; i < modelo.ciudades.length; i++) {
-            name = modelo.ciudades[i].nombre;
+            var name = modelo.ciudades[i].nombre;
             $('#sel1').append($('<option>', {
                 value: name,
                 text: name
@@ -444,6 +450,28 @@
             }));
         }
     }
+    
+    function verOferta(codO, codD, origen, destino) {
+        var id = "#butt" + codO + codD;
+            $(id).click(function(){
+            $('#sel1').val(origen);
+            $('#sel2').val(destino);
+            $('#btnBuscar').focus();
+        });
+    }
+    
+    function agregarEventosCarou() {
+        for(var i = 0; i < modelo.promos.length; i++) {
+            var miCodO = modelo.promos[i].origen.codigo;
+            var miCodD = modelo.promos[i].destino.codigo;
+            var miOrigen = modelo.promos[i].origen.nombre;
+            var miDestino = modelo.promos[i].destino.nombre;
+           
+            verOferta(miCodO, miCodD, miOrigen, miDestino);
+        }
+    }
+    
+    
 
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="images/icon.png" />
+        <title> JDK Aerolinea Busqueda </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- DataTable -->
+        <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
+        <!--Fuentes de Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy" rel="stylesheet"
+
+        <!-- CSS propio -->
+        <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
+        
+        
+
+    </head>
+    <body>
+        <!--BARRA DE MENÚ-->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-plane"></span> JDK Aerolíneas </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sobre nosotros <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html#Referencias">Referentes institucionales</a></li>
+                                <li><a href="index.html#Historia">Historia</a></li>
+                                <li><a href="#PgFooter">Contáctenos</a></li>
+                            </ul>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br><br>
+        <div class="container">
+            <h2>Crear cuenta</h2>
+            <br><br>
+            <form class="form-horizontal" action="">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="nombre" type="text" class="form-control" placeholder="Ingrese su nombre">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-triangle-right"></i></span>
+                    <input id="apellido" type="text" class="form-control" placeholder="Ingrese su apellido">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input id="nacimiento" type="text" class="form-control" placeholder="Fecha de nacimiento DD/MM/AAAA">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                    <input id="celular" type="text" class="form-control" placeholder="Ingrese su celular">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="email" type="email" class="form-control" placeholder="Ingrese su correo electrónico">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="usuario" type="text" class="form-control" placeholder="Ingrese su nombre de usuario">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="contraseña" type="password" class="form-control" placeholder="Ingrese su nueva contraseña">
+                </div>
+                <br>
+                <center>
+                    <div id="map" style="width:60%;height:400px"></div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <input id="ubicacion" type="text" class="form-control" placeholder="Escoja ubicación">
+                    </div>
+                    <br>
+                    <div class="btn-group btn-group-lg" id="registrarse">
+                        <button type="submit" class="btn btn-primary" id="btnBuscar">Registrarse</button>
+                    </div>
+                 </center>
+                <br>
+                <br
+           
+            </form>
+        </div>
+       
+    </body>
+    <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
+    <footer id="PgFooter">
+        <div class="container">
+            <h2><b>Detalle de Contacto</b></h2>
+                <div class="footerp">
+                    <h3><b>JDK Aerolíneas</b></h3>
+                    <p><b>Email id:</b> <a href="#">aerolineasJDK@aerolíneas.com</a></p>
+                    <p><b>Números de ayuda(8AM a 10PM):</b> +506-66666666, +506-99999999</p>
+                    <p><b>Números Telefónicos: </b> 011-27568832, 9868387223 </p>
+                </div>
+        </div>
+    </footer>
+</html>
+
+<script>
+    function myMap() {
+                      var mapCanvas = document.getElementById("map");
+                      var myCenter=new google.maps.LatLng(9.908250364159004, -84.100341796875);
+                      var mapOptions = {center: myCenter, zoom: 5};
+                      var map = new google.maps.Map(mapCanvas, mapOptions);
+                      google.maps.event.addListener(map, 'click', function(event) {
+                        placeMarker(map, event.latLng);
+                      });
+                    }
+
+                    function placeMarker(map, location) {
+                      var marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                      });
+                      var infowindow = new google.maps.InfoWindow({
+                        content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+                      });
+                      infowindow.open(map,marker);
+                    }                function myMap() {
+                      var mapCanvas = document.getElementById("map");
+                      var myCenter=new google.maps.LatLng(9.908250364159004, -84.100341796875);
+                      var mapOptions = {center: myCenter, zoom: 5};
+                      var map = new google.maps.Map(mapCanvas, mapOptions);
+                      google.maps.event.addListener(map, 'click', function(event) {
+                        placeMarker(map, event.latLng);
+                      });
+                    }
+
+                    function placeMarker(map, location) {
+                      var marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                      });
+                      var infowindow = new google.maps.InfoWindow({
+                        content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+                      });
+                      infowindow.open(map,marker);
+                    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjVarU3j6-ep42xFVVDevyVvmuGgCFEvc&callback=myMap"></script>
