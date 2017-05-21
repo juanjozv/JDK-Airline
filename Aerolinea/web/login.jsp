@@ -1,3 +1,10 @@
+<%-- 
+    Document   : login
+    Created on : 20/05/2017, 07:03:26 PM
+    Author     : Dani
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,45 +24,15 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy" rel="stylesheet"
+       <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy|Lato" rel="stylesheet"
 
         <!-- CSS propio -->
         <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
-        
-        
 
     </head>
     <body>
-        <!--BARRA DE MENÚ-->
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-plane"></span> JDK Aerolíneas </a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sobre nosotros <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="index.html#Referencias">Referentes institucionales</a></li>
-                                <li><a href="index.html#Historia">Historia</a></li>
-                                <li><a href="#PgFooter">Contáctenos</a></li>
-                            </ul>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <br><br>
+        <%@ include file="header.jspf" %>
+        <br><br><br>
         <div class="container">
             <h2>Crear cuenta</h2>
             <br><br>
@@ -112,19 +89,11 @@
            
             </form>
         </div>
-       
     </body>
+    
     <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
     <footer id="PgFooter">
-        <div class="container">
-            <h2><b>Detalle de Contacto</b></h2>
-                <div class="footerp">
-                    <h3><b>JDK Aerolíneas</b></h3>
-                    <p><b>Email id:</b> <a href="#">aerolineasJDK@aerolíneas.com</a></p>
-                    <p><b>Números de ayuda(8AM a 10PM):</b> +506-66666666, +506-99999999</p>
-                    <p><b>Números Telefónicos: </b> 011-27568832, 9868387223 </p>
-                </div>
-        </div>
+        <%@ include file="footer.jspf" %>
     </footer>
 </html>
 

@@ -1,11 +1,11 @@
 body {
   background-color: white;
+  font-family: 'Lato', serif;
 }
 
-.glyphicon {
-  color: gray !important;
+.glyphicon, .fa {
+  color: #2e6da4;
 }
-
 
 /*---------------------------------MENU BAR------------------------------------*/
 .navbar-brand {
@@ -17,6 +17,11 @@ body {
 .navbar-nav {
   font-size: 20px;
 }
+
+.navbar-inverse .navbar-nav>li>a {
+    color: white;
+}
+
 @media (max-width: 991px) {
   .navbar-header {
     float: none;
@@ -79,14 +84,13 @@ body {
   left: 0;
   z-index: 20;
   color: white;
-  font-family: "Arial";
   margin: 0px;
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, .5) 10%, transparent 35%);
   background-image: linear-gradient(rgba(0, 0, 0, .5) 10%, transparent 35%);
 }
 
 .tituloOferta{
-  font-family: 'Satisfy', cursive; /*poner otra fuente*/
+  font-family: 'Lato', serif; /*poner otra fuente*/
   font-style: bold;
   font-size: 40px;
   padding-top: 10%;
@@ -97,14 +101,6 @@ body {
   font-size: 30px;
   padding-top: 0;
 }
-
-/*@media (max-width: @screen-xs) {
-  .tituloOferta{ font-size: 20px; }
-}
-
-@media (max-width: @screen-sm) {
-  .tituloOferta{ font-size: 20px; }
-}*/
 
 /*---------------------------------CAROUSEL------------------------------------*/
 
@@ -159,26 +155,18 @@ hr {
     margin: 0px;
 }
 h3 {
-    font-family: 'Sanchez', serif;
+    font-family: 'Lato', serif;
 }
 .item span { /*ICONS*/
   color: white !important;
   font-size: 30px;
 }
-.container h2 {  /*TITULO DE FORM DE BÚSQUEDA*/
-  color: gray;
-  font-family: 'Sanchez', serif, bold;
-  font-size: 300%;
-}
-#jumbotronHeader {
-  color: #f0ad4e;
-}
+
+
 table, table.table-striped thead th {
   text-align: center;
 }
-.fa { /*ICONS*/
-  color: gray;
-}
+
 .center {
   text-align: center;
 }
@@ -189,20 +177,20 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 }
 
 .btn-primary{
-    background-color: gray;
-    border-color: gray;
+    background-color: #2e6da4;
+    border-color: #2e6da4;
     
 }
 
 .btn-warning{
-    background-color: grey;
-    border-color: grey;
+    background-color: #2e6da4;
+    border-color: #2e6da4;
 }
 /*------------------------------------TAGS-------------------------------------*/
 
 
 /*------------------------------------ID'S-------------------------------------*/
-#Referentes {
+#Referentes, #Historia {
   text-align: center;
   background-color: #ffffff;
   color: gray;
@@ -210,18 +198,23 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
   min-height: 750px;
 }
 #Referentes h1, #Historia h1{
-  font-family: 'Sanchez', serif;
+  color: gray;
+  font-family: 'Lato', serif;
   font-style: bold;
   font-size: 400%;
 }
 
-#Historia {
-  background-color: #ffffff;
+#busquedaForm {  /*TITULO DE FORM DE BÚSQUEDA*/
   color: gray;
-  height: 400%;
-  min-height: 750px;
+  font-family: 'Lato', serif, bold;
+  font-size: 300%;
   text-align: center;
 }
+
+.container{
+    text-align: center;
+}
+
 /*------------------------------------ID'S-------------------------------------*/
 
 
@@ -255,6 +248,11 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 .bs-docs-featurette > .container > .container > p{
   font-size: 130%;
 }
+
+.container .jumbotron{
+    border-radius: 0px;
+    background-color: white;
+}
 /*---------------------------------SECCIONES-----------------------------------*/
 
 
@@ -272,3 +270,140 @@ footer .container {
   text-align: right;
 }
 /*-------------------------------PIE DE PÁGINA---------------------------------*/
+
+/*-------------------------------HISTORIA---------------------------------*/
+.timeline {
+  list-style: none;
+  padding: 20px 0 20px;
+  position: relative;
+}
+
+.timeline:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 3px;
+  background-color: #eeeeee;
+  left: 50%;
+  margin-left: -1.5px;
+}
+
+.timeline > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+
+.timeline > li:after {
+  clear: both;
+}
+
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+
+.timeline > li:after {
+  clear: both;
+}
+
+.timeline > li > .timeline-panel {
+  width: 46%;
+  float: left;
+  border: 1px solid #d4d4d4;
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+.timeline > li > .timeline-panel:before {
+  position: absolute;
+  top: 26px;
+  right: -15px;
+  display: inline-block;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #ccc;
+  border-right: 0 solid #ccc;
+  border-bottom: 15px solid transparent;
+  content: " ";
+}
+
+.timeline > li > .timeline-panel:after {
+  position: absolute;
+  top: 27px;
+  right: -14px;
+  display: inline-block;
+  border-top: 14px solid transparent;
+  border-left: 14px solid #fff;
+  border-right: 0 solid #fff;
+  border-bottom: 14px solid transparent;
+  content: " ";
+}
+
+.timeline > li > .timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -25px;
+  background-color: #999999;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel {
+  float: right;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel:before {
+  border-left-width: 0;
+  border-right-width: 15px;
+  left: -15px;
+  right: auto;
+}
+
+.timeline > li.timeline-inverted > .timeline-panel:after {
+  border-left-width: 0;
+  border-right-width: 14px;
+  left: -14px;
+  right: auto;
+}
+
+.timeline-badge.primary {
+  background-color: #2e6da4 !important;
+}
+
+.timeline-title {
+  margin-top: 0;
+  color: inherit;
+}
+
+.timeline-body > p,
+.timeline-body > ul {
+  margin-bottom: 0;
+}
+
+.timeline-body > p + p {
+  margin-top: 5px;
+}
+
+.timeline-badge > i.glyphicon {
+    color: white !important;
+}
