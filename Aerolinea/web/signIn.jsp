@@ -81,11 +81,11 @@
                     </div>
                     <br>
                     <div class="btn-group btn-group-lg" id="registrarse">
-                        <button type="submit" class="btn btn-primary" id="btnBuscar">Registrarse</button>
+                        <button type="submit" class="btn btn-primary" id="btnRegistrarse">Registrarse</button>
                     </div>
                  </center>
                 <br>
-                <br
+                <br>
            
             </form>
         </div>
