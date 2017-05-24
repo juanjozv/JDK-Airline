@@ -105,7 +105,7 @@ public class AerolineaModelo {
     
     private static Ciudad toCiudades(ResultSet rs) throws Exception {
         Ciudad obj = new Ciudad();
-        obj.setCodigo(rs.getString("codigoCiudad"));
+        obj.setCodigo(rs.getString("codigo"));
         obj.setNombre(rs.getString("nombre"));
         obj.setPais(rs.getString("pais"));
         obj.setZonaHoraria(rs.getString("zonaHoraria"));
