@@ -1,15 +1,10 @@
-function Avion(codigo, año, modelo, marca, cantPasajeros, cantFilas, cantAsiFila) {
-  this.Avion(codigo, año, modelo, marca, cantPasajeros, cantFilas, cantAsiFila);
+function Avion(codigo, tipo) {
+  this.Avion(codigo, tipo);
 }
 
 Avion.prototype = {
-  Avion: function(codigo, año, modelo, marca, cantPasajeros, cantFilas, cantAsiFila) {
+  Avion: function(codigo, tipo) {
     this.codigo = codigo;
-    this.año = año;
-    this.modelo = modelo;
-    this.marca = marca;
-    this.cantPasajeros = cantPasajeros;
-    this.cantFilas = cantFilas;
-    this.cantAsiFila = cantAsiFila;
+    this.tipo = tipo;
     }
 }

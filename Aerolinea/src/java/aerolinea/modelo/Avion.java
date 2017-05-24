@@ -2,21 +2,28 @@ package aerolinea.modelo;
 
 public class Avion implements Jsonable {
     String codigo;
-    String año;
-    String modelo;
-    String marca;
-    String cantPasajeros;
-    String cantFilas;
-    String cantAsiFila; 
+    TipoAvion tipo;
 
-    public Avion(String codigo, String año, String modelo, String marca, String cantPasajeros, String cantFilas, String cantAsiFila) {
+    public Avion(String codigo, TipoAvion tipo) {
         this.codigo = codigo;
-        this.año = año;
-        this.modelo = modelo;
-        this.marca = marca;
-        this.cantPasajeros = cantPasajeros;
-        this.cantFilas = cantFilas;
-        this.cantAsiFila = cantAsiFila;
+        this.tipo = tipo;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public TipoAvion getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoAvion tipo) {
+        this.tipo = tipo;
+    }
+   
 }
 

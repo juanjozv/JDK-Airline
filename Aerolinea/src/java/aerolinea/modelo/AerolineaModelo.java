@@ -21,7 +21,6 @@ public class AerolineaModelo {
             new Ciudad("RI", "Rio", "Brasil", "UTC+6"), //4
             new Ciudad("MIA", "Miami", "Estados Unidos", "UTC+6"), //5
             new Ciudad("NY", "Nueva York", "Estados Unidos", "UTC+6"), //6
-
             new Ciudad("BE", "Berlin", "Alemania", "UTC+6"), //7
             new Ciudad("AM", "Amsterdam", "Holanda", "UTC+6") //8
         };
@@ -60,23 +59,6 @@ public class AerolineaModelo {
     }
     
     public List<Vuelo> getPromo() {
-        /*Vuelo[] promos2 = {
-            new Vuelo("1001", ciudades.get(0), ciudades.get(1), "5780km", "3hs", "20", aviones.get(0)), //0 Hawai-Londres
-     
-            new Vuelo("1002", ciudades.get(4), ciudades.get(5), "1180km", "3hs", "15", aviones.get(1)), //1 Rio - Miami
-
-            new Vuelo("1003", ciudades.get(5), ciudades.get(6), "1180km", "3hs", "30", aviones.get(4)), //2 Miami - Nueva York
-            new Vuelo("1004", ciudades.get(3), ciudades.get(2), "4000km", "3hs", "30", aviones.get(4)) //3 San Jose - Orlando
-        };*/
-        //return new ArrayList(Arrays.asList(promos2));
-        
-        
-        
-        //De esta forma se agregan directamente los vuelos que tengan descuento
-        //Al utilizar un solo vuelo y varios viajes, la lista de promociones será unica, no tendrá valores repetidos, no obtante
-        //si destino es repetido, imagen destino saldrá dos veces en carousel -> Arreglar?
-        
-        //Cambiar oferta a entidad en BD?
         List<Vuelo> promos2 = new ArrayList<Vuelo>();
         for(Vuelo vuelo: vuelos) {
             if(!"0".equals(vuelo.descuento)) {
