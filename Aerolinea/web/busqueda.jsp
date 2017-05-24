@@ -48,7 +48,6 @@
         <div class="container">
             <div class="jumbotron">
                 <div class="row">
-                    <!-- <div class="col-md-6"> -->
                     <div class="table-responsive">
                         <table id="tablaIda" class="table-striped">
                             <thead>
@@ -68,7 +67,6 @@
                     </div>
                 </div>
                 <br>
-                <!-- <div class="col-md-6"> -->
                 <div class="row">
                     <div class="table-responsive" id="regreso">
                         <table id="tablaRegreso" class="table-striped">
@@ -86,7 +84,6 @@
                             </thead>
                             <tbody id="listaRegreso"></tbody>
                         </table>
-                        <!-- </div>-->
                     </div>
                 </div>
                 <br><br>

@@ -213,7 +213,6 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 }
 
 
-
 /*------------------------------------TAGS-------------------------------------*/
 
 
@@ -283,6 +282,12 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 .container .jumbotron{
     border-radius: 0px;
     background-color: white;
+}
+
+@media (min-width: 500px){
+    .table-responsive{
+        overflow-x: hidden;
+    }
 }
 /*---------------------------------SECCIONES-----------------------------------*/
 

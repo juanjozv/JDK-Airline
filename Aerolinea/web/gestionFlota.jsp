@@ -1,7 +1,12 @@
 <%-- 
-    Document   : gestionAviones
-    Created on : 23/05/2017, 05:35:02 PM
-    Author     : Kim
+    Document   : gestionFlota
+    Created on : 23/05/2017, 07:56:02 PM
+    Author     : Dani
+--%>
+<%-- 
+    Document   : gestionHorarios
+    Created on : 23/05/2017, 07:21:55 PM
+    Author     : Dani
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,7 +29,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy|Lato" rel="stylesheet"
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"
 
               <!-- CSS propio -->
               <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
@@ -34,88 +39,81 @@
         <%@ include file="header.jspf" %>
         <br><br><br>
         <div class="container">
-            <h2>Gestión de Tipos de Aviones</h2>
+            <h1>Gestión de flota de aviones</h1>
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar tipo de avión por ID">
+                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar avión por ID">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
-                </div>&nbsp&nbsp&nbsp       
-                <div class="btn-group btn-group-lg" id="agregarAvion">
-                    <button type="button" class="btn btn-primary" id="btnAgregarAvion">
-                        <i class="glyphicon glyphicon-plus"></i>&nbsp Agregar un nuevo avión</button>
+                </div>&nbsp&nbsp&nbsp
+                <div class="btn-group btn-group-lg" id="agregarUnidad">
+                    <button type="button" class="btn btn-primary" id="btnAgregarUnidad">
+                        <i class="glyphicon glyphicon-plus"></i>&nbsp Agregar avión a la flota</button>
                 </div>
             </form>       
         </div>
         <br><br><br>
         <div class="container">
             <div class="table-responsive">
-                <table id="tablaAviones" class="table-striped">
+                <table id="tablaFlota" class="table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Año</th>
-                            <th>Modelo</th>
-                            <th>Pasajeros</th>
-                            <th>Filas</th>
-                            <th>Asientos por fila</th>
-                            <th>Modificar / Eliminar</th>
+                            <th>Ruta</th>
+                            <th>Horario</th>
+                            <th>Tipo de avión</th>
                         </tr>
                     </thead>
-                    <tbody id="listaAviones">
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
+                    <tbody id="listaFlota">
+                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th></tr>
+                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th></tr>
                     </tbody>
                 </table>
                 <br><br>
             </div>
         </div>
 
-        <div id="registrarAvionModal" class="modal">
+        <div id="registrarFlotaModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="cerrarRegistrarAviones" id="close">&times;</span> 
-                    <center><h2>Registrar un avión</h2></center>
+                    <span class="cerrarRegistrarFlota" id="close">&times;</span> 
+                    <center><h2>Registrar un avión en la flota</h2></center>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idAvionA" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
+                            <input id="idAvionF" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
                         </div>
                         <br>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="añoAvion" type="text" class="form-control" placeholder="Ingrese el año del avión">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+                            <select class="form-control" id="rutaAvion">
+                                <option selected disabled>Seleccione la ruta</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            <select class="form-control" id="horarioAvion">
+                                <option selected disabled>Seleccione el horario</option>
+                            </select>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="modeloAvion" type="text" class="form-control" placeholder="Ingrese el modelo del avión">
+                            <select class="form-control" id="tipoAvion">
+                                <option selected disabled>Seleccione el tipo de avion</option>
+                            </select>
                         </div>
                         <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input id="pasajerosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de pasajeros">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="filasAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de filas">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="asientosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de asientos por fila">
-                        </div>
-                        <br>
-                        <center><div class="btn-group btn-group-lg" id="registrarAvion">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarAvion">Registrar</button>
+                        <center><div class="btn-group btn-group-lg" id="registrarEnFlota">
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarEnFlota">Registrar</button>
                             </div></center>
                         <br>
                     </form>       
@@ -141,22 +139,22 @@
 
 <script>
     //Modelo
-    function GestionAvionesModelo() {
-        this.GestionAvionesModelo();
+    function GestionFlotaModelo() {
+        this.GestionFlotaModelo();
     }
-    GestionAvionesModelo.prototype = {
-        GestionAvionesModelo: function () {}
+    GestionFlotaModelo.prototype = {
+        GestionFlotaModelo: function () {}
     };
 </script>
 
 <script>
     //Control
-    function GestionAvionesModelo(modelo, vista) {
-        this.GestionAvionesModelo(modelo, vista);
+    function GestionFlotaModelo(modelo, vista) {
+        this.GestionFlotaModelo(modelo, vista);
     }
 
-    GestionAvionesModelo.prototype = {
-        GestionAvionesModelo function(modelo, vista) {
+    GestionFlotaModelo.prototype = {
+        GestionFlotaModelo function(modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
         }
@@ -169,12 +167,12 @@
     var controlador;
 
     function cargarPagina(event) {
-        modelo = new GestionAvionesModelo();
-        controlador = new GestionAvionesModelo(modelo, window);
+        modelo = new GestionFlotaModelo();
+        controlador = new GestionFlotaModelo(modelo, window);
         //----------------Mover esto de aquí----------------
-        var modal = document.getElementById('registrarAvionModal');
-        var btn = document.getElementById("btnAgregarAvion");
-        var close = document.getElementsByClassName("cerrarRegistrarAviones")[0];
+        var modal = document.getElementById('registrarFlotaModal');
+        var btn = document.getElementById("btnAgregarUnidad");
+        var close = document.getElementsByClassName("cerrarRegistrarFlota")[0];
 
         btn.onclick = function () {
             modal.style.display = "block";
@@ -190,7 +188,7 @@
             }
         }
 
-        var table = $("#tablaAviones").DataTable({
+        var table = $("#tablaFlota").DataTable({
             bFilter: false,
             lengthChange: false,
             pageLength: 10,

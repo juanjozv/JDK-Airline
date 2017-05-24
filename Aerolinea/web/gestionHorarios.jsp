@@ -1,7 +1,7 @@
 <%-- 
-    Document   : gestionAviones
-    Created on : 23/05/2017, 05:35:02 PM
-    Author     : Kim
+    Document   : gestionHorarios
+    Created on : 23/05/2017, 07:21:55 PM
+    Author     : Dani
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy|Lato" rel="stylesheet"
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"
 
               <!-- CSS propio -->
               <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
@@ -34,88 +34,84 @@
         <%@ include file="header.jspf" %>
         <br><br><br>
         <div class="container">
-            <h2>Gestión de Tipos de Aviones</h2>
+            <h1>Gestión de Horarios</h1>
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar tipo de avión por ID">
+                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar avión por ID">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
-                </div>&nbsp&nbsp&nbsp       
-                <div class="btn-group btn-group-lg" id="agregarAvion">
-                    <button type="button" class="btn btn-primary" id="btnAgregarAvion">
-                        <i class="glyphicon glyphicon-plus"></i>&nbsp Agregar un nuevo avión</button>
+                </div>&nbsp&nbsp&nbsp
+                <div class="btn-group btn-group-lg" id="agregarHorario">
+                    <button type="button" class="btn btn-primary" id="btnAgregarHorario">
+                        <i class="glyphicon glyphicon-plus"></i>&nbsp Agregar nuevo horario</button>
                 </div>
             </form>       
         </div>
         <br><br><br>
         <div class="container">
             <div class="table-responsive">
-                <table id="tablaAviones" class="table-striped">
+                <table id="tablaHorarios" class="table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Año</th>
-                            <th>Modelo</th>
-                            <th>Pasajeros</th>
-                            <th>Filas</th>
-                            <th>Asientos por fila</th>
-                            <th>Modificar / Eliminar</th>
+                            <th>Ruta</th>
+                            <th>Día</th>
+                            <th>Hora salida</th>
+                            <th>Hora llegada</th>
+                            <th>Precio</th>
                         </tr>
                     </thead>
-                    <tbody id="listaAviones">
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
+                    <tbody id="listaHorarios">
+                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
+                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
                     </tbody>
                 </table>
                 <br><br>
             </div>
         </div>
 
-        <div id="registrarAvionModal" class="modal">
+        <div id="registrarHorarioModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="cerrarRegistrarAviones" id="close">&times;</span> 
-                    <center><h2>Registrar un avión</h2></center>
+                    <span class="cerrarRegistrarHorarios" id="close">&times;</span> 
+                    <center><h2>Registrar un horario</h2></center>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idAvionA" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
+                            <input id="idHorario" type="text" class="form-control" placeholder="Ingrese el identificador del horario">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+                            <select class="form-control" id="rutaHorario">
+                                <option selected disabled>Seleccione la ruta</option>
+                            </select>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="añoAvion" type="text" class="form-control" placeholder="Ingrese el año del avión">
+                            <select class="form-control" id="diaHorario">
+                                <option selected disabled>Seleccione el día</option>
+                                <option>Domingo</option><option>Lunes</option><option>Martes</option>
+                                <option>Miércoles</option><option>Jueves</option><option>Viernes</option>
+                                <option>Sábado</option>
+                            </select>
                         </div>
                         <br>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="modeloAvion" type="text" class="form-control" placeholder="Ingrese el modelo del avión">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            <input id="salidaHorario" type="text" class="form-control" placeholder="Ingrese la hora de salida HH:mm">
                         </div>
                         <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input id="pasajerosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de pasajeros">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="filasAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de filas">
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="asientosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de asientos por fila">
-                        </div>
-                        <br>
-                        <center><div class="btn-group btn-group-lg" id="registrarAvion">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarAvion">Registrar</button>
+                        <center><div class="btn-group btn-group-lg" id="registrarHorario">
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarHorario">Registrar</button>
                             </div></center>
                         <br>
                     </form>       
@@ -141,22 +137,22 @@
 
 <script>
     //Modelo
-    function GestionAvionesModelo() {
-        this.GestionAvionesModelo();
+    function GestionHorariosModelo() {
+        this.GestionHorariosModelo();
     }
-    GestionAvionesModelo.prototype = {
-        GestionAvionesModelo: function () {}
+    GestionHorariosModelo.prototype = {
+        GestionHorariosModelo: function () {}
     };
 </script>
 
 <script>
     //Control
-    function GestionAvionesModelo(modelo, vista) {
-        this.GestionAvionesModelo(modelo, vista);
+    function GestionHorariosModelo(modelo, vista) {
+        this.GestionHorariosModelo(modelo, vista);
     }
 
-    GestionAvionesModelo.prototype = {
-        GestionAvionesModelo function(modelo, vista) {
+    GestionHorariosModelo.prototype = {
+        GestionHorariosModelo function(modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
         }
@@ -169,12 +165,12 @@
     var controlador;
 
     function cargarPagina(event) {
-        modelo = new GestionAvionesModelo();
-        controlador = new GestionAvionesModelo(modelo, window);
+        modelo = new GestionHorariosModelo();
+        controlador = new GestionHorariosModelo(modelo, window);
         //----------------Mover esto de aquí----------------
-        var modal = document.getElementById('registrarAvionModal');
-        var btn = document.getElementById("btnAgregarAvion");
-        var close = document.getElementsByClassName("cerrarRegistrarAviones")[0];
+        var modal = document.getElementById('registrarHorarioModal');
+        var btn = document.getElementById("btnAgregarHorario");
+        var close = document.getElementsByClassName("cerrarRegistrarHorarios")[0];
 
         btn.onclick = function () {
             modal.style.display = "block";
@@ -190,7 +186,7 @@
             }
         }
 
-        var table = $("#tablaAviones").DataTable({
+        var table = $("#tablaHorarios").DataTable({
             bFilter: false,
             lengthChange: false,
             pageLength: 10,
