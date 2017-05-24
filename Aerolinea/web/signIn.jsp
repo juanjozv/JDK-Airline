@@ -77,7 +77,7 @@
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-                        <input id="ubicacion" type="text" class="form-control" placeholder="Escoja ubicación">
+                        <input id="ubicacion" type="text" class="form-control" placeholder="Escoja ubicación" disabled>
                     </div>
                     <br>
                     <div class="btn-group btn-group-lg" id="registrarse">
@@ -99,43 +99,46 @@
 
 <script>
     function myMap() {
-                      var mapCanvas = document.getElementById("map");
-                      var myCenter=new google.maps.LatLng(9.908250364159004, -84.100341796875);
-                      var mapOptions = {center: myCenter, zoom: 5};
-                      var map = new google.maps.Map(mapCanvas, mapOptions);
-                      google.maps.event.addListener(map, 'click', function(event) {
-                        placeMarker(map, event.latLng);
-                      });
-                    }
-
-                    function placeMarker(map, location) {
-                      var marker = new google.maps.Marker({
-                        position: location,
-                        map: map
-                      });
-                      var infowindow = new google.maps.InfoWindow({
-                        content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-                      });
-                      infowindow.open(map,marker);
-                    }                function myMap() {
-                      var mapCanvas = document.getElementById("map");
-                      var myCenter=new google.maps.LatLng(9.908250364159004, -84.100341796875);
-                      var mapOptions = {center: myCenter, zoom: 5};
-                      var map = new google.maps.Map(mapCanvas, mapOptions);
-                      google.maps.event.addListener(map, 'click', function(event) {
-                        placeMarker(map, event.latLng);
-                      });
-                    }
-
-                    function placeMarker(map, location) {
-                      var marker = new google.maps.Marker({
-                        position: location,
-                        map: map
-                      });
-                      var infowindow = new google.maps.InfoWindow({
-                        content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-                      });
-                      infowindow.open(map,marker);
-                    }
+        var mapCanvas = document.getElementById("map");
+        var myCenter = new google.maps.LatLng(9.908250364159004, -84.100341796875);
+        var mapOptions = {center: myCenter, zoom: 5};
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(map, event.latLng);
+        });        
+    }
+    
+    var marker;
+    function placeMarker(map, location) {
+      var geocoder = new google.maps.Geocoder;
+      //var infowindow = new google.maps.InfoWindow;
+      if ( marker ) {
+        marker.setPosition(location);
+      } else {
+        marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+      }
+      //geocodeLatLng(geocoder, map, infowindow, location, marker);
+      geocodeLatLng(geocoder, location);
+      
+    }
+    function geocodeLatLng(geocoder, position) {
+          geocoder.geocode({'location': position}, function(results, status) {
+          if (status === 'OK') {
+            if (results[1]) {
+              //infowindow.setContent(results[0].formatted_address);
+              //infowindow.open(map, marker);
+              document.getElementById('ubicacion').value = results[0].formatted_address;
+            } else {
+              window.alert('No results found');
+            }
+            } else {
+              window.alert('Geocoder failed due to: ' + status);
+            }
+          });   
+    }
+    
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjVarU3j6-ep42xFVVDevyVvmuGgCFEvc&callback=myMap"></script>
