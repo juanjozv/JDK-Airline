@@ -222,5 +222,21 @@
             ]
         });
     }
+    
+    
+    function cargarSelects() {
+            for (var i = 0; i < modelo.flota.length; i++) {
+                var name = modelo.flota[i].nombre;
+                $('#rutaAvion').append($('<option>', {
+                    value: name,
+                    text: name
+                }));
+                $('#sel2').append($('<option>', {
+                    value: name,
+                    text: name
+                }));
+            }
+    }
+        
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>
