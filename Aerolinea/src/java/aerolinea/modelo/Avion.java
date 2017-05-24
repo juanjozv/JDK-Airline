@@ -3,6 +3,8 @@ package aerolinea.modelo;
 public class Avion implements Jsonable {
     String codigo;
     TipoAvion tipo;
+    
+    public Avion() {}
 
     public Avion(String codigo, TipoAvion tipo) {
         this.codigo = codigo;

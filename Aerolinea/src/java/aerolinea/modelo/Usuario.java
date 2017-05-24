@@ -10,6 +10,8 @@ public class Usuario implements Jsonable{
     String direccion;
     String telefono;
     String celular;
+    
+    public Usuario() {}
 
     public Usuario(String username, String password, String nombre, String apellidos, String email, String fechaNacimiento, String direccion, String telefono, String celular) {
         this.username = username;

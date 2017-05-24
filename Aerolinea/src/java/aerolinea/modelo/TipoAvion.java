@@ -13,6 +13,8 @@ public class TipoAvion implements Jsonable{
     int cantidadPasajeros;
     int cantidadFilas;
     int cantidadAsientosFila;
+    
+    public TipoAvion() {}
 
     public TipoAvion(String codigo, String annio, String modelo, String marca, int cantidadPasajeros, int cantidadFilas, int cantidadAsientosFila) {
         this.codigo = codigo;

@@ -1,9 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aerolinea.service;
 
 import aerolinea.modelo.*;
@@ -17,11 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import aerolinea.modelo.Ciudad;
+import aerolinea.modelo.Avion;
+import aerolinea.modelo.Viaje;
+import aerolinea.modelo.Vuelo;
 
 @WebServlet(name = "AerolineaService", urlPatterns = {"/AerolineaService"})
 public class AerolineaService extends HttpServlet{
-    AerolineaModelo model;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
@@ -34,7 +30,6 @@ public class AerolineaService extends HttpServlet{
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             String json;
             String accion = request.getParameter("action");
-            System.out.println(accion);
             List<Ciudad> ciudades;
             List<Avion> aviones;
             List<Viaje> viajes;
@@ -42,20 +37,20 @@ public class AerolineaService extends HttpServlet{
             Vuelo vuelos;
             switch(accion){
                 case "ciudadListAll":
-                    ciudades = model.getCiudades();
+                    ciudades = AerolineaModelo.getCiudades();
                     json = gson.toJson(ciudades);
                     out.write(json);
                     System.out.print(json);
                     break;
-                case "vueloListPromo":
+                /*case "vueloListPromo":
                     promos = model.getPromo();
                     json = gson.toJson(promos);
                     out.write(json);
-                    break;
+                    break;*/
                 case "vueloListSearch":
                     String origen = request.getParameter("origen");
                     String destino = request.getParameter("destino");
-                    vuelos = model.getVuelos(origen, destino);
+                    vuelos = AerolineaModelo.getVuelos(origen, destino);
                     json = gson.toJson(vuelos);
                     out.write(json);
                     break;
@@ -64,12 +59,12 @@ public class AerolineaService extends HttpServlet{
                     String destino2 = request.getParameter("destino");
                     String fecha = request.getParameter("fecha");
                     String cantAsientOcup = request.getParameter("cantAsientOcup");
-                    viajes = model.getViajes(origen2, destino2, fecha, cantAsientOcup);
+                    viajes = AerolineaModelo.getViajes(origen2, destino2, fecha, cantAsientOcup);
                     json = gson.toJson(viajes);
                     out.write(json);
                     break;                    
                 case "viajeListAll":
-                    viajes = model.getViajes();
+                    viajes = AerolineaModelo.getViajes();
                     json = gson.toJson(viajes);
                     out.write(json);
                     System.out.print(json);
@@ -118,10 +113,4 @@ public class AerolineaService extends HttpServlet{
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    @Override
-    public void init() throws ServletException{
-        super.init();
-        model = new AerolineaModelo();
-    }
 }

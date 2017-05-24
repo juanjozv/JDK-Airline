@@ -9,7 +9,9 @@ public class Viaje implements Jsonable{
     String horaLlegada;
     String precio;
     Avion avion;
-    Vuelo vuelo;  
+    Vuelo vuelo;
+    
+    public Viaje() {}
 
     public Viaje(String codigo, String fecha, String dia, int cantAsientOcup, String horaSalida, String horaLlegada, String precio, Avion avion, Vuelo vuelo) {
         this.codigo = codigo;

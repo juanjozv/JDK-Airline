@@ -5,6 +5,8 @@ public class Ciudad implements Jsonable{
     String nombre;
     String pais;
     String zonaHoraria;
+    
+    public Ciudad() {}
 
     public Ciudad(String codigo, String nombre, String pais, String zonaHoraria) {
         this.codigo = codigo;

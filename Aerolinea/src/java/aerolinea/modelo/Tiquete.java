@@ -4,6 +4,8 @@ public class Tiquete implements Jsonable{
     String codigo;
     String pasajero;
     Viaje viaje;
+    
+    public Tiquete() {}
 
     public Tiquete(String codigo, String pasajero, Viaje viaje) {
         this.codigo = codigo;

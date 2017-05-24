@@ -3,7 +3,7 @@ var Proxy = Proxy || {};
 Proxy.getCiudades = function(callback) {
 	var AJAX_req = new XMLHttpRequest();
 	url = "/Aerolinea/AerolineaService?action=ciudadListAll";
-	AJAX_req.open("GET", url, true);
+	AJAX_req.open("POST", url, true);
 	AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	AJAX_req.onreadystatechange = function() {
 		if(AJAX_req.readyState === 4 && AJAX_req.status === 200) {
@@ -14,7 +14,7 @@ Proxy.getCiudades = function(callback) {
 	AJAX_req.send();
 };
 
-Proxy.getPromo = function(callback) {
+/*Proxy.getPromo = function(callback) {
 	var AJAX_req = new XMLHttpRequest();
 	url = "/Aerolinea/AerolineaService?action=vueloListPromo";
 	AJAX_req.open("GET", url, true);
@@ -26,7 +26,7 @@ Proxy.getPromo = function(callback) {
 		}
 	};
 	AJAX_req.send();
-};
+};*/
 
 
 

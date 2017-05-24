@@ -229,12 +229,21 @@
             IndexControl: function (modelo, vista) {
                 this.modelo = modelo;
                 this.vista = vista;
-
+                this.obtenerCiudades();
+                this.obtenerPromos();
+            },
+            obtenerCiudades: function(){
+                var modelo = this.modelo;
+                var vista = this.vista;
                 Proxy.getCiudades(function (result) {
                     modelo.ciudades = result;
                     vista.cargarCiudades(); //magia
                 }
                 );
+            },
+            obtenerPromos: function(){
+                var modelo = this.modelo;
+                var vista = this.vista;            
                 Proxy.getPromo(function (result) {
                     modelo.promos = result;
                     vista.cargarCarousel();
