@@ -50,20 +50,22 @@
         <%@ include file="header.jspf" %>
 
         <!--CAROUSEL OFERTAS DE VUELOS-->
-        <div id="myCarousel" class="carousel slide">
-            <!-- Indicators -->
-            <ol class="carousel-indicators"></ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox"></div>
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+        <div class="container" id="contCarousel">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators"></ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox"></div>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
         </div>
 
         <!-- FORMULARIO DE BÚSQUEDA DE VUELO -->
@@ -72,8 +74,8 @@
                 <h2 id="busquedaForm">Elija los vuelos de su preferencia </h2><br>
                 <form class="form-horizontal" id="formulario" action="javascript:doSubmit();">
                     <center><div class="radio">
-                        <label class="radio-inline"><input type="radio" name="optradio" id="radioIR" checked="checked"> Ida y regreso</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" id="radioID"> Solo Ida</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioIR" checked="checked"> Ida y regreso</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" id="radioID"> Solo Ida</label>
                         </div></center><br><br>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i> Origen: </span>
@@ -90,17 +92,17 @@
                     </div>
                     <br>
                     <div class="input-group date">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha ida: </span>
-                            <input type="text" id="datetimepicker1" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha ida: </span>
+                        <input type="text" id="datetimepicker1" class="form-control" placeholder="DD/MM/AAAA" readonly>
                     </div>
                     <br>
                     <div class="input-group date" id="regreso"> 
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha regreso: </span>
-                            <input type="text" id="datetimepicker2" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha regreso: </span>
+                        <input type="text" id="datetimepicker2" class="form-control" placeholder="DD/MM/AAAA" readonly>
                     </div>
                     <br>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-users"></i> Cantidad de pasajeros: </span>
+                        <span class="input-group-addon"><i class="fa fa-users"></i> Pasajeros: </span>
                         <div class="input-group spinner">
                             <input type="text" class="form-control" value="1" min="1" max="10" id="mySpinner"></input>
                             <div class="input-group-btn-vertical">
@@ -265,7 +267,7 @@
             formulario.addEventListener("reset", limpiar);
             //cargarInicio();
         }
-        
+
         function cargarCarousel() {
 
             var nameO = "NA";
@@ -284,8 +286,11 @@
                     codigoO = modelo.promos[i].origen.codigo;
                     codigoD = modelo.promos[i].destino.codigo;
                     descripcion = descuento + "% - Precios desde $150";
-                    var item = '<div class="item"><img src="images/' + nameD + '.jpg"><div class="carousel-caption flex"><div class="tituloOferta"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> ' + nameO + " - " + nameD +
-                            '</div><br><div class="infoDesc">' + descripcion + '<br><div class="btn-group"><button type="button" class="btn btn-success" id="butt'
+                    var item = '<div class="item"><img src="images/' + nameD +
+                            '.jpg"><div class="carousel-caption flex"><div class="tituloOferta"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> '
+                            + nameO + " - " + nameD +
+                            '</div><br><div class="infoDesc">' + descripcion +
+                            '<br><div class="btn-group"><button type="button" class="btn btn-success" id="butt'
                             + codigoO + codigoD + '">Ver oferta</button></div></div></div></div>';
 
                     $(item).appendTo('.carousel-inner');
@@ -475,5 +480,3 @@
     </script>
 
 </html>
-
-

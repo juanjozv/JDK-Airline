@@ -43,7 +43,7 @@
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-triangle-right"></i></span>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                     <input id="apellido" type="text" class="form-control" placeholder="Ingrese su apellido">
                 </div>
                 <br>
@@ -81,11 +81,11 @@
                     </div>
                     <br>
                     <div class="btn-group btn-group-lg" id="registrarse">
-                        <button type="submit" class="btn btn-primary" id="btnBuscar">Registrarse</button>
+                        <button type="submit" class="btn btn-primary" id="btnRegistrarse">Registrarse</button>
                     </div>
                  </center>
                 <br>
-                <br
+                <br>
            
             </form>
         </div>

@@ -11,7 +11,8 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <!--Puse la referencia de inicio a gestion de aviones para probar, CAMBIAR LUEGO-->
+                        <li class="active"><a href="gestionAviones.jsp"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sobre nosotros <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -21,9 +22,59 @@
                             </ul>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="login.jsp"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
+                        <li><a href="signIn.jsp"><span class="glyphicon glyphicon-user"></span>&nbsp Crear Cuenta</a></li>
+                        <li><a href="#" id="login"><span class="glyphicon glyphicon-log-in"></span>&nbsp Iniciar Sesión</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="cerrarLogin" id="close">&times;</span> 
+            <center><h2>Iniciar sesión</h2></center>
+        </div>
+        <div class="modal-body">
+            <center>
+                <br><br>
+                <img src="images/usuario.png" style="width:150px;height:150px;">
+                <br><br>
+                <div class="input-group" id="loginInputs">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="usuario" type="text" class="form-control" placeholder="Ingrese su nombre de usuario">
+                </div> 
+                <br>
+                <div class="input-group" id="loginInputs">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="contraseña" type="password" class="form-control" placeholder="Ingrese su contraseña">
+                </div> 
+                <br>
+                    <div class="btn-group btn-group-lg" id="ingresar">
+                        <button type="submit" class="btn btn-primary" id="btnIngresar">Ingresar</button>
+                    </div>
+                <br><br>
+            </center>       
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal = document.getElementById('loginModal');
+    var link = document.getElementById("login");
+    var close = document.getElementsByClassName("cerrarLogin")[0];
+
+    link.onclick = function() {
+        modal.style.display = "block";
+    }
+    
+    close.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
