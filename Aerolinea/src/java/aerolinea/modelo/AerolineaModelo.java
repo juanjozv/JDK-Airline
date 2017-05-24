@@ -136,9 +136,9 @@ public class AerolineaModelo {
         obj.setCodigo(rs.getString("codigo"));
         obj.setOrigen(toCiudades(rs));
         obj.setDestino(toCiudades(rs));
-        obj.setDistancia(rs.getString("distancia"));
-        obj.setDuracion(rs.getString("duracion"));
-        obj.setDescuento(rs.getString("descuento"));
+        obj.setDistancia(rs.getFloat("distancia"));
+        obj.setDuracion(rs.getInt("duracion"));
+        obj.setDescuento(rs.getFloat("descuento"));
         obj.setAvion(toAvion(rs));
         return obj;
     }
@@ -151,7 +151,7 @@ public class AerolineaModelo {
         obj.setCantAsientOcup(rs.getInt("cantAsientOcup"));
         obj.setHoraSalida(rs.getString("horaSalida"));
         obj.setHoraLlegada(rs.getString("horaLlegada"));
-        obj.setPrecio(rs.getString("precio"));
+        obj.setPrecio(rs.getFloat("precio"));
         obj.setAvion(toAvion(rs));
         obj.setVuelo(toVuelo(rs));
         return obj;

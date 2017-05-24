@@ -7,13 +7,13 @@ public class Viaje implements Jsonable{
     int cantAsientOcup;
     String horaSalida;
     String horaLlegada;
-    String precio;
+    float precio;
     Avion avion;
     Vuelo vuelo;
     
     public Viaje() {}
 
-    public Viaje(String codigo, String fecha, String dia, int cantAsientOcup, String horaSalida, String horaLlegada, String precio, Avion avion, Vuelo vuelo) {
+    public Viaje(String codigo, String fecha, String dia, int cantAsientOcup, String horaSalida, String horaLlegada, float precio, Avion avion, Vuelo vuelo) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.dia = dia;
@@ -73,11 +73,11 @@ public class Viaje implements Jsonable{
         this.horaLlegada = horaLlegada;
     }
 
-    public String getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 

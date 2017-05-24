@@ -2,13 +2,13 @@ package aerolinea.modelo;
 
 public class Avion implements Jsonable {
     String codigo;
-    TipoAvion tipo;
+    TipoAvion tipoAvion;
     
     public Avion() {}
 
-    public Avion(String codigo, TipoAvion tipo) {
+    public Avion(String codigo, TipoAvion tipoAvion) {
         this.codigo = codigo;
-        this.tipo = tipo;
+        this.tipoAvion = tipoAvion;
     }
 
     public String getCodigo() {
@@ -20,11 +20,11 @@ public class Avion implements Jsonable {
     }
 
     public TipoAvion getTipo() {
-        return tipo;
+        return tipoAvion;
     }
 
-    public void setTipo(TipoAvion tipo) {
-        this.tipo = tipo;
+    public void setTipo(TipoAvion tipoAvion) {
+        this.tipoAvion = tipoAvion;
     }
    
 }

@@ -5,14 +5,14 @@ public class Vuelo implements Jsonable{
     String codigo;
     Ciudad origen;
     Ciudad destino;
-    String distancia;
-    String duracion;
-    String descuento;
+    float distancia;
+    int duracion;
+    float descuento;
     Avion avion;
     
     public Vuelo() {}
 
-    public Vuelo(String codigo, Ciudad origen, Ciudad destino, String distancia, String duracion, String descuento, Avion avion) {
+    public Vuelo(String codigo, Ciudad origen, Ciudad destino, float distancia, int duracion, float descuento, Avion avion) {
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;
@@ -46,27 +46,27 @@ public class Vuelo implements Jsonable{
         this.destino = destino;
     }
 
-    public String getDistancia() {
+    public float getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(String distancia) {
+    public void setDistancia(float distancia) {
         this.distancia = distancia;
     }
 
-    public String getDuracion() {
+    public int getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(String duracion) {
+    public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
 
-    public String getDescuento() {
+    public float getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(String descuento) {
+    public void setDescuento(float descuento) {
         this.descuento = descuento;
     }
 
