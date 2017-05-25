@@ -24,9 +24,10 @@ public class AerolineaService extends HttpServlet{
             response.setContentType("text/xml");
             RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
                     .registerSubtype(Ciudad.class, "Ciudad")
+                    .registerSubtype(TipoAvion.class, "TipoAvion")
                     .registerSubtype(Avion.class, "Avion")
-                    .registerSubtype(Viaje.class, "Viaje")
-                    .registerSubtype(Vuelo.class, "Vuelo");
+                    .registerSubtype(Vuelo.class, "Vuelo")
+                    .registerSubtype(Viaje.class, "Viaje");
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             String json;
             String accion = request.getParameter("action");
@@ -42,11 +43,11 @@ public class AerolineaService extends HttpServlet{
                     out.write(json);
                     System.out.print(json);
                     break;
-                /*case "vueloListPromo":
-                    promos = model.getPromo();
+                case "vueloListPromo":
+                    promos = AerolineaModelo.getPromo();
                     json = gson.toJson(promos);
                     out.write(json);
-                    break;*/
+                    break;
                 case "vueloListSearch":
                     String origen = request.getParameter("origen");
                     String destino = request.getParameter("destino");

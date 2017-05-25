@@ -38,7 +38,7 @@ public class AerolineaModelo {
         List<TipoAvion> tipos;
         tipos = new ArrayList();
         try {
-            String sql = "select * from tiposavion";
+            String sql = "select * from tiposAvion";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
                 tipos.add(toTipoAvion(rs));
@@ -49,29 +49,50 @@ public class AerolineaModelo {
     }
     
 
-    public static List<Avion> getAviones(){
-        Avion[] aviones2 = {
-            
-        };
-        return new ArrayList(Arrays.asList(aviones2));
+    public static List<Avion> getAviones() throws Exception{
+        List<Avion> aviones;
+        aviones = new ArrayList();
+        try {
+            String sql = "select * from aviones av inner join tiposAvion ta on av.tipoAvion = ta.codigo";
+            ResultSet rs = aerolinea.executeQuery(sql);
+            while (rs.next()) {
+                aviones.add(toAvion(rs));
+            }
+        } catch (SQLException ex) {
+        }
+        return aviones;
     }
     
-    public static List<Vuelo> getVuelos(){
-        Vuelo[] vuelos2 =  {
+   
+    public static List<Vuelo> getVuelos() throws Exception{
+        List<Vuelo> vuelos;
+        vuelos = new ArrayList();
+        try {
            
-        };
-        return new ArrayList(Arrays.asList(vuelos2));
+            String sql = "select * from vuelos v inner join (select av.codigo as cod from aviones av inner join tiposavion ta on av.tipoAvion = ta.codigo) a on v.avion = a.cod\n" +
+                        "inner join ciudades o on v.origen = o.codigo\n" +
+                        "inner join ciudades d on v.destino = d.codigo;";
+            
+            ResultSet rs = aerolinea.executeQuery(sql);        
+            while (rs.next()) {
+                vuelos.add(toVuelo(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener vuelos");
+        }
+        return vuelos;
     }
     
-    /*public static List<Vuelo> getPromo() {
+    public static List<Vuelo> getPromo() throws Exception {
+        List<Vuelo> vuelos = getVuelos(); //->Obtiene todos los vuelos
         List<Vuelo> promos2 = new ArrayList<Vuelo>();
         for(Vuelo vuelo: vuelos) {
-            if(!"0".equals(vuelo.descuento)) {
+            if(vuelo.getDescuento() > 0) {
                 promos2.add(vuelo);
             }
         }
         return promos2;
-    }*/
+    }
     
     public static List<Viaje> getViajes() {
         Viaje[] viajes2 = {
@@ -83,7 +104,7 @@ public class AerolineaModelo {
     
     
     //Metodos que aplican los filtros de búsqueda
-    public static Vuelo getVuelos(String origen, String destino) {
+    public static Vuelo getVuelos(String origen, String destino) throws Exception {
         for(Vuelo v: getVuelos()) {
             if(v.getOrigen().getNombre().contains(origen) && v.getDestino().getNombre().contains(destino))
                 return v;
@@ -111,7 +132,8 @@ public class AerolineaModelo {
         obj.setZonaHoraria(rs.getString("zonaHoraria"));
         return obj;
     }
-    
+   
+    /*OJO: El problema está cuando esntrea al tipo avión, no pasa de setModelo*/
     private static TipoAvion toTipoAvion(ResultSet rs) throws Exception {
         TipoAvion obj = new TipoAvion();
         obj.setCodigo(rs.getString("codigo"));
@@ -134,12 +156,13 @@ public class AerolineaModelo {
     private static Vuelo toVuelo(ResultSet rs) throws Exception {
         Vuelo obj = new Vuelo();
         obj.setCodigo(rs.getString("codigo"));
-        obj.setOrigen(toCiudades(rs));
-        obj.setDestino(toCiudades(rs));
         obj.setDistancia(rs.getFloat("distancia"));
         obj.setDuracion(rs.getInt("duracion"));
         obj.setDescuento(rs.getFloat("descuento"));
-        obj.setAvion(toAvion(rs));
+        obj.setOrigen(toCiudades(rs));
+        obj.setDestino(toCiudades(rs));
+        //obj.setAvion(toAvion(rs));
+        obj.setAvion(new Avion()); //->PESIMO, se cae en toAvion->toTiposAvion
         return obj;
     }
    
@@ -160,6 +183,7 @@ public class AerolineaModelo {
     private static Usuario toUsuario(ResultSet rs) throws Exception {
         Usuario obj = new Usuario();
         obj.setUsername(rs.getString("username"));
+        obj.setContraseña(rs.getString("password"));
         obj.setNombre(rs.getString("nombre"));
         obj.setApellidos(rs.getString("apellidos"));
         obj.setEmail(rs.getString("email"));
