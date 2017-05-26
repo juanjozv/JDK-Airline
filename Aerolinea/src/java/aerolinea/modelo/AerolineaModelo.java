@@ -4,7 +4,6 @@ import aerolinea.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AerolineaModelo {
@@ -19,60 +18,110 @@ public class AerolineaModelo {
         aerolinea = new Database(null, null, null);
     }
    
-    
-    public static List<Ciudad> getCiudades() throws Exception{
+    public static List<Ciudad> getCiudadesAll() throws Exception{
         List<Ciudad> ciudades;
         ciudades = new ArrayList();
         try {
-            String sql = "select * from ciudades";
+            String sql = "select * from ciudades;";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
                 ciudades.add(toCiudades(rs));
             }
         } catch (SQLException ex) {
+            System.out.println("Error obteniendo las ciudades");
         }
         return ciudades;
     }
     
-    public static List<TipoAvion> getTiposAvion() throws Exception {
+    public static Ciudad getCiudad(String codigo) throws Exception{ //Va a obtener sola mente una ciudad
+        Ciudad ciudad = new Ciudad();
+        try {
+            String sql = "select * from ciudades " +
+                    "where codigo = '%s';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            
+            if (rs.next()) {
+                ciudad =  toCiudades(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad");
+        }
+        return ciudad;
+    }
+    
+    public static List<TipoAvion> getTiposAvionAll() throws Exception {
         List<TipoAvion> tipos;
         tipos = new ArrayList();
         try {
-            String sql = "select * from tiposAvion";
+            String sql = "select * from tiposAvion;";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
                 tipos.add(toTipoAvion(rs));
             }
         } catch (SQLException ex) {
+            System.out.println("Error obteniendo las tiposAvion");
         }
         return tipos;
     }
     
-
-    public static List<Avion> getAviones() throws Exception{
+    public static TipoAvion getTipoAvion(String codigo) throws Exception{ //Va a obtener sola mente un tipoAvion
+        TipoAvion tipo = new TipoAvion();
+        try {
+            String sql = "select * from tiposavion " +
+                    "where codigo = '%s';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                tipo =  toTipoAvion(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente un tipoAvion");
+        }
+        return tipo;
+    }
+    
+    //Cambiar este inner Join
+    public static List<Avion> getAvionesAll() throws Exception{
         List<Avion> aviones;
         aviones = new ArrayList();
         try {
-            String sql = "select * from aviones av inner join tiposAvion ta on av.tipoAvion = ta.codigo";
+            //String sql = "select * from aviones av inner join tiposAvion ta on av.tipoAvion = ta.codigo";
+            String sql = "select * from tiposavion;";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
                 aviones.add(toAvion(rs));
             }
         } catch (SQLException ex) {
+            System.out.println("Error obteniendo las aviones");
         }
         return aviones;
     }
     
-   
-    public static List<Vuelo> getVuelos() throws Exception{
+    public static Avion getAvion(String codigo) throws Exception{ //Va a obtener sola mente un Avion
+        Avion avion = new Avion();
+        try {
+            String sql = "select * from aviones " +
+                    "where codigo = '%s';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                avion =  toAvion(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente un avion");
+        }
+        return avion;
+    }
+    
+    public static List<Vuelo> getVuelosAll() throws Exception{
         List<Vuelo> vuelos;
         vuelos = new ArrayList();
         try {
-           
-            String sql = "select * from vuelos v inner join (select av.codigo as cod from aviones av inner join tiposavion ta on av.tipoAvion = ta.codigo) a on v.avion = a.cod\n" +
+            /*String sql = "select * from vuelos v inner join (select av.codigo as cod from aviones av inner join tiposavion ta on av.tipoAvion = ta.codigo) a on v.avion = a.cod\n" +
                         "inner join ciudades o on v.origen = o.codigo\n" +
-                        "inner join ciudades d on v.destino = d.codigo;";
-            
+                        "inner join ciudades d on v.destino = d.codigo;";*/
+            String sql = "select * from vuelos;";
             ResultSet rs = aerolinea.executeQuery(sql);        
             while (rs.next()) {
                 vuelos.add(toVuelo(rs));
@@ -83,29 +132,36 @@ public class AerolineaModelo {
         return vuelos;
     }
     
-    public static List<Vuelo> getPromo() throws Exception {
-        List<Vuelo> vuelos = getVuelos(); //->Obtiene todos los vuelos
-        List<Vuelo> promos2 = new ArrayList<Vuelo>();
-        for(Vuelo vuelo: vuelos) {
-            if(vuelo.getDescuento() > 0) {
-                promos2.add(vuelo);
+    public static List<Vuelo> getPromos() throws Exception {
+        List<Vuelo> promo;
+        promo = new ArrayList();
+        try {
+            String sql = "select * from vuelos " +
+                    "where descuento > 0;";
+            ResultSet rs = aerolinea.executeQuery(sql);        
+            while (rs.next()) {
+                promo.add(toVuelo(rs));
             }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener vuelos con descuento");
         }
-        return promos2;
+        return promo;
     }
     
+    
+    //->Crear el getViajes all y getViaje
     public static List<Viaje> getViajes() {
-        Viaje[] viajes2 = {
-     
-        };
-        return new ArrayList(Arrays.asList(viajes2));
+        return null;
     }
     
     
     
+    
+    
+    //->ESTOS METODOS DE FILTRO DEBEN SER REALIZADOS CON CONSULTAS TAMBIÉN, CAMBIAR MAÑANA
     //Metodos que aplican los filtros de búsqueda
     public static Vuelo getVuelos(String origen, String destino) throws Exception {
-        for(Vuelo v: getVuelos()) {
+        for(Vuelo v: getVuelosAll()) {
             if(v.getOrigen().getNombre().contains(origen) && v.getDestino().getNombre().contains(destino))
                 return v;
         }
@@ -123,7 +179,6 @@ public class AerolineaModelo {
         return result;
     }
     
-    
     private static Ciudad toCiudades(ResultSet rs) throws Exception {
         Ciudad obj = new Ciudad();
         obj.setCodigo(rs.getString("codigo"));
@@ -133,7 +188,6 @@ public class AerolineaModelo {
         return obj;
     }
    
-    /*OJO: El problema está cuando esntrea al tipo avión, no pasa de setModelo*/
     private static TipoAvion toTipoAvion(ResultSet rs) throws Exception {
         TipoAvion obj = new TipoAvion();
         obj.setCodigo(rs.getString("codigo"));
@@ -159,13 +213,13 @@ public class AerolineaModelo {
         obj.setDistancia(rs.getFloat("distancia"));
         obj.setDuracion(rs.getInt("duracion"));
         obj.setDescuento(rs.getFloat("descuento"));
-        obj.setOrigen(toCiudades(rs));
-        obj.setDestino(toCiudades(rs));
-        //obj.setAvion(toAvion(rs));
-        obj.setAvion(new Avion()); //->PESIMO, se cae en toAvion->toTiposAvion
+        obj.setOrigen(getCiudad(rs.getString("origen")));
+        obj.setDestino(getCiudad(rs.getString("destino")));
+        obj.setAvion(getAvion(rs.getString("avion")));
         return obj;
     }
    
+    //-->Cambiar para que funcione con los gets
     private static Viaje toViaje(ResultSet rs) throws Exception {
         Viaje obj = new Viaje();
         obj.setCodigo(rs.getString("codigo"));
@@ -194,6 +248,7 @@ public class AerolineaModelo {
         return obj;
     }
   
+    //Cambiar para que funcione toViaje con get
     private static Tiquete toTiquete(ResultSet rs) throws Exception {
         Tiquete obj = new Tiquete();
         obj.setCodigo(rs.getString("codigo"));

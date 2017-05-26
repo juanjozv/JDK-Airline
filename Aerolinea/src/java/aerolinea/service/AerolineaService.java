@@ -38,13 +38,13 @@ public class AerolineaService extends HttpServlet{
             Vuelo vuelos;
             switch(accion){
                 case "ciudadListAll":
-                    ciudades = AerolineaModelo.getCiudades();
+                    ciudades = AerolineaModelo.getCiudadesAll();
                     json = gson.toJson(ciudades);
                     out.write(json);
                     System.out.print(json);
                     break;
                 case "vueloListPromo":
-                    promos = AerolineaModelo.getPromo();
+                    promos = AerolineaModelo.getPromos();
                     json = gson.toJson(promos);
                     out.write(json);
                     break;
