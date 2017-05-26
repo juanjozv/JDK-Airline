@@ -25,8 +25,8 @@ public class Database {
             String servidor=(servidorArg==null?SERVIDOR:servidorArg);
             String usuario=(usuarioArg==null?USUARIO:usuarioArg);
             String clave=(claveArg==null?CLAVE:claveArg);
-            //String URL_conexion=PROTOCOLO+"//"+ servidor+":"+PUERTO+"/"+BASEDATOS+"?user="+usuario+"&password="+clave;
-            String URL_conexion=PROTOCOLO+"//"+ servidor+":"+PUERTO+"/"+BASEDATOS+"?user="+usuario;
+            String URL_conexion=PROTOCOLO+"//"+ servidor+":"+PUERTO+"/"+BASEDATOS+"?user="+usuario+"&password="+clave;
+            //String URL_conexion=PROTOCOLO+"//"+ servidor+":"+PUERTO+"/"+BASEDATOS+"?user="+usuario;
             Class.forName(MANEJADOR_DB).newInstance();
             return DriverManager.getConnection(URL_conexion);
         } catch (Exception e) {

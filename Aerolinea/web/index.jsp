@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 20/05/2017, 08:44:34 PM
-    Author     : Dani
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
@@ -20,7 +14,6 @@
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
@@ -51,7 +44,7 @@
         <%@ include file="header.jspf" %>
 
         <!--CAROUSEL OFERTAS DE VUELOS-->
-        <div class="container" id="contCarousel">
+        <!--<div class="container-fluid" id="contCarousel">-->
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators"></ol>
@@ -67,7 +60,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </div>
+        <!--</div>-->
 
         <!-- FORMULARIO DE BÚSQUEDA DE VUELO -->
         <div class="bs-docs-featurette" id="divBusqueda">

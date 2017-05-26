@@ -99,3 +99,32 @@ Proxy.getVuelos = function (callback) {
     };
     AJAX_req.send();
 };
+
+Proxy.getTiposAvion = function(callback) {
+	var AJAX_req = new XMLHttpRequest();
+	url = "/Aerolinea/AerolineaService?action=tiposAvionListAll";
+	AJAX_req.open("POST", url, true);
+	AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	AJAX_req.onreadystatechange = function() {
+		if(AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+			var object = JSON.parse(AJAX_req.responseText, JsonUtils.revive);
+			callback(object);
+		}
+	};
+	AJAX_req.send();
+};
+
+Proxy.tipoAvionSearch = function(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFila, callback) {
+	var AJAX_req = new XMLHttpRequest();
+	url = "/Aerolinea/AerolineaService?action=viajeListSearch";
+	AJAX_req.open("POST", url, true);
+	AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	AJAX_req.onreadystatechange = function() {
+		if(AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+			var object = JSON.parse(AJAX_req.responseText, JsonUtils.revive);
+			callback(object);
+		}
+	};
+	AJAX_req.send("codigo=" + codigo + "&annio=" + annio + "&marca=" + marca + "&modelo=" + modelo
+                + "&cantidadPasajeros=" + cantidadPasajeros + "&cantidadFilas=" + cantidadFilas + "&cantidadAsientosFila=" + cantidadAsientosFila);
+};

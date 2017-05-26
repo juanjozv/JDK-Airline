@@ -15,12 +15,14 @@ import aerolinea.modelo.Ciudad;
 import aerolinea.modelo.Avion;
 import aerolinea.modelo.Viaje;
 import aerolinea.modelo.Vuelo;
+import aerolinea.modelo.TipoAvion;
 
 @WebServlet(name = "AerolineaService", urlPatterns = {"/AerolineaService"})
-public class AerolineaService extends HttpServlet{
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+public class AerolineaService extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try(PrintWriter out = response.getWriter()){
+        try (PrintWriter out = response.getWriter()) {
             response.setContentType("text/xml");
             RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
                     .registerSubtype(Ciudad.class, "Ciudad")
@@ -36,8 +38,9 @@ public class AerolineaService extends HttpServlet{
             List<Viaje> viajes;
             List<Vuelo> promos;
             List<Vuelo> vuelos;
+            List<TipoAvion> tipos;
             Vuelo vuelo;
-            switch(accion){
+            switch (accion) {
                 case "ciudadListAll":
                     ciudades = AerolineaModelo.getCiudadesAll();
                     json = gson.toJson(ciudades);
@@ -64,7 +67,7 @@ public class AerolineaService extends HttpServlet{
                     viajes = AerolineaModelo.getViajes(origen2, destino2, fecha, cantAsientOcup);
                     json = gson.toJson(viajes);
                     out.write(json);
-                    break;                    
+                    break;
                 case "viajeListAll":
                     viajes = AerolineaModelo.getViajes();
                     json = gson.toJson(viajes);
@@ -77,12 +80,18 @@ public class AerolineaService extends HttpServlet{
                     out.write(json);
                     System.out.print(json);
                     break;
+                case "tiposAvionListAll":
+                    tipos = AerolineaModelo.getTiposAvionAll();
+                    json = gson.toJson(tipos);
+                    out.write(json);
+                    System.out.print(json);
+                    break;
             }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        catch(Exception e){ System.out.println(e); }
     }
-    
-   
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

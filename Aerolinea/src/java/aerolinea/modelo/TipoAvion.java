@@ -1,26 +1,22 @@
 package aerolinea.modelo;
 
-/**
- *
- * @author Juanjo
- */
 public class TipoAvion implements Jsonable{
    
     String codigo;
     String annio;
-    String modelo;
     String marca;
+    String modelo;
     int cantidadPasajeros;
     int cantidadFilas;
     int cantidadAsientosFila;
     
     public TipoAvion() {}
 
-    public TipoAvion(String codigo, String annio, String modelo, String marca, int cantidadPasajeros, int cantidadFilas, int cantidadAsientosFila) {
+    public TipoAvion(String codigo, String annio, String marca, String modelo, int cantidadPasajeros, int cantidadFilas, int cantidadAsientosFila) {
         this.codigo = codigo;
         this.annio = annio;
-        this.modelo = modelo;
         this.marca = marca;
+        this.modelo = modelo;
         this.cantidadPasajeros = cantidadPasajeros;
         this.cantidadFilas = cantidadFilas;
         this.cantidadAsientosFila = cantidadAsientosFila;
@@ -41,6 +37,14 @@ public class TipoAvion implements Jsonable{
     public void setAnnio(String annio) {
         this.annio = annio;
     }
+    
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
 
     public String getModelo() {
         return modelo;
@@ -48,14 +52,6 @@ public class TipoAvion implements Jsonable{
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
     }
 
     public int getCantidadPasajeros() {

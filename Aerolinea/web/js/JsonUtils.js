@@ -1,11 +1,11 @@
 var JsonUtils = JsonUtils || {};
 
 JsonUtils.revive = function (k, v) {
-    if(v instanceof Object && v._class == 'Ciudad'){
+    if(v instanceof Object && v._class == 'Ciudad') {
         return new Ciudad(v.codigo, v.nombre, v.pais, v.zonaHoraria);
     }
-    if(v instanceof Object && v._class == 'TipoAvion'){
-        return new TipoAvion(v.codigo, v.annio, v.modelo, v.marca, v.cantidadPasajeros, v.cantidadFilas, v.cantidadAsientosFila);
+    if(v instanceof Object && v._class == 'TipoAvion') {
+        return new TipoAvion(v.codigo, v.annio, v.marca, v.modelo, v.cantidadPasajeros, v.cantidadFilas, v.cantidadAsientosFila);
     }
     if(v instanceof Object && v._class == 'Avion'){
         return new Avion(v.codigo, v.tipo);
