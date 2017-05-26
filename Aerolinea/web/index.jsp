@@ -36,6 +36,7 @@
 
         <!-- JS propio -->
         <script type="text/javascript" src="js/Ciudad.js"></script>
+        <script type="text/javascript" src="js/TipoAvion.js"></script>
         <script type="text/javascript" src="js/Avion.js"></script>
         <script type="text/javascript" src="js/Vuelo.js"></script>
         <script type="text/javascript" src="js/Viaje.js"></script>

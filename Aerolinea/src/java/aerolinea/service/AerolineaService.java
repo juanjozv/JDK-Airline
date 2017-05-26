@@ -35,7 +35,8 @@ public class AerolineaService extends HttpServlet{
             List<Avion> aviones;
             List<Viaje> viajes;
             List<Vuelo> promos;
-            Vuelo vuelos;
+            List<Vuelo> vuelos;
+            Vuelo vuelo;
             switch(accion){
                 case "ciudadListAll":
                     ciudades = AerolineaModelo.getCiudadesAll();
@@ -51,8 +52,8 @@ public class AerolineaService extends HttpServlet{
                 case "vueloListSearch":
                     String origen = request.getParameter("origen");
                     String destino = request.getParameter("destino");
-                    vuelos = AerolineaModelo.getVuelos(origen, destino);
-                    json = gson.toJson(vuelos);
+                    vuelo = AerolineaModelo.getVuelos(origen, destino);
+                    json = gson.toJson(vuelo);
                     out.write(json);
                     break;
                 case "viajeListSearch":
@@ -67,6 +68,12 @@ public class AerolineaService extends HttpServlet{
                 case "viajeListAll":
                     viajes = AerolineaModelo.getViajes();
                     json = gson.toJson(viajes);
+                    out.write(json);
+                    System.out.print(json);
+                    break;
+                case "vueloListAll":
+                    vuelos = AerolineaModelo.getVuelosAll();
+                    json = gson.toJson(vuelos);
                     out.write(json);
                     System.out.print(json);
                     break;

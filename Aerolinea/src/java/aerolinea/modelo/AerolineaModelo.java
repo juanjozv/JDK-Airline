@@ -68,7 +68,7 @@ public class AerolineaModelo {
     public static TipoAvion getTipoAvion(String codigo) throws Exception{ //Va a obtener sola mente un tipoAvion
         TipoAvion tipo = new TipoAvion();
         try {
-            String sql = "select * from tiposavion " +
+            String sql = "select * from tiposAvion " +
                     "where codigo = '%s';";
             sql = String.format(sql, codigo);
             ResultSet rs = aerolinea.executeQuery(sql);
@@ -203,7 +203,7 @@ public class AerolineaModelo {
     private static Avion toAvion(ResultSet rs) throws Exception {
         Avion obj = new Avion();
         obj.setCodigo(rs.getString("codigo"));
-        obj.setTipo(toTipoAvion(rs));
+        obj.setTipo(getTipoAvion(rs.getString("tipoAvion")));
         return obj;
     }
     
