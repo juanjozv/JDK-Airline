@@ -3,6 +3,8 @@ package aerolinea.modelo;
 import aerolinea.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +52,23 @@ public class AerolineaModelo {
         return ciudad;
     }
     
+    public static Ciudad getCiudadPorNombre(String nombre) throws Exception{ //Va a obtener sola mente una ciudad
+        Ciudad ciudad = new Ciudad();
+        try {
+            String sql = "select * from ciudades " +
+                    "where nombre = '%s';";
+            sql = String.format(sql, nombre);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            
+            if (rs.next()) {
+                ciudad =  toCiudades(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad por nombre");
+        }
+        return ciudad;
+    }
+    
     public static List<TipoAvion> getTiposAvionAll() throws Exception {
         List<TipoAvion> tipos;
         tipos = new ArrayList();
@@ -81,7 +100,6 @@ public class AerolineaModelo {
         return tipo;
     }
     
-    //Cambiar este inner Join
     public static List<Avion> getAvionesAll() throws Exception{
         List<Avion> aviones;
         aviones = new ArrayList();
@@ -132,6 +150,21 @@ public class AerolineaModelo {
         return vuelos;
     }
     
+    public static Vuelo getVuelo(String codigo) throws Exception { //buscacara un vuelo solamente
+        Vuelo vuelo = new Vuelo();
+        try {
+            String sql = "select * from vuelos where codigo = '%s';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                vuelo =  toVuelo(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener solamente el vuelo");
+        }
+        return vuelo;
+    }
+    
     public static List<Vuelo> getPromos() throws Exception {
         List<Vuelo> promo;
         promo = new ArrayList();
@@ -148,37 +181,75 @@ public class AerolineaModelo {
         return promo;
     }
     
-    
-    //->Crear el getViajes all y getViaje
-    public static List<Viaje> getViajes() {
-        return null;
-    }
-    
-    
-    
-    
-    
-    //->ESTOS METODOS DE FILTRO DEBEN SER REALIZADOS CON CONSULTAS TAMBIÉN, CAMBIAR MAÑANA
-    //Metodos que aplican los filtros de búsqueda
-    public static Vuelo getVuelos(String origen, String destino) throws Exception {
-        for(Vuelo v: getVuelosAll()) {
-            if(v.getOrigen().getNombre().contains(origen) && v.getDestino().getNombre().contains(destino))
-                return v;
+    public static Vuelo getVueloBusqueda(String nomOrig, String nomDest) throws Exception {
+        Vuelo vuelo = new Vuelo();
+        Ciudad origen = getCiudadPorNombre(nomOrig);
+        Ciudad destino = getCiudadPorNombre(nomDest);
+        try {
+            String sql = "select * from vuelos where origen = '%s' and destino = '%s';";
+            sql = String.format(sql, origen.getCodigo(), destino.getCodigo());
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                vuelo =  toVuelo(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener el vuelo buscado");
         }
-        return null;
+        return vuelo;
     }
     
-    public static List<Viaje> getViajes(String origen, String destino, String fecha, String cantAsientOcup) {
+    //->Crear el getViajesBusqueda all y getViaje
+    public static List<Viaje> getViajesAll() throws Exception {
+        List<Viaje> viajes;
+        viajes = new ArrayList();
+        try {
+            String sql = "select * from viajes;";
+            ResultSet rs = aerolinea.executeQuery(sql);        
+            while (rs.next()) {
+                viajes.add(toViaje(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener viajes");
+        }
+        return viajes;
+    }
+    
+    
+    /*public static List<Viaje> getViajesBusqueda(String origen, String destino, String fecha, String cantAsientOcup) {
         ArrayList<Viaje> result = new ArrayList();
-        for(Viaje v: getViajes()) {
+        for(Viaje v: getViajesAll()) {
            int cantAsientos =  Integer.parseInt(cantAsientOcup);
             if(v.getVuelo().getOrigen().getNombre().contains(origen) && v.getVuelo().getDestino().getNombre().contains(destino) &&
                     v.getFecha().contains(fecha) && v.getCantAsientOcup()  >= cantAsientos )
                 result.add(v);
         }
         return result;
+    }*/
+    public static List<Viaje> getViajesBusqueda(String origen, String destino, String fecha, String cantAsientOcup) throws ParseException, Exception {
+        List<Viaje> result;
+        result = new ArrayList();
+        int cantAsientos =  Integer.parseInt(cantAsientOcup);
+        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
+        String formatoFecha = miFormato.format(delUsuario.parse(fecha));
+        Vuelo vueloBuscado = getVueloBusqueda(origen, destino);
+        
+        try {
+            String sql = "select * from viajes where vuelo = '%s' and fecha = '%s'\n" +
+                                                "and cantAsientOcup >= '%s';";
+            sql = String.format(sql,vueloBuscado.getCodigo(), formatoFecha, cantAsientos);
+            ResultSet rs = aerolinea.executeQuery(sql);        
+            while (rs.next()) {
+                result.add(toViaje(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener viajes");
+        }
+        return result;
     }
     
+    
+    // Inicio de métodos toSomething
     private static Ciudad toCiudades(ResultSet rs) throws Exception {
         Ciudad obj = new Ciudad();
         obj.setCodigo(rs.getString("codigo"));
@@ -219,7 +290,6 @@ public class AerolineaModelo {
         return obj;
     }
    
-    //-->Cambiar para que funcione con los gets
     private static Viaje toViaje(ResultSet rs) throws Exception {
         Viaje obj = new Viaje();
         obj.setCodigo(rs.getString("codigo"));
@@ -229,11 +299,12 @@ public class AerolineaModelo {
         obj.setHoraSalida(rs.getString("horaSalida"));
         obj.setHoraLlegada(rs.getString("horaLlegada"));
         obj.setPrecio(rs.getFloat("precio"));
-        obj.setAvion(toAvion(rs));
-        obj.setVuelo(toVuelo(rs));
+        obj.setAvion(getAvion(rs.getString("avion"))); 
+        obj.setVuelo(getVuelo(rs.getString("vuelo")));
         return obj;
     }
   
+    //-Modificar los gets
     private static Usuario toUsuario(ResultSet rs) throws Exception {
         Usuario obj = new Usuario();
         obj.setUsername(rs.getString("username"));

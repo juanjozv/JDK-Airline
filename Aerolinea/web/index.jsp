@@ -87,12 +87,12 @@
                     <br>
                     <div class="input-group date">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha ida: </span>
-                        <input type="text" id="datetimepicker1" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                        <input type="text" id="datetimepicker1" class="form-control" placeholder="DD-MM-AAAA" readonly>
                     </div>
                     <br>
                     <div class="input-group date" id="regreso"> 
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> Fecha regreso: </span>
-                        <input type="text" id="datetimepicker2" class="form-control" placeholder="DD/MM/AAAA" readonly>
+                        <input type="text" id="datetimepicker2" class="form-control" placeholder="DD-MM-AAAA" readonly>
                     </div>
                     <br>
                     <div class="input-group">
@@ -402,11 +402,11 @@
         //Calendarios
         $(function () {
             $('#datetimepicker1').datetimepicker({
-                format: 'DD/MM/YYYY',
+                format: 'DD-MM-YYYY',
                 pickTime: false
             });
             $('#datetimepicker2').datetimepicker({
-                format: 'DD/MM/YYYY',
+                format: 'DD-MM-YYYY',
                 pickTime: false
             });
             var dt = new Date();

@@ -55,7 +55,7 @@ public class AerolineaService extends HttpServlet {
                 case "vueloListSearch":
                     String origen = request.getParameter("origen");
                     String destino = request.getParameter("destino");
-                    vuelo = AerolineaModelo.getVuelos(origen, destino);
+                    vuelo = AerolineaModelo.getVueloBusqueda(origen, destino);
                     json = gson.toJson(vuelo);
                     out.write(json);
                     break;
@@ -64,12 +64,12 @@ public class AerolineaService extends HttpServlet {
                     String destino2 = request.getParameter("destino");
                     String fecha = request.getParameter("fecha");
                     String cantAsientOcup = request.getParameter("cantAsientOcup");
-                    viajes = AerolineaModelo.getViajes(origen2, destino2, fecha, cantAsientOcup);
+                    viajes = AerolineaModelo.getViajesBusqueda(origen2, destino2, fecha, cantAsientOcup);
                     json = gson.toJson(viajes);
                     out.write(json);
                     break;
                 case "viajeListAll":
-                    viajes = AerolineaModelo.getViajes();
+                    viajes = AerolineaModelo.getViajesAll();
                     json = gson.toJson(viajes);
                     out.write(json);
                     System.out.print(json);

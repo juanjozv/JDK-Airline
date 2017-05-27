@@ -263,3 +263,44 @@ insert into vuelos values ("1004", 1200, 3, 0, "BE", "AM", "A4"); -- 6
 insert into vuelos values ("2004", 1200, 3, 0, "AM", "BE", "A4");-- 7
 insert into vuelos values ("1005", 4000, 3, 30, "SJ", "OR", "A5"); -- 8
 insert into vuelos values ("2005", 4000, 3, 0, "OR", "SJ", "A5");-- 9
+
+insert into viajes values ("1", "2017-07-05", "V", 20, "9:00am", "12:00pm", 150, "A1", "1001"); -- Hawai-Londres
+insert into viajes values ("2", "2017-07-05", "V", 20, "5:00pm", "8:00pm", 150, "A1", "1001");
+insert into viajes values ("3", "2017-07-09", "M", 10, "9:00am", "12:00pm", 150, "A1", "2001"); -- Londres-Hawai;
+insert into viajes values ("4", "2017-07-09", "M", 10, "5:00pm", "8:00pm", 150, "A1", "2001");
+insert into viajes values ("5", "2017-07-05", "V", 20, "9:00am", "12:00pm", 300, "A2", "1002"); -- Rio - Miami
+insert into viajes values ("6", "2017-07-05", "V", 20, "5:00pm", "8:00pm", 300, "A2", "1002");
+insert into viajes values ("7", "2017-07-09", "M", 10, "9:00am", "12:00pm", 300, "A2", "2002"); -- Miami - Rio
+insert into viajes values ("8", "2017-07-09", "M", 10, "5:00pm", "8:00pm", 300, "A2", "2002");
+insert into viajes values ("9", "2017-07-05", "V", 20, "9:00am", "12:00pm", 270, "A3", "1003"); -- Miami - Nueva York
+insert into viajes values ("10", "2017-07-05", "V", 20, "5:00pm", "8:00pm", 270, "A3", "1003"); 
+insert into viajes values ("11", "2017-07-09", "V", 20, "9:00am", "12:00pm", 270, "A3", "2003"); -- Nueva York - Miami
+insert into viajes values ("12", "2017-07-09", "V", 20, "5:00pm", "8:00pm", 270, "A3", "2003");
+insert into viajes values ("13", "2017-07-05", "V", 20, "9:00am", "12:00pm", 400, "A4", "1004"); -- Berlin - Amsterdam
+insert into viajes values ("14", "2017-07-05", "V", 20, "5:00pm", "8:00pm", 400, "A4", "1004");
+insert into viajes values ("15", "2017-07-09", "V", 20, "9:00am", "12:00pm", 400, "A4", "2004"); -- Amsterdam - Berlin
+insert into viajes values ("16", "2017-07-09", "V", 20, "5:00pm", "8:00pm", 400, "A4", "2004");
+insert into viajes values ("17", "2017-07-05", "M", 10, "09:00am", "12:00am", 350, "A5", "1005"); -- SJ - orlando
+insert into viajes values ("18", "2017-07-05", "M", 10, "10:00am", "01:00pm", 350, "A5", "1005");
+insert into viajes values ("19", "2017-07-05", "M", 10, "11:00am", "02:00pm", 350, "A5", "1005");
+insert into viajes values ("20", "2017-07-05", "M", 10, "12:00pm", "03:00pm", 350, "A5", "1005");
+insert into viajes values ("21", "2017-07-05", "M", 10, "01:00pm", "04:00pm", 350, "A5", "1005");
+insert into viajes values ("22", "2017-07-05", "M", 10, "02:00pm", "05:00pm", 350, "A5", "1005");
+insert into viajes values ("23", "2017-07-05", "M", 10, "03:00pm", "06:00pm", 350, "A5", "1005");
+insert into viajes values ("24", "2017-07-05", "M", 10, "04:00pm", "07:00pm", 350, "A5", "1005");
+insert into viajes values ("25", "2017-07-05", "M", 10, "05:00pm", "08:00pm", 350, "A5", "1005");
+insert into viajes values ("26", "2017-07-05", "M", 10, "06:00pm", "09:00pm", 350, "A5", "1005");
+insert into viajes values ("27", "2017-07-05", "M", 10, "07:00pm", "10:00pm", 350, "A5", "1005");
+insert into viajes values ("28", "2017-07-05", "M", 10, "08:00pm", "11:00pm", 350, "A5", "1005");
+insert into viajes values ("29", "2017-07-09", "M", 10, "09:00am", "12:00am", 350, "A5", "2005"); -- Orlando - SJ
+insert into viajes values ("30", "2017-07-09", "M", 10, "10:00am", "01:00pm", 350, "A5", "2005");
+insert into viajes values ("31", "2017-07-09", "M", 10, "11:00am", "02:00pm", 350, "A5", "2005");
+insert into viajes values ("32", "2017-07-09", "M", 10, "12:00pm", "03:00pm", 350, "A5", "2005");
+insert into viajes values ("33", "2017-07-09", "M", 10, "01:00pm", "04:00pm", 350, "A5", "2005");
+insert into viajes values ("34", "2017-07-09", "M", 10, "02:00pm", "05:00pm", 350, "A5", "2005");
+insert into viajes values ("35", "2017-07-09", "M", 10, "03:00pm", "06:00pm", 350, "A5", "2005");
+insert into viajes values ("36", "2017-07-09", "M", 10, "04:00pm", "07:00pm", 350, "A5", "2005");
+insert into viajes values ("37", "2017-07-09", "M", 10, "05:00pm", "08:00pm", 350, "A5", "2005");
+insert into viajes values ("38", "2017-07-09", "M", 10, "06:00pm", "09:00pm", 350, "A5", "2005");
+insert into viajes values ("39", "2017-07-09", "M", 10, "07:00pm", "10:00pm", 350, "A5", "2005");
+insert into viajes values ("40", "2017-07-09", "M", 10, "08:00pm", "11:00pm", 350, "A5", "2005");

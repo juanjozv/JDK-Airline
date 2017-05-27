@@ -24,8 +24,9 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!-- JS propio -->
-        <script type="text/javascript" src="js/Avion.js"></script>
         <script type="text/javascript" src="js/Ciudad.js"></script>
+        <script type="text/javascript" src="js/TipoAvion.js"></script>    
+        <script type="text/javascript" src="js/Avion.js"></script>
         <script type="text/javascript" src="js/Vuelo.js"></script>
         <script type="text/javascript" src="js/Viaje.js"></script>
         <script type="text/javascript" src="js/Proxy.js"></script>
@@ -189,10 +190,10 @@
                     orderable: false
                 },
                 {
-                    orderable: true
+                    orderable: false
                 },
                 {
-                    orderable: true
+                    orderable: false
                 },
                 {
                     orderable: true
@@ -226,7 +227,7 @@
         td.appendChild(document.createTextNode(viaje.fecha + " " + viaje.horaSalida + " - " + viaje.horaLlegada));
         tr.appendChild(td);
         td = document.createElement("td");
-        td.appendChild(document.createTextNode(vuelo.distancia + " " + vuelo.duracion));
+        td.appendChild(document.createTextNode(vuelo.distancia + "Km - " + vuelo.duracion +"h"));
         tr.appendChild(td);
         td = document.createElement("td");
         td.appendChild(document.createTextNode(viaje.precio));
