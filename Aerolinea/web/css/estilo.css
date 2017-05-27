@@ -112,7 +112,6 @@ body {
 
 .tituloOferta{
     font-family: 'Lato', serif; /*poner otra fuente*/
-    font-style: bold;
     font-size: 40px;
     padding-top: 10%;
     font-size: 400%;
@@ -243,8 +242,8 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 }
 
 #Eliminar:hover, #Modificar:hover{
-  width: 15%;
-  height: 15%;
+  width: 33px;
+  height: 33px;
 }
 .container{
     text-align: center;

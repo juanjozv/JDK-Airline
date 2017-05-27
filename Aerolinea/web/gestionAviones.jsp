@@ -1,21 +1,10 @@
-<%-- 
-    Document   : gestionFlota
-    Created on : 23/05/2017, 07:56:02 PM
-    Author     : Dani
---%>
-<%-- 
-    Document   : gestionHorarios
-    Created on : 23/05/2017, 07:21:55 PM
-    Author     : Dani
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="images/icon.png" />
-        <title> JDK Aerolinea Busqueda </title>
+        <title> JDK Aerolinea Gestión </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,14 +18,22 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
-              <!-- CSS propio -->
-              <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
+        <!-- CSS propio -->
+        <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
+        <!-- JS propio -->
+        <script type="text/javascript" src="js/Ciudad.js"></script>
+        <script type="text/javascript" src="js/Avion.js"></script>
+        <script type="text/javascript" src="js/TipoAvion.js"></script>
+        <script type="text/javascript" src="js/Vuelo.js"></script>
+        <script type="text/javascript" src="js/Viaje.js"></script>
+        <script type="text/javascript" src="js/Proxy.js"></script>
+        <script type="text/javascript" src="js/JsonUtils.js"></script>
+        <%@ include file="header.jspf" %>
 
     </head>
     <body>
-        <%@ include file="header.jspf" %>
         <br><br><br>
         <div class="container">
             <h1>Gestión de flota de aviones</h1>
@@ -59,28 +56,26 @@
         <br><br><br>
         <div class="container">
             <div class="table-responsive">
-                <table id="tablaFlota" class="table-striped">
+                <table id="tablaAviones" class="table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Ruta</th>
-                            <th>Horario</th>
+<!--                            <th>Ruta</th>
+                            <th>Horario</th>-->
                             <th>Tipo de avión</th>
+                            <th>Modificar/Eliminar
                         </tr>
                     </thead>
-                    <tbody id="listaFlota">
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th></tr>
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th></tr>
-                    </tbody>
+                    <tbody id="listaAviones"></tbody>
                 </table>
                 <br><br>
             </div>
         </div>
 
-        <div id="registrarFlotaModal" class="modal">
+        <div id="registrarAvionesModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="cerrarRegistrarFlota" id="close">&times;</span> 
+                    <span class="cerrarRegistrarAviones" id="close">&times;</span> 
                     <center><h2>Registrar un avión en la flota</h2></center>
                 </div>
                 <div class="modal-body">
@@ -91,7 +86,7 @@
                             <input id="idAvionF" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
                         </div>
                         <br>
-                        <div class="input-group">
+<!--                        <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
                             <select class="form-control" id="rutaAvion">
                                 <option selected disabled>Seleccione la ruta</option>
@@ -104,7 +99,7 @@
                                 <option selected disabled>Seleccione el horario</option>
                             </select>
                         </div>
-                        <br>
+                        <br>-->
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
                             <select class="form-control" id="tipoAvion">
@@ -112,8 +107,8 @@
                             </select>
                         </div>
                         <br>
-                        <center><div class="btn-group btn-group-lg" id="registrarEnFlota">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarEnFlota">Registrar</button>
+                        <center><div class="btn-group btn-group-lg" id="registrarAviones">
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarAviones">Registrar</button>
                             </div></center>
                         <br>
                     </form>       
@@ -139,26 +134,48 @@
 
 <script>
     //Modelo
-    function GestionFlotaModelo() {
-        this.GestionFlotaModelo();
+    function GestionAvionesModelo() {
+        this.GestionAvionesModelo();
+        this.aviones;
+        this.tipos;
     }
-    GestionFlotaModelo.prototype = {
-        GestionFlotaModelo: function () {}
+    GestionAvionesModelo.prototype = {
+        GestionAvionesModelo: function () {}
     };
 </script>
 
 <script>
     //Control
-    function GestionFlotaModelo(modelo, vista) {
-        this.GestionFlotaModelo(modelo, vista);
+    function GestionAvionesControl(modelo, vista) {
+        this.GestionAvionesControl(modelo, vista);
     }
 
-    GestionFlotaModelo.prototype = {
-        GestionFlotaModelo function(modelo, vista) {
+    GestionAvionesControl.prototype = {
+        GestionAvionesControl: function (modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
+            this.obtenerAviones();
+            this.obtenerTipos();
+        },
+        obtenerAviones: function () {
+            var model = this.modelo;
+            var vista = this.vista;
+            Proxy.getAviones(function (result) {
+                model.aviones = result;
+                vista.listarAviones(model.aviones);
+                vista.crearTablaAviones();
+            });
+        },
+        obtenerTipos: function () { 
+            //Para llenar el select del formulario
+            var modelo = this.modelo;
+            var vista = this.vista;
+            Proxy.getTiposAvion(function (result) {
+                modelo.tipos = result;
+                vista.cargarTipos();
+            });
         }
-    }
+    };
 </script>
 
 <script>
@@ -167,28 +184,32 @@
     var controlador;
 
     function cargarPagina(event) {
-        modelo = new GestionFlotaModelo();
-        controlador = new GestionFlotaModelo(modelo, window);
-        //----------------Mover esto de aquí----------------
-        var modal = document.getElementById('registrarFlotaModal');
+        modelo = new GestionAvionesModelo();
+        controlador = new GestionAvionesControl(modelo, window);
+        initModal();
+    }
+
+    function initModal() {
+        var modal = document.getElementById('registrarAvionesModal');
         var btn = document.getElementById("btnAgregarUnidad");
-        var close = document.getElementsByClassName("cerrarRegistrarFlota")[0];
+        var close = document.getElementsByClassName("cerrarRegistrarAviones")[0];
 
         btn.onclick = function () {
             modal.style.display = "block";
-        }
-
+        };
         close.onclick = function () {
             modal.style.display = "none";
-        }
-
+        };
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
+        };
+    }
 
-        var table = $("#tablaFlota").DataTable({
+
+    function crearTablaAviones() {
+        var table = $("#tablaAviones").DataTable({
             bFilter: false,
             lengthChange: false,
             pageLength: 10,
@@ -196,18 +217,6 @@
                 sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
             columns: [{
-                    orderable: false
-                },
-                {
-                    orderable: true
-                },
-                {
-                    orderable: false
-                },
-                {
-                    orderable: true
-                },
-                {
                     orderable: true
                 },
                 {
@@ -215,28 +224,74 @@
                 },
                 {
                     orderable: false
-                },
+                }
             ],
             order: [
-                [1, 'asc']
+                [2, 'asc']
             ]
         });
     }
     
-    
-    function cargarSelects() {
-            for (var i = 0; i < modelo.flota.length; i++) {
-                var name = modelo.flota[i].nombre;
-                $('#rutaAvion').append($('<option>', {
-                    value: name,
-                    text: name
-                }));
-                $('#sel2').append($('<option>', {
-                    value: name,
-                    text: name
+    function cargarTipos(){
+        for (var i = 0; i < modelo.tipos.length; i++) {
+                var cod = modelo.tipos[i].codigo;
+                var mar = modelo.tipos[i].marca;
+                var mod = modelo.tipos[i].modelo;
+                var opcion = cod + " - " + mar + " " + mod;
+                $('#tipoAvion').append($('<option>', {
+                    value: opcion,
+                    text: opcion
                 }));
             }
     }
-        
+
+
+    function listarAviones(aviones) {
+        var listaAviones = document.getElementById("listaAviones");
+        listaAviones.innerHTML = "";
+        for (var i = 0; i < aviones.length; i++) {
+            crearListaAviones(listaAviones, aviones[i]);
+        }
+    }
+
+    function crearListaAviones(listaAviones, avion) {
+        var tr = document.createElement("tr");
+        var td;
+
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(avion.codigo));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(avion.tipoAvion.codigo));
+        tr.appendChild(td);
+   
+        td = document.createElement("td");
+        img = document.createElement("img");
+        img.src = "images/modificar.png";
+        img.id = "Modificar";
+        img.title = "Modificar";
+        img.addEventListener("click", function (e) {
+            window.alert("Modificar");
+        });
+        img.width = "30";
+        img.height = "30";
+        td.appendChild(img);
+
+        img = document.createElement("img");
+        img.src = "images/eliminar.png";
+        img.id = "Eliminar";
+        img.title = "Eliminar";
+        img.addEventListener("click", function (e) {
+            window.alert("Eliminar");
+        });
+        img.width = "30";
+        img.height = "30";
+        td.appendChild(img);
+        tr.appendChild(td);
+
+        listaAviones.appendChild(tr);
+    }
+
+
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>

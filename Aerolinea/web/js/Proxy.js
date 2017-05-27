@@ -74,7 +74,7 @@ Proxy.getViajes = function (callback) {
 
 Proxy.getAviones = function (callback) {
     var AJAX_req = new XMLHttpRequest();
-    url = "/Aerolinea/AerolineaService?action=listAviones";
+    url = "/Aerolinea/AerolineaService?action=avionesListAll";
     AJAX_req.open("POST", url, true);
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     AJAX_req.onreadystatechange = function () {

@@ -19,11 +19,11 @@ public class Avion implements Jsonable {
         this.codigo = codigo;
     }
 
-    public TipoAvion getTipo() {
+    public TipoAvion getTipoAvion() {
         return tipoAvion;
     }
 
-    public void setTipo(TipoAvion tipoAvion) {
+    public void setTipoAvion(TipoAvion tipoAvion) {
         this.tipoAvion = tipoAvion;
     }
    

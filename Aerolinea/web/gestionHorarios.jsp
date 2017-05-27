@@ -1,9 +1,3 @@
-<%-- 
-    Document   : gestionHorarios
-    Created on : 23/05/2017, 07:21:55 PM
-    Author     : Dani
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -63,6 +57,7 @@
                             <th>Hora salida</th>
                             <th>Hora llegada</th>
                             <th>Precio</th>
+                            <th>Modificar/Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaHorarios">
@@ -139,6 +134,7 @@
     //Modelo
     function GestionHorariosModelo() {
         this.GestionHorariosModelo();
+        this.horarios;
     }
     GestionHorariosModelo.prototype = {
         GestionHorariosModelo: function () {}
@@ -155,37 +151,55 @@
         GestionHorariosModelo function(modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
+            this.obtenerHorarios();
+        },
+        obtenerHorarios: function () {
+            var modelo = this.modelo;
+            var vista = this.vista;
+            Proxy.getViajes(function (result) {
+                modelo.horarios = result;
+                vista.listarHorarios(modelo.horarios);
+                vista.crearTablaHorarios();
+            });
+        },
+        modificarHorario: function(){
+            
         }
-    }
+    };
 </script>
 
 <script>
-    //Vista
+   //Vista
     var modelo;
     var controlador;
 
     function cargarPagina(event) {
         modelo = new GestionHorariosModelo();
-        controlador = new GestionHorariosModelo(modelo, window);
-        //----------------Mover esto de aquí----------------
+        controlador = new GestionHorariosControl(modelo, window);
+        initModal();
+    }
+
+
+    function initModal() {
         var modal = document.getElementById('registrarHorarioModal');
         var btn = document.getElementById("btnAgregarHorario");
         var close = document.getElementsByClassName("cerrarRegistrarHorarios")[0];
 
         btn.onclick = function () {
             modal.style.display = "block";
-        }
+        };
 
         close.onclick = function () {
             modal.style.display = "none";
-        }
+        };
 
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
-
+        };
+    }
+    function crearTablaHorarios() {
         var table = $("#tablaHorarios").DataTable({
             bFilter: false,
             lengthChange: false,
@@ -194,9 +208,6 @@
                 sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
             columns: [{
-                    orderable: false
-                },
-                {
                     orderable: true
                 },
                 {
@@ -212,13 +223,77 @@
                     orderable: true
                 },
                 {
-                    orderable: false
+                    orderable: true
                 },
+                {
+                    orderable: false
+                }
             ],
             order: [
-                [1, 'asc']
+                [5, 'asc']
             ]
         });
     }
+
+    function listarHorarios(horarios) {
+        var listaHorarios = document.getElementById("listaHorarios");
+        listaHorarios.innerHTML = "";
+        for (var i = 0; i < horarios.length; i++) {
+            crearListaHorarios(listaHorarios, horarios[i]);
+        }
+    }
+
+    function crearListaHorarios(listaHorarios, horario) {
+        //horario = viaje
+        var tr = document.createElement("tr");
+        var td;
+
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.codigo));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.vuelo.origen.nombre + "-" + horario.vuelo.destino.nombre)); //ruta
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.dia));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.horaSalida));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.horaLlegada));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(horario.precio));
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        img = document.createElement("img");
+        img.src = "images/modificar.png";
+        img.id = "Modificar";
+        img.title = "Modificar";
+        img.addEventListener("click", function (e) {
+            window.alert("Modificar");
+        });
+        img.width = "30";
+        img.height = "30";
+        td.appendChild(img);
+
+        img = document.createElement("img");
+        img.src = "images/eliminar.png";
+        img.id = "Eliminar";
+        img.title = "Eliminar";
+        img.addEventListener("click", function (e) {
+            window.alert("Eliminar");
+        });
+        img.width = "30";
+        img.height = "30";
+        td.appendChild(img);
+        tr.appendChild(td);
+
+        listaHorarios.appendChild(tr);
+    }
+
+
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>

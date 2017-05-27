@@ -1,10 +1,10 @@
-function Avion(codigo, tipo) {
-  this.Avion(codigo, tipo);
+function Avion(codigo, tipoAvion) {
+  this.Avion(codigo, tipoAvion);
 }
 
 Avion.prototype = {
-  Avion: function(codigo, tipo) {
+  Avion: function(codigo, tipoAvion) {
     this.codigo = codigo;
-    this.tipo = tipo;
+    this.tipoAvion = tipoAvion;
     }
-}
+};

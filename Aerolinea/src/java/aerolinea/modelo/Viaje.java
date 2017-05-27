@@ -13,11 +13,11 @@ public class Viaje implements Jsonable{
     
     public Viaje() {}
 
-    public Viaje(String codigo, String fecha, String dia, int cantAsientOcup, String horaSalida, String horaLlegada, float precio, Avion avion, Vuelo vuelo) {
+    public Viaje(String codigo, String fecha, String dia, String horaSalida, String horaLlegada, float precio, Avion avion, Vuelo vuelo) {
         this.codigo = codigo;
         this.fecha = fecha;
         this.dia = dia;
-        this.cantAsientOcup = cantAsientOcup;
+        this.cantAsientOcup = 0;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
         this.precio = precio;

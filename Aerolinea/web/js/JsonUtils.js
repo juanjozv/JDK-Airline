@@ -4,11 +4,11 @@ JsonUtils.revive = function (k, v) {
     if(v instanceof Object && v._class == 'Ciudad') {
         return new Ciudad(v.codigo, v.nombre, v.pais, v.zonaHoraria);
     }
-    if(v instanceof Object && v._class == 'TipoAvion') {
+    if(v instanceof Object && v._class == 'TipoAvion'){
         return new TipoAvion(v.codigo, v.annio, v.marca, v.modelo, v.cantidadPasajeros, v.cantidadFilas, v.cantidadAsientosFila);
     }
     if(v instanceof Object && v._class == 'Avion'){
-        return new Avion(v.codigo, v.tipo);
+        return new Avion(v.codigo, v.tipoAvion);
     }
     if(v instanceof Object && v._class == 'Vuelo'){
         return new Vuelo(v.codigo, v.origen, v.destino, v.distancia, v.duracion, v.descuento, v.avion);

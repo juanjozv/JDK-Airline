@@ -113,8 +113,7 @@ public class AerolineaModelo {
         List<Avion> aviones;
         aviones = new ArrayList();
         try {
-            //String sql = "select * from aviones av inner join tiposAvion ta on av.tipoAvion = ta.codigo";
-            String sql = "select * from tiposavion;";
+            String sql = "select * from aviones;";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
                 aviones.add(toAvion(rs));
@@ -285,7 +284,7 @@ public class AerolineaModelo {
     private static Avion toAvion(ResultSet rs) throws Exception {
         Avion obj = new Avion();
         obj.setCodigo(rs.getString("codigo"));
-        obj.setTipo(getTipoAvion(rs.getString("tipoAvion")));
+        obj.setTipoAvion(getTipoAvion(rs.getString("tipoAvion")));
         return obj;
     }
     

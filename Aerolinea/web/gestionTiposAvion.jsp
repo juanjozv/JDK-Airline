@@ -198,15 +198,6 @@
 
             var tipo = new TipoAvion(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFila);
             Proxy.tipoAvionAdd(tipo, function (result) {
-                switch (result) {
-                    case 0:
-                        window.alert("Tipo de avión agregado");
-                        this.obtenerTiposAvion();
-                        break;
-                    case 1:
-                        window.alert("Error ingresando el tipo de avión");
-                        break;
-                }
             });
         },
         modificarTipoAvion: function () {

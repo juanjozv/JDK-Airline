@@ -81,6 +81,12 @@ public class AerolineaService extends HttpServlet {
                     out.write(json);
                     System.out.print(json);
                     break;
+                case "avionesListAll":
+                    aviones = AerolineaModelo.getAvionesAll();
+                    json = gson.toJson(aviones);
+                    out.write(json);
+                    System.out.print(json);
+                    break;
                 case "tiposAvionListAll":
                     tipos = AerolineaModelo.getTiposAvionAll();
                     json = gson.toJson(tipos);
@@ -91,15 +97,15 @@ public class AerolineaService extends HttpServlet {
                     break;
                 case "tipoAvionAdd":
                     json = request.getParameter("tipoAvion");
-                    TipoAvion tipoAdd= gson.fromJson(json, TipoAvion.class);
-                    int inserted = AerolineaModelo.tipoAvionAdd(tipoAdd); 
-                    out.write((inserted==1)?"0":"1");
+                    TipoAvion tipoAdd = gson.fromJson(json, TipoAvion.class);
+                    int inserted = AerolineaModelo.tipoAvionAdd(tipoAdd);
+                    out.write((inserted == 1) ? "0" : "1");
                     break;
                 case "agregarUsuario":
                     json = request.getParameter("usuario");
                     Usuario usuarioAdd = gson.fromJson(json, Usuario.class);
-                    int miInsertado = AerolineaModelo.usuarioAdd(usuarioAdd); 
-                    out.write((miInsertado==1)?"0":"1");
+                    int miInsertado = AerolineaModelo.usuarioAdd(usuarioAdd);
+                    out.write((miInsertado == 1) ? "0" : "1");
                     break;
             }
         } catch (Exception e) {
