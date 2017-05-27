@@ -29,7 +29,8 @@ public class AerolineaService extends HttpServlet {
                     .registerSubtype(TipoAvion.class, "TipoAvion")
                     .registerSubtype(Avion.class, "Avion")
                     .registerSubtype(Vuelo.class, "Vuelo")
-                    .registerSubtype(Viaje.class, "Viaje");
+                    .registerSubtype(Viaje.class, "Viaje")
+                    .registerSubtype(Usuario.class, "Usuario");
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             String json;
             String accion = request.getParameter("action");
@@ -93,7 +94,13 @@ public class AerolineaService extends HttpServlet {
                     TipoAvion tipoAdd= gson.fromJson(json, TipoAvion.class);
                     int inserted = AerolineaModelo.tipoAvionAdd(tipoAdd); 
                     out.write((inserted==1)?"0":"1");
-                    break; 
+                    break;
+                case "agregarUsuario":
+                    json = request.getParameter("usuario");
+                    Usuario usuarioAdd = gson.fromJson(json, Usuario.class);
+                    int miInsertado = AerolineaModelo.usuarioAdd(usuarioAdd); 
+                    out.write((miInsertado==1)?"0":"1");
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);

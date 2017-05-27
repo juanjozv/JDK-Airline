@@ -142,3 +142,17 @@ Proxy.tipoAvionAdd = function (tipoAvion, callBack) {
     };
     AJAX_req.send("tipoAvion=" + jsonTipoAvion);
 };
+
+Proxy.UsuarioAdd = function (Usuario, callBack) {
+    var jsonUsuario = JSON.stringify(Usuario, JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=agregarUsuario";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+                callBack(0);
+        }
+    };
+    AJAX_req.send("usuario=" + jsonUsuario);
+};

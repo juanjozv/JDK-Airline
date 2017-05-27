@@ -33,7 +33,7 @@ public class Usuario implements Jsonable{
         this.username = username;
     }
 
-    public String getContraseña() {
+    public String getPassword() {
         return password;
     }
 

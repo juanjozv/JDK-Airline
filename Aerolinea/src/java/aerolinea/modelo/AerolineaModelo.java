@@ -224,16 +224,6 @@ public class AerolineaModelo {
     }
     
     
-    /*public static List<Viaje> getViajesBusqueda(String origen, String destino, String fecha, String cantAsientOcup) {
-        ArrayList<Viaje> result = new ArrayList();
-        for(Viaje v: getViajesAll()) {
-           int cantAsientos =  Integer.parseInt(cantAsientOcup);
-            if(v.getVuelo().getOrigen().getNombre().contains(origen) && v.getVuelo().getDestino().getNombre().contains(destino) &&
-                    v.getFecha().contains(fecha) && v.getCantAsientOcup()  >= cantAsientos )
-                result.add(v);
-        }
-        return result;
-    }*/
     public static List<Viaje> getViajesBusqueda(String origen, String destino, String fecha, String cantAsientOcup) throws ParseException, Exception {
         List<Viaje> result;
         result = new ArrayList();
@@ -255,6 +245,18 @@ public class AerolineaModelo {
             System.out.println("Error en obtener viajes");
         }
         return result;
+    }
+    
+    //Agregar metodos del usuario all, getUsuario, toUsuario
+    public static int usuarioAdd(Usuario user) throws Exception {
+        //Validar el formato de la fecha
+        
+        String sql = "insert into usuarios "
+                + "(username, password, nombre, apellidos, email, fechaNacimiento, direccion, telefono, celular) "
+                + "values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+        sql = String.format(sql, user.getUsername(), user.getPassword(), user.getNombre(), user.getApellidos(), user.getEmail(), 
+                user.getFechaNacimiento(), user.getDireccion(), user.getTelefono(), user.getCelular());
+        return aerolinea.executeUpdate(sql);
     }
     
     

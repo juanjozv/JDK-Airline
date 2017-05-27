@@ -16,6 +16,10 @@ JsonUtils.revive = function (k, v) {
     if(v instanceof Object && v._class == 'Viaje'){
         return new Viaje(v.codigo, v.fecha, v.dia, v.cantAsientOcup, v.horaSalida, v.horaLlegada, v.precio, v.avion, v.vuelo);
     }
+    if(v instanceof Object && v._class == 'Usuario'){
+        return new Usuario(v.username, v.password, v.nombre, v.apellidos, v.email, v.fechaNacimiento, v.direccion, v.telefono, v.celular);
+    }
+    
     return v;
 };
 
@@ -34,6 +38,9 @@ JsonUtils.replacer = function (k, v){
     }
     if(v instanceof Viaje){
         v._class = "Viaje";
+    }
+    if(v instanceof Usuario){
+        v._class = "Usuario";
     }
     
     return v;
