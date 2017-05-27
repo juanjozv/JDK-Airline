@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Roboto|Sanchez|Lobster+Two|Satisfy|Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
         <!-- CSS propio -->
         <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
@@ -119,7 +119,7 @@
                         </div>
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarAvion">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarAvion">Registrar</button>
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarAvion" onclick="controlador.agregarTipoAvion();">Registrar</button>
                             </div></center>
                         <br>
                     </form>       
@@ -147,7 +147,8 @@
     //Modelo
     function GestionTiposAvionModelo() {
         this.GestionTiposAvionModelo();
-        this.aviones;
+        this.tiposAvion;
+        this.tipo;
     }
     GestionTiposAvionModelo.prototype = {
         GestionTiposAvionModelo: function () {}
@@ -167,22 +168,51 @@
             this.obtenerTiposAvion();
         },
         obtenerTiposAvion: function () {
-            var modelo = this.modelo;
+            var model = this.modelo;
             var vista = this.vista;
             Proxy.getTiposAvion(function (result) {
-                modelo.aviones = result;
-                vista.listarAviones(modelo.aviones, "listaAviones");
-                vista.crearTablaAviones("#tablaAviones");
+                model.tiposAvion = result;
+                vista.listarAviones(model.tiposAvion);
+                vista.crearTablaAviones();
             });
         },
-        buscarTipoAvion: function (codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFilas) {
-            var modelo = this.modelo;
+//        buscarTipoAvion: function (codigo) {
+//            var model = this.modelo;
+//            var vista = this.vista;
+//            Proxy.tipoAvionSearch(codigo, function (result) {
+//                modelo.tiposAvion = result;
+//                vista.listarAviones(modelo.tiposAvion, "listaAviones");
+//                vista.crearTablaAviones("#tablaAviones");
+//            });
+//        },
+        agregarTipoAvion: function () {
             var vista = this.vista;
-            Proxy.tipoAvionSearch(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFilas, function (result) {
-                modelo.avion = result;
+            var model = this.modelo;
+            var codigo = document.getElementById("idAvionA").value;
+            var annio = document.getElementById("añoAvion").value;
+            var marca = document.getElementById("marcaAvion").value;
+            var modelo = document.getElementById("modeloAvion").value;
+            var cantidadPasajeros = parseInt(document.getElementById("pasajerosAvion").value);
+            var cantidadFilas = parseInt(document.getElementById("filasAvion").value);
+            var cantidadAsientosFila = parseInt(document.getElementById("asientosAvion").value);
+
+            var tipo = new TipoAvion(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFila);
+            Proxy.tipoAvionAdd(tipo, function (result) {
+                switch (result) {
+                    case 0:
+                        window.alert("Tipo de avión agregado");
+                        this.obtenerTiposAvion();
+                        break;
+                    case 1:
+                        window.alert("Error ingresando el tipo de avión");
+                        break;
+                }
             });
+        },
+        modificarTipoAvion: function () {
+
         }
-    }
+    };
 </script>
 
 <script>
@@ -198,8 +228,8 @@
         formulario.reset();
         formulario.addEventListener("submit", validar);
     }
-    
-    function initModal(){
+
+    function initModal() {
         var modal = document.getElementById('registrarAvionModal');
         var btn = document.getElementById("btnAgregarAvion");
         var close = document.getElementsByClassName("cerrarRegistrarAviones")[0];
@@ -218,27 +248,15 @@
             }
         };
     }
-    function doSubmit() {
-        var codigo = document.getElementById("idAvionA");
-        var annio = document.getElementById("añoAvion");
-        var marca = document.getElementById("marcaAvion");
-        var modelo = document.getElementById("modeloAvion");
-        var cantPasajeros = document.getElementById("pasajerosAvion");
-        var cantFilas = document.getElementById("filasAvion");
-        var cantAsientosFila = document.getElementById("asientosAvion");
-
-        controlador.buscarTipoAvion(codigo, annio, marca, modelo, cantPasajeros, cantFilas, cantAsientosFila);
-
-    }
 
     function validar(event) {
-        var codigo = document.getElementById("idAvionA");
-        var annio = document.getElementById("añoAvion");
-        var marca = document.getElementById("marcaAvion");
-        var modelo = document.getElementById("modeloAvion");
-        var cantPasajeros = document.getElementById("pasajerosAvion");
-        var cantFilas = document.getElementById("filasAvion");
-        var cantAsientosFila = document.getElementById("asientosAvion");
+        var codigo = document.getElementById("idAvionA").value;
+        var annio = document.getElementById("añoAvion").value;
+        var marca = document.getElementById("marcaAvion").value;
+        var modelo = document.getElementById("modeloAvion").value;
+        var cantPasajeros = parseInt(document.getElementById("pasajerosAvion").value);
+        var cantFilas = parseInt(document.getElementById("filasAvion").value);
+        var cantAsientosFila = parseInt(document.getElementById("asientosAvion").value);
         var error = false;
 
         codigo.classList.remove("invalid");
@@ -281,19 +299,14 @@
             error = true;
         }
 
-
         if (error) {
             window.alert("Error: Espacios vacios");
-            event.preventDefault();
-        } else if (buscarAvion(codigo.value)) {
-            codigo.classList.add("invalid");
-            window.alert("Error: El código ingresado ya existe.");
             event.preventDefault();
         }
     }
 
-    function crearTablaAviones(tabla) {
-        var table = $(tabla).DataTable({
+    function crearTablaAviones() {
+        var table = $("#tablaAviones").DataTable({
             bFilter: false,
             lengthChange: false,
             pageLength: 10,
@@ -331,8 +344,8 @@
         });
     }
 
-    function listarAviones(aviones, lista) {
-        var listaAviones = document.getElementById(lista);
+    function listarAviones(aviones) {
+        var listaAviones = document.getElementById("listaAviones");
         listaAviones.innerHTML = "";
         for (var i = 0; i < aviones.length; i++) {
             crearListaAviones(listaAviones, aviones[i]);
@@ -368,6 +381,7 @@
         td = document.createElement("td");
         img = document.createElement("img");
         img.src = "images/modificar.png";
+        img.id = "Modificar";
         img.title = "Modificar";
         img.addEventListener("click", function (e) {
             window.alert("Modificar");
@@ -378,6 +392,7 @@
 
         img = document.createElement("img");
         img.src = "images/eliminar.png";
+        img.id = "Eliminar";
         img.title = "Eliminar";
         img.addEventListener("click", function (e) {
             window.alert("Eliminar");

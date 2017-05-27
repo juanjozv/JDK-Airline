@@ -86,6 +86,14 @@ public class AerolineaService extends HttpServlet {
                     out.write(json);
                     System.out.print(json);
                     break;
+                case "tiposAvionSearch":
+                    break;
+                case "tipoAvionAdd":
+                    json = request.getParameter("tipoAvion");
+                    TipoAvion tipoAdd= gson.fromJson(json, TipoAvion.class);
+                    int inserted = AerolineaModelo.tipoAvionAdd(tipoAdd); 
+                    out.write((inserted==1)?"0":"1");
+                    break; 
             }
         } catch (Exception e) {
             System.out.println(e);

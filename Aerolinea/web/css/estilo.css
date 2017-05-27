@@ -242,6 +242,10 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
     width: 50%;
 }
 
+#Eliminar:hover, #Modificar:hover{
+  width: 15%;
+  height: 15%;
+}
 .container{
     text-align: center;
 }

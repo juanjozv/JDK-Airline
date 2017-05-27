@@ -128,3 +128,17 @@ Proxy.tipoAvionSearch = function(codigo, annio, marca, modelo, cantidadPasajeros
 	AJAX_req.send("codigo=" + codigo + "&annio=" + annio + "&marca=" + marca + "&modelo=" + modelo
                 + "&cantidadPasajeros=" + cantidadPasajeros + "&cantidadFilas=" + cantidadFilas + "&cantidadAsientosFila=" + cantidadAsientosFila);
 };
+
+Proxy.tipoAvionAdd = function (tipoAvion, callBack) {
+    var jsonTipoAvion = JSON.stringify(tipoAvion, JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=tipoAvionAdd";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+                callBack(0);
+        }
+    };
+    AJAX_req.send("tipoAvion=" + jsonTipoAvion);
+};

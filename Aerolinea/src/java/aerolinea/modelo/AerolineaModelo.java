@@ -79,9 +79,18 @@ public class AerolineaModelo {
                 tipos.add(toTipoAvion(rs));
             }
         } catch (SQLException ex) {
-            System.out.println("Error obteniendo las tiposAvion");
+            System.out.println("Error obteniendo los tiposAvion");
         }
         return tipos;
+    }
+    
+    public static int tipoAvionAdd(TipoAvion tipo) throws Exception {
+        String sql = "insert into TiposAvion "
+                + "(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFila) "
+                + "values ('%s','%s','%s','%s',%d,%d,%d)";
+        sql = String.format(sql, tipo.getCodigo(), tipo.getAnnio(), tipo.getMarca(), tipo.getModelo(),
+                            tipo.getCantidadPasajeros(), tipo.getCantidadFilas(), tipo.getCantidadAsientosFila());
+        return aerolinea.executeUpdate(sql);
     }
     
     public static TipoAvion getTipoAvion(String codigo) throws Exception{ //Va a obtener sola mente un tipoAvion
@@ -111,7 +120,7 @@ public class AerolineaModelo {
                 aviones.add(toAvion(rs));
             }
         } catch (SQLException ex) {
-            System.out.println("Error obteniendo las aviones");
+            System.out.println("Error obteniendo los aviones");
         }
         return aviones;
     }
