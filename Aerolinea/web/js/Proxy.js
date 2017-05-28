@@ -156,3 +156,33 @@ Proxy.UsuarioAdd = function (Usuario, callBack) {
     };
     AJAX_req.send("usuario=" + jsonUsuario);
 };
+
+Proxy.addVuelo = function(vuelo,callBack){
+    var jsonVuelo = JSON.stringify(vuelo,JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest(); 
+    url="/Aerolinea/AerolineaService?action=vueloAdd";
+    AJAX_req.open("POST", url, true );
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");      
+    AJAX_req.onreadystatechange = function(){
+        if( AJAX_req.readyState === 4 && AJAX_req.status === 200 ){
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        } 
+    };
+    AJAX_req.send("vuelo=" + jsonVuelo); 
+};
+
+Proxy.modifyVuelo = function(vuelo,callBack){
+    var jsonVuelo = JSON.stringify(vuelo,JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest(); 
+    url="/Aerolinea/AerolineaService?action=vueloModify";
+    AJAX_req.open("POST", url, true );
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");      
+    AJAX_req.onreadystatechange = function(){
+        if( AJAX_req.readyState === 4 && AJAX_req.status === 200 ){
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        } 
+    };
+    AJAX_req.send("vuelo=" + jsonVuelo); 
+};

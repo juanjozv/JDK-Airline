@@ -107,6 +107,18 @@ public class AerolineaService extends HttpServlet {
                     int miInsertado = AerolineaModelo.usuarioAdd(usuarioAdd);
                     out.write((miInsertado == 1) ? "0" : "1");
                     break;
+                case "vueloAdd":
+                    json = request.getParameter("vuelo");
+                    Vuelo vueloAdd = gson.fromJson(json, Vuelo.class);
+                    int insertedV = AerolineaModelo.addVuelo(vueloAdd); 
+                    out.write((insertedV==1)?"0":"1");
+                    break;    
+                case "vueloModify":
+                    json = request.getParameter("vuelo");
+                    Vuelo vueloMod = gson.fromJson(json, Vuelo.class);
+                    int modified = AerolineaModelo.modifyVuelo(vueloMod); 
+                    out.write((modified==1)?"0":"1");
+                    break;   
             }
         } catch (Exception e) {
             System.out.println(e);

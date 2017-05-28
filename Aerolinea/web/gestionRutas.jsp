@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="images/icon.png" />
-        <title> JDK Aerolinea Busqueda - Gestión de Rutas </title>
+        <title> JDK Aerolinea - Gestión de Rutas </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,11 +29,12 @@
         <script type="text/javascript" src="js/Avion.js"></script>
         <script type="text/javascript" src="js/Vuelo.js"></script>
         <script type="text/javascript" src="js/Viaje.js"></script>
-        <script type="text/javascript" src="js/Proxy.js"></script>
+        <script type="text/javascript" src="js/Usuario.js"></script>
         <script type="text/javascript" src="js/JsonUtils.js"></script>
+        <script type="text/javascript" src="js/Proxy.js"></script>
 
         <%@ include file="header.jspf" %>
-        
+
     </head>
     <body>
         <br><br><br>
@@ -42,9 +43,9 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarRuta" type="text" class="form-control" placeholder="Buscar ruta por ID">
+                    <input id="buscarRuta" type="text" class="form-control" placeholder = "Buscar ruta por ciudad">
                     <span class = "input-group-btn">
-                        <button class = "btn btn-default" type = "button">
+                        <button class = "btn btn-default" type = "button" onclick ="controlador.buscarRuta();">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
@@ -81,14 +82,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="cerrarRegistrarRutas" id="close">&times;</span> 
-                    <center><h2>Registrar una ruta</h2></center>
+                    <center><h2>Agregar una ruta</h2></center>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="formRuta">
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idRuta" type="text" class="form-control" placeholder="Ingrese el identificador de la ruta">
+                            <input id="codigo" type="text" class="form-control" placeholder="Ingrese el identificador de la ruta">
                         </div>
                         <br>                        
                         <div class="input-group">
@@ -128,7 +129,7 @@
                         </div>                      
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarRuta">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarAvion">Registrar</button>
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarRuta">Agregar</button>
                             </div></center>
                         <br>
                     </form>       
@@ -163,6 +164,8 @@
                 this.modelo = modelo;
                 this.vista = vista;
                 this.obtenerRutas();
+                this.obtenerCiudades();
+                this.obtenerAviones();
             },
             obtenerRutas: function () {
                 var modelo = this.modelo;
@@ -171,8 +174,87 @@
                     modelo.rutas = result;
                     vista.listarRutas(modelo.rutas);
                     vista.crearTablaRutas();
+                });
+            },
+            obtenerCiudades: function () {
+                var modelo = this.modelo;
+                var vista = this.vista;
+                Proxy.getCiudades(function (result) {
+                    modelo.ciudades = result;
+                    vista.cargarCiudades();
+                });
+            },
+            obtenerAviones: function () {
+                var modelo = this.modelo;
+                var vista = this.vista;
+                Proxy.getAviones(function (result) {
+                    modelo.aviones = result;
+                    vista.cargarAviones();
+                });
+            },
+            agregarRuta: function(){
+                var vuelo = this.crearRuta();
+                Proxy.addVuelo(vuelo, function(status){
+                    switch(status){
+                        case 0:
+                            window.alert("Datos agregados");
+                            this.obtenerRutas();
+                            break;  
+                        case 1:
+                            window.alert("Registro duplicado");
+                            break;
+                    }
+                });
+            },
+            modificarRuta: function(){
+                var vuelo = this.crearRuta();
+                Proxy.modifyVuelo(vuelo, function(status){
+                    switch(status){
+                        case 0: 
+                            window.alert("Datos modificados");
+                            this.obtenerRutas();
+                            break;  
+                        case 1:
+                            window.alert("Error");
+                            break;
+                    }
+                });               
+            },
+            buscarRuta: function(){
+                var modelo = this.modelo;
+                var vista = this.vista;
+                var ciudad = (document.getElementById("buscarRuta").value).toLowerCase();
+                var busqueda = [];
+                for(var i = 0; i < modelo.rutas.length; i++){
+                    var orig = (modelo.rutas[i].origen.nombre).toLowerCase();
+                    var dest = (modelo.rutas[i].destino.nombre).toLowerCase();
+                    if(orig.includes(ciudad) || dest.includes(ciudad))
+                        busqueda.push(modelo.rutas[i]);
                 }
-                );
+                vista.listarRutas(busqueda);
+                vista.finBusqueda();
+            },
+            crearRuta: function(){
+                var id = document.getElementById("codigo").value;
+                var orig = this.obtenerCiudad(document.getElementById("selOrigen").value);
+                var dest = this.obtenerCiudad(document.getElementById("selDestino").value);
+                var dist = document.getElementById("distancia").value;
+                var dura = document.getElementById("duracion").value;
+                var desc = document.getElementById("descuento").value;
+                var avion = this.obtenerAvion(document.getElementById("selAvion").value);
+                return new Vuelo(id,orig,dest,dist,dura,desc,avion);                
+            },
+            obtenerCiudad: function(ciudad) {
+                var modelo = this.modelo;
+                return modelo.ciudades.find(function(c){return c.codigo == ciudad; });
+            },
+            obtenerAvion: function(avion) {
+                var modelo = this.modelo;
+                return modelo.aviones.find(function(a){return a.codigo == avion; });
+            },
+            obtenerRuta: function(ruta) {
+                var modelo = this.modelo;
+                return modelo.rutas.find(function(r){return r.codigo == ruta.codigo; });
             }
         };
     </script>
@@ -185,64 +267,59 @@
         function cargarPagina(event) {
             modelo = new GestionRutasModelo();
             controlador = new GestionRutasControl(modelo, window);
+            var modal = document.getElementById("registrarRutaModal");
+            var btn = document.getElementById("btnRegistrarRuta");
+            modal.addEventListener("submit", validar);
+            btn.onclick = function () {
+                if(btn.innerText === "Modificar")  
+                    controlador.modificarRuta();
+                if(btn.innerText === "Agregar")     
+                    controlador.agregarRuta();
+            };            
             initModal();
         }
 
         function initModal() {
-            var modal = document.getElementById('registrarRutaModal');
+            var modal = document.getElementById("registrarRutaModal");
             var btn = document.getElementById("btnAgregarRuta");
             var close = document.getElementsByClassName("cerrarRegistrarRutas")[0];
             btn.onclick = function () {
+                document.getElementById("codigo").disabled = false;
+                document.getElementById("btnRegistrarRuta").innerText = "Agregar";
+                document.getElementsByTagName("h2")[2].innerText = "Agregar una ruta";
+                document.getElementById("formRuta").reset();
+                quitarDescripciones();
                 modal.style.display = "block";
-            }
-
+            };
             close.onclick = function () {
                 modal.style.display = "none";
-            }
-
+            };
             window.onclick = function (event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
-            }
+            };
         }
 
         function crearTablaRutas() {
-            var table = $("#tablaRutas").DataTable({
+            $("#tablaRutas").DataTable({
                 bFilter: false,
                 lengthChange: false,
                 pageLength: 10,
                 oLanguage: {
                     sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 },
-                columns: [{
-                        orderable: true
-                    },
-                    {
-                        orderable: false
-                    },
-                    {
-                        orderable: false
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: false
-                    },
-                    {
-                        orderable: false
-                    }
+                columns: [
+                    {orderable: true },
+                    {orderable: false},
+                    {orderable: false},
+                    {orderable: true },
+                    {orderable: true },
+                    {orderable: true },
+                    {orderable: false},
+                    {orderable: false}
                 ],
-                order: [
-                    [0, 'asc']
-                ]
+                order: [ [0, 'asc'] ]
             });
         }
 
@@ -283,9 +360,10 @@
             td = document.createElement("td");
             img = document.createElement("img");
             img.src = "images/modificar.png";
+            img.id = "Modificar";
             img.title = "Modificar";
             img.addEventListener("click", function (e) {
-                window.alert("Modificar");
+                modificarRuta(ruta);
             });
             img.width = "30";
             img.height = "30";
@@ -293,6 +371,7 @@
 
             img = document.createElement("img");
             img.src = "images/eliminar.png";
+            img.id = "Eliminar";
             img.title = "Eliminar";
             img.addEventListener("click", function (e) {
                 window.alert("Eliminar");
@@ -303,7 +382,131 @@
             tr.appendChild(td);
             listaRutas.appendChild(tr);
         }
+        
+        function modificarRuta(ruta){
+            mostrarRuta(controlador.obtenerRuta(ruta));
+            quitarDescripciones();
+            agregarDescripciones();
+            document.getElementById("btnRegistrarRuta").innerText = "Modificar";
+            document.getElementsByTagName("h2")[2].innerText = "Modificar una ruta";
+            document.getElementById('registrarRutaModal').style.display = "block";             
+        }
+   
+        function mostrarRuta(vuelo){
+            var codigo =  document.getElementById("codigo");
+            codigo.value = vuelo.codigo;
+            codigo.disabled = true;
+            document.getElementById("selOrigen").value = vuelo.origen.codigo;
+            document.getElementById("selDestino").value = vuelo.destino.codigo;
+            document.getElementById("distancia").value = vuelo.distancia;
+            document.getElementById("duracion").value = vuelo.duracion;
+            document.getElementById("descuento").value = vuelo.descuento;
+            document.getElementById("selAvion").value = vuelo.avion.codigo;     
+        }
+        
+        function cargarCiudades() {
+            for (var i = 0; i < modelo.ciudades.length; i++) {
+                var codigo = modelo.ciudades[i].codigo;
+                var nombre = modelo.ciudades[i].nombre;
+                $('#selOrigen').append($('<option>', {
+                    value: codigo,
+                    text: nombre
+                }));
+                $('#selDestino').append($('<option>', {
+                    value: codigo,
+                    text: nombre
+                }));
+            }
+        }
+             
+        function cargarAviones() {
+            for (var i = 0; i < modelo.aviones.length; i++) {
+                var codigo = modelo.aviones[i].codigo;
+                $('#selAvion').append($('<option>', {
+                    value: codigo,
+                    text: codigo
+                }));
+            }
+        }
+        
+        function validar(event) {
+            var identificador = document.getElementById("codigo");
+            var origen = document.getElementById("selOrigen");
+            var destino = document.getElementById("selDestino");
+            var distancia = document.getElementById("distancia");
+            var duracion = document.getElementById("duracion");
+            var avion = document.getElementById("selAvion");
+            var error = false;
+            
+            identificador.classList.remove("invalid");
+            if (identificador.value.length == 0) {
+                identificador.classList.add("invalid");
+                error = true;
+            }
+            
+            origen.classList.remove("invalid");
+            if (origen.value == "Elija la ciudad de origen") {
+                origen.classList.add("invalid");
+                error = true;
+            }
 
+            destino.classList.remove("invalid");
+            if (destino.value == "Elija la ciudad de destino") {
+                destino.classList.add("invalid");
+                error = true;
+            }
+
+            distancia.classList.remove("invalid");
+            if (distancia.value.length == 0) {
+                distancia.classList.add("invalid");
+                error = true;
+            }
+
+            duracion.classList.remove("invalid");
+            if (duracion.value.length == 0) {
+                duracion.classList.add("invalid");
+                error = true;
+            }
+
+            avion.classList.remove("invalid");
+            if (avion.value == "Elija el avión encargado de la ruta") {
+                avion.classList.add("invalid");
+                error = true;
+            }
+            
+            if (error) {
+                window.alert("Error: Espacios vacios");
+                event.preventDefault();
+            } else if (origen.value == destino.value) {
+                origen.classList.add("invalid");
+                destino.classList.add("invalid");
+                window.alert("Error: Ciudades iguales");
+                event.preventDefault();
+            }
+        }
+        
+        function agregarDescripciones(){
+            var spans = document.getElementsByTagName("span");
+            spans[14].append(" Código: ");
+            spans[15].append(" Origen: ");
+            spans[16].append(" Destino: ");
+            spans[17].append(" Distancia: ");
+            spans[18].append(" Duración: ");
+            spans[19].append(" Descuento: ");
+            spans[20].append(" Avión: ");
+        }
+        
+        function quitarDescripciones(){
+            $(".input-group-addon").contents().filter(function () {
+                return this.nodeType === 3; 
+            }).remove();
+        }
+
+        function finBusqueda(){
+           window.alert("Busqueda realizada");
+           document.getElementById("buscarRuta").value = "";
+        }
+        
         document.addEventListener("DOMContentLoaded", cargarPagina);
     </script>
 </html>

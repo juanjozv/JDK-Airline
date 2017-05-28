@@ -341,7 +341,23 @@ public class AerolineaModelo {
     /*To do:
     to... de las demas tablas con dudas
     */
-    
+    public static int addVuelo(Vuelo vuelo) throws Exception{
+             String sql="insert into Vuelos "+
+                    "(codigo, distancia, duracion, descuento, origen, destino, avion) "+
+                    "values ('%s',%.2f,%d,%.2f,'%s','%s','%s') ";
+            sql=String.format(sql,vuelo.getCodigo(),vuelo.getDistancia(),vuelo.getDuracion(),
+                    vuelo.getDescuento(), vuelo.getOrigen().getCodigo(), 
+                    vuelo.getDestino().getCodigo(), vuelo.getAvion().getCodigo());
+            return aerolinea.executeUpdate(sql);
+    } 
+   
+    public static int modifyVuelo(Vuelo vuelo) throws Exception{
+             String sql="update Vuelos set distancia=%.2f, duracion=%d, descuento=%.2f, "+
+                        "origen='%s', destino='%s', avion='%s' " + "where codigo='%s'";
+            sql=String.format(sql,vuelo.getDistancia(),vuelo.getDuracion(),vuelo.getDescuento(),vuelo.getOrigen().getCodigo(),
+                    vuelo.getDestino().getCodigo(), vuelo.getAvion().getCodigo(), vuelo.getCodigo());
+            return aerolinea.executeUpdate(sql);
+    } 
 }
 
 
