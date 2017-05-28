@@ -93,6 +93,9 @@ body {
     .bs-docs-featurette > .container > .page-header > h1 {
         font-size: 300% !important;
     }
+    #birthday{
+        width: 100% !important;
+    }
 }
 
 .carousel-caption {
@@ -247,6 +250,9 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 }
 .container{
     text-align: center;
+}
+#birthday{
+    width: 30%;
 }
 /*------------------------------------ID'S-------------------------------------*/
 

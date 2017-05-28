@@ -39,6 +39,8 @@
         <script type="text/javascript" src="js/Proxy.js"></script>
         <script type="text/javascript" src="js/JsonUtils.js"></script>
         
+        
+        
         <%@ include file="header.jspf" %>
     </head>
     <body>
@@ -50,7 +52,7 @@
             <form class="form-horizontal"  id="inicioSesion" action="javascript:doSubmit();">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="userName" type="text" class="form-control" placeholder="Ingrese su nombre de usuario">
+                    <input id="userName" type="text" class="form-control" placeholder="Ingrese su nombre de usuario" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
@@ -60,22 +62,26 @@
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="nombre" type="text" class="form-control" placeholder="Ingrese su nombre">
+                    <input id="nombre" type="text" class="form-control" placeholder="Ingrese su nombre" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="apellido" type="text" class="form-control" placeholder="Ingrese su apellido">
+                    <input id="apellido" type="text" class="form-control" placeholder="Ingrese su apellido" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input id="email" type="email" class="form-control" placeholder="Ingrese su correo electrónico">
+                    <input id="email" type="email" class="form-control" placeholder="Ingrese su correo electrónico" autocomplete="off">
                 </div>
                 <br>
-                <div class="input-group">
+                <div class="input-group" id="birthday">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                    <input id="nacimiento" type="text" class="form-control" placeholder="Fecha de nacimiento DD/MM/AAAA">
+                        <span>
+                        <div><select class="form-control" id="years" ><option selected disabled>Año de nacimiento</option></select></div>
+                        <div><select class="form-control" id="months"><option selected disabled>Mes de nacimiento</option></select></div>
+                        <div><select class="form-control" id="days"></select></div>     
+                        </span>
                 </div>
                 <br>
                 <div class="input-group">
@@ -158,7 +164,9 @@
         var nombre = document.getElementById("nombre");
         var apellido = document.getElementById("apellido");
         var email = document.getElementById("email");
-        var nacimiento = document.getElementById("nacimiento");
+        var diaNacimiento = document.getElementById("days");
+        var mesNacimiento = document.getElementById("months");
+        var anoNacimiento = document.getElementById("years");
         var telefono = document.getElementById("telefono");
         var celular = document.getElementById("celular");
         var ubicacion = document.getElementById("ubicacion");
@@ -195,11 +203,24 @@
             error = true;
         }
         
-        nacimiento.classList.remove("invalid");
-        if (nacimiento.value == "") {
-            nacimiento.classList.add("invalid");
+        diaNacimiento.classList.remove("invalid");
+        if (diaNacimiento.value == "Día de nacimiento") {
+            diaNacimiento.classList.add("invalid");
             error = true;
         }
+        
+        mesNacimiento.classList.remove("invalid");
+        if (mesNacimiento.value == "Mes de nacimiento") {
+            mesNacimiento.classList.add("invalid");
+            error = true;
+        }
+        
+        anoNacimiento.classList.remove("invalid");
+        if (anoNacimiento.value == "Año de nacimiento") {
+            anoNacimiento.classList.add("invalid");
+            error = true;
+        }
+        
         
         telefono.classList.remove("invalid");
         if (telefono.value == "") {
@@ -237,16 +258,91 @@
         var nombre = document.getElementById("nombre").value;
         var apellido = document.getElementById("apellido").value;
         var email = document.getElementById("email").value;
-        var nacimiento = document.getElementById("nacimiento").value;
+        var diaNacimiento = document.getElementById("days").value;
+        var mesNacimiento = document.getElementById("months").value;
+        var anoNacimiento = document.getElementById("years").value;
         var telefono = document.getElementById("telefono").value;
         var celular = document.getElementById("celular").value;
         var ubicacion = document.getElementById("ubicacion").value;
         
+        var nacimiento = anoNacimiento + "-" + mesNacimiento + "-" + diaNacimiento;
+        ubicacion = getCleanedString(ubicacion);
+        
         var usuarioNuevo = new Usuario(usuario, contrasena, nombre, apellido, email, nacimiento,
         ubicacion, telefono, celular);
         Proxy.UsuarioAdd(usuarioNuevo, function(result) {
-            window.alert("Usuario Insertado");
+            if(result != 0){
+                window.alert("El nombre de usuario ya existe");
+            }
+            if(result == 0) {
+                window.alert("Nuevo Usuario agregado");
+            }
         });
+        var form = document.getElementById("inicioSesion");
+        form.reset();
+    }
+    
+    $(function() {
+
+        //populate our years select box
+        for (i = new Date().getFullYear(); i > 1940; i--){
+            $('#years').append($('<option />').val(i).html(i));
+        }
+        //populate our months select box
+        for (i = 1; i < 13; i++){
+            $('#months').append($('<option />').val(i).html(i));
+        }
+        //populate our Days select box
+        updateNumberOfDays(); 
+
+        //"listen" for change events
+        $('#years, #months').change(function(){
+            updateNumberOfDays(); 
+        });
+
+    });
+
+    //function to update the days based on the current values of month and year
+    function updateNumberOfDays(){
+        $('#days').html('');
+        month = $('#months').val();
+        year = $('#years').val();
+        days = daysInMonth(month, year);
+        $('#days').append('<option selected disabled>Día de nacimiento</option>');
+        for(i=1; i < days+1 ; i++){
+                $('#days').append($('<option />').val(i).html(i));
+        }
+    }
+
+    //helper function
+    function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    
+    
+    function getCleanedString(cadena){
+        // caracteres eliminar
+        var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?.";
+
+        // elimina todos
+        for (var i = 0; i < specialChars.length; i++) {
+            cadena= cadena.replace(new RegExp("\\" + specialChars[i], 'gi'), '');
+        }   
+
+        //devolver limpio en minusculas
+        //cadena = cadena.toLowerCase();
+
+       
+        //cadena = cadena.replace(/ /g," ");
+
+        // Quita acentos y "ñ".
+        cadena = cadena.replace(/á/gi,"a");
+        cadena = cadena.replace(/é/gi,"e");
+        cadena = cadena.replace(/í/gi,"i");
+        cadena = cadena.replace(/ó/gi,"o");
+        cadena = cadena.replace(/ú/gi,"u");
+        cadena = cadena.replace(/ñ/gi,"n");
+        return cadena;
     }
     
     function myMap() {
