@@ -141,7 +141,20 @@
         signInControl: function (modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
+        },
+        agregarUsuario: function (nuevoUsuario) {
+            var modelo = this.modelo;
+            var vista = this.vista;
+            Proxy.UsuarioAdd(nuevoUsuario, function(result) {
+                if(result != 0){
+                    window.alert("El nombre de usuario ya existe");
+                }
+                if(result == 0) {
+                    window.alert("Nuevo Usuario agregado");
+                }
+            });
         }
+        
     };
     
 </script>
@@ -270,14 +283,8 @@
         
         var usuarioNuevo = new Usuario(usuario, contrasena, nombre, apellido, email, nacimiento,
         ubicacion, telefono, celular);
-        Proxy.UsuarioAdd(usuarioNuevo, function(result) {
-            if(result != 0){
-                window.alert("El nombre de usuario ya existe");
-            }
-            if(result == 0) {
-                window.alert("Nuevo Usuario agregado");
-            }
-        });
+        
+        controlador.agregarUsuario(usuarioNuevo);
         var form = document.getElementById("inicioSesion");
         form.reset();
     }

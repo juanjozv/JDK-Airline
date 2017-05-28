@@ -151,7 +151,8 @@ Proxy.UsuarioAdd = function (Usuario, callBack) {
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     AJAX_req.onreadystatechange = function () {
         if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
-                callBack(0);
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
         }
     };
     AJAX_req.send("usuario=" + jsonUsuario);
