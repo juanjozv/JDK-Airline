@@ -221,18 +221,13 @@
                 });               
             },
             buscarRuta: function(){
-                var modelo = this.modelo;
                 var vista = this.vista;
-                var ciudad = (document.getElementById("buscarRuta").value).toLowerCase();
-                var busqueda = [];
-                for(var i = 0; i < modelo.rutas.length; i++){
-                    var orig = (modelo.rutas[i].origen.nombre).toLowerCase();
-                    var dest = (modelo.rutas[i].destino.nombre).toLowerCase();
-                    if(orig.includes(ciudad) || dest.includes(ciudad))
-                        busqueda.push(modelo.rutas[i]);
-                }
-                vista.listarRutas(busqueda);
-                vista.finBusqueda();
+                var ciudad = document.getElementById("buscarRuta").value;
+                Proxy.vueloCiudadSearch(ciudad, function(result){
+                    var busqueda = result;
+                    vista.listarRutas(busqueda);
+                    vista.finBusqueda();                    
+                });
             },
             crearRuta: function(){
                 var id = document.getElementById("codigo").value;

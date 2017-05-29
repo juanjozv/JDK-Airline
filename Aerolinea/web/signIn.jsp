@@ -1,16 +1,10 @@
-<%-- 
-    Document   : login
-    Created on : 20/05/2017, 07:03:26 PM
-    Author     : Dani
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="images/icon.png" />
-        <title> JDK Aerolinea Busqueda </title>
+        <title> JDK Aerolinea - Sign In </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

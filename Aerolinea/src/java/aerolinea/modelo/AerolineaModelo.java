@@ -70,9 +70,6 @@ public class AerolineaModelo {
         List<Vuelo> vuelos;
         vuelos = new ArrayList();
         try {
-            /*String sql = "select * from vuelos v inner join (select av.codigo as cod from aviones av inner join tiposavion ta on av.tipoAvion = ta.codigo) a on v.avion = a.cod\n" +
-                        "inner join ciudades o on v.origen = o.codigo\n" +
-                        "inner join ciudades d on v.destino = d.codigo;";*/
             String sql = "select * from vuelos;";
             ResultSet rs = aerolinea.executeQuery(sql);
             while (rs.next()) {
@@ -237,6 +234,42 @@ public class AerolineaModelo {
             System.out.println("Error en obtener viajes");
         }
         return result;
+    }
+    
+    public static List<Ciudad> getCiudadLike(String nombre) throws Exception { //Va a obtener sola mente una ciudad
+        List<Ciudad> ciudades = new ArrayList();
+        
+        try {
+            String sql = "select * from ciudades "
+                    + "where nombre like '%%%s%%';";
+            sql = String.format(sql, nombre);
+            ResultSet rs = aerolinea.executeQuery(sql);
+
+            while (rs.next()) {
+                ciudades.add(toCiudades(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad like");
+        }
+        return ciudades;
+    }
+
+    public static List<Vuelo> getVuelosBusquedaLike(String nomLike) throws Exception {
+        List<Vuelo> vuelos = new ArrayList();
+        List<Ciudad> ciudades = getCiudadLike(nomLike);
+        for(Ciudad c :ciudades){
+            try {
+                String sql = "select * from vuelos where origen = '%s' or destino = '%s';";
+                sql = String.format(sql, c.getCodigo(), c.getCodigo());
+                ResultSet rs = aerolinea.executeQuery(sql);
+                while (rs.next()) {
+                    vuelos.add(toVuelo(rs));
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error en obtener vuelos like");
+            }
+        }
+        return vuelos;
     }
 
     /*---------------------    AGREGAR         ----------------------------*/

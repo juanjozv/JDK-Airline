@@ -127,6 +127,12 @@ public class AerolineaService extends HttpServlet {
                     break;
                 case "avionSearch":
                     break;
+                case "vueloCiudadSearch":
+                    String ciudadB = request.getParameter("ciudad");
+                    vuelos = AerolineaModelo.getVuelosBusquedaLike(ciudadB);
+                    json = gson.toJson(vuelos);
+                    out.write(json);
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);
