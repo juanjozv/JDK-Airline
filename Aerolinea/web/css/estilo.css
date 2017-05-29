@@ -7,6 +7,38 @@ body {
     color: #2e6da4;
 }
 
+input{
+    -webkit-autofill: off;
+}
+
+#birthday{
+    width: 50%;
+}
+
+#days, #months, #years {
+    float:left;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
 /*---------------------------------MENU BAR------------------------------------*/
 .navbar-brand {
     font-size: 20px;
@@ -88,14 +120,13 @@ body {
     .carousel-caption > .infoDesc {
         font-size: 125%;
     }
-
-
     .bs-docs-featurette > .container > .page-header > h1 {
         font-size: 300% !important;
     }
     #birthday{
-        width: 100% !important;
+        width: 100%;
     }
+
 }
 
 .carousel-caption {
@@ -245,14 +276,11 @@ input.invalid, select.invalid {box-shadow: 0 0 1px 1px red;}
 }
 
 #Eliminar:hover, #Modificar:hover{
-  width: 33px;
-  height: 33px;
+    width: 33px;
+    height: 33px;
 }
 .container{
     text-align: center;
-}
-#birthday{
-    width: 30%;
 }
 /*------------------------------------ID'S-------------------------------------*/
 

@@ -129,7 +129,7 @@
                         </div>                      
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarRuta">
-                                <button type="submit" class="btn btn-primary" id="btnRegistrarRuta">Agregar</button>
+                                <button type="submit" class="btn btn-primary" id="btnRegistrarRuta" onclick="controlador.agregarRuta();">Agregar</button>
                             </div></center>
                         <br>
                     </form>       

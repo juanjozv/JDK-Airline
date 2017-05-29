@@ -9,4 +9,4 @@ Ciudad.prototype = {
     this.pais = pais;
     this.zonaHoraria = zonaHoraria;
   }
-}
+};

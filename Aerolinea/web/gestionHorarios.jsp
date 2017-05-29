@@ -18,14 +18,22 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
         <!--Fuentes de Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
-              <!-- CSS propio -->
-              <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
-
+        <!-- CSS propio -->
+        <link rel="stylesheet" title="xxx" type="text/css" href="css/estilo.css">
+        <!-- JS propio -->
+        <script type="text/javascript" src="js/Ciudad.js"></script>
+        <script type="text/javascript" src="js/Usuario.js"></script>
+        <script type="text/javascript" src="js/Avion.js"></script>
+        <script type="text/javascript" src="js/TipoAvion.js"></script>
+        <script type="text/javascript" src="js/Vuelo.js"></script>
+        <script type="text/javascript" src="js/Viaje.js"></script>
+        <script type="text/javascript" src="js/Proxy.js"></script>
+        <script type="text/javascript" src="js/JsonUtils.js"></script>
+        <%@ include file="header.jspf" %>
     </head>
     <body>
-        <%@ include file="header.jspf" %>
         <br><br><br>
         <div class="container">
             <h1>Gestión de Horarios</h1>
@@ -61,8 +69,6 @@
                         </tr>
                     </thead>
                     <tbody id="listaHorarios">
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
-                        <tr> <th>11</th><th>11</th><th>11</th><th>11</th><th>11</th><th>11</th></tr>
                     </tbody>
                 </table>
                 <br><br>
@@ -143,17 +149,17 @@
 
 <script>
     //Control
-    function GestionHorariosModelo(modelo, vista) {
-        this.GestionHorariosModelo(modelo, vista);
+    function GestionHorariosControl(modelo, vista){
+        this.GestionHorariosControl(modelo, vista);
     }
 
-    GestionHorariosModelo.prototype = {
-        GestionHorariosModelo function(modelo, vista) {
+    GestionHorariosControl.prototype = {
+        GestionHorariosControl: function(modelo, vista){
             this.modelo = modelo;
             this.vista = vista;
             this.obtenerHorarios();
         },
-        obtenerHorarios: function () {
+        obtenerHorarios: function(){
             var modelo = this.modelo;
             var vista = this.vista;
             Proxy.getViajes(function (result) {
@@ -162,6 +168,9 @@
                 vista.crearTablaHorarios();
             });
         },
+        agregarHorario: function(){
+            
+        }
         modificarHorario: function(){
             
         }

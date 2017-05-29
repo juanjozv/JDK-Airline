@@ -114,9 +114,9 @@ Proxy.getTiposAvion = function(callback) {
 	AJAX_req.send();
 };
 
-Proxy.tipoAvionSearch = function(codigo, annio, marca, modelo, cantidadPasajeros, cantidadFilas, cantidadAsientosFila, callback) {
+Proxy.tipoAvionSearch = function(marca, callback) {
 	var AJAX_req = new XMLHttpRequest();
-	url = "/Aerolinea/AerolineaService?action=viajeListSearch";
+	url = "/Aerolinea/AerolineaService?action=tiposAvionSearch";
 	AJAX_req.open("POST", url, true);
 	AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	AJAX_req.onreadystatechange = function() {
@@ -125,8 +125,7 @@ Proxy.tipoAvionSearch = function(codigo, annio, marca, modelo, cantidadPasajeros
 			callback(object);
 		}
 	};
-	AJAX_req.send("codigo=" + codigo + "&annio=" + annio + "&marca=" + marca + "&modelo=" + modelo
-                + "&cantidadPasajeros=" + cantidadPasajeros + "&cantidadFilas=" + cantidadFilas + "&cantidadAsientosFila=" + cantidadAsientosFila);
+	AJAX_req.send("marca=" + marca);
 };
 
 Proxy.tipoAvionAdd = function (tipoAvion, callBack) {
@@ -186,4 +185,38 @@ Proxy.modifyVuelo = function(vuelo,callBack){
         } 
     };
     AJAX_req.send("vuelo=" + jsonVuelo); 
+};
+
+Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
+    var jsonCiudad = JSON.stringify(ciudad, JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=ciudadAdd";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+                if (parseInt(AJAX_req.responseText)==0){
+                Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
+            }
+            else{
+                callBack(1);
+            }
+        }
+    };
+    AJAX_req.send("ciudad=" + jsonCiudad);
+};
+
+Proxy.ciudadAddImagen = function(codigo,imagen,callBack){
+    var AJAX_req = new XMLHttpRequest();  
+    url = "/Aerolinea/CiudadUpload";
+    AJAX_req.open( "POST", url, true );
+    AJAX_req.onreadystatechange = function(){
+        if( AJAX_req.readyState === 4 && AJAX_req.status === 200 ){
+            callBack(0);
+        }
+    };
+    var formdata = new FormData();
+    formdata.append("codigo", codigo);
+    formdata.append("imagen", imagen); 
+    AJAX_req.send(formdata);    
 };

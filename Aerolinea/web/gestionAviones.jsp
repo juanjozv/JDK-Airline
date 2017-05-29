@@ -60,8 +60,6 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-<!--                            <th>Ruta</th>
-                            <th>Horario</th>-->
                             <th>Tipo de avión</th>
                             <th>Modificar/Eliminar
                         </tr>
@@ -86,20 +84,6 @@
                             <input id="idAvionF" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
                         </div>
                         <br>
-<!--                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
-                            <select class="form-control" id="rutaAvion">
-                                <option selected disabled>Seleccione la ruta</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            <select class="form-control" id="horarioAvion">
-                                <option selected disabled>Seleccione el horario</option>
-                            </select>
-                        </div>
-                        <br>-->
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
                             <select class="form-control" id="tipoAvion">
@@ -173,6 +157,31 @@
             Proxy.getTiposAvion(function (result) {
                 modelo.tipos = result;
                 vista.cargarTipos();
+            });
+        },
+        agregarAvion: function () {
+            var avion = this.crearAvion();
+            Proxy.avionAdd(avion, function(status){
+                switch(status){
+                        case 0:
+                            window.alert("Datos agregados");
+                            this.obtenerAviones();
+                            break;  
+                        case 1:
+                            window.alert("Registro duplicado");
+                            break;
+                    }
+            });
+        },
+        crearAvion: function () {
+            var codigo = document.getElementById("idAvion").value;
+            var tipoAvion = this.obtenerAvion(document.getElementById("tipoAvion").value);
+            return new Avion(codigo, tipoAvion);
+        },
+        obtenerAvion: function (cod) { //Pasar a nivel de B.D.
+            var modelo = this.modelo;
+            return modelo.aviones.find(function (a) {
+                return a.codigo == cod;
             });
         }
     };
