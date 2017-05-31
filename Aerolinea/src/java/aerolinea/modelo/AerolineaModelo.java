@@ -295,10 +295,10 @@ public class AerolineaModelo {
         //Validar el formato de la fecha
 
         String sql = "insert into usuarios "
-                + "(username, password, nombre, apellidos, email, fechaNacimiento, direccion, telefono, celular) "
-                + "values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+                + "(username, password, nombre, apellidos, email, fechaNacimiento, direccion, telefono, celular, tipo) "
+                + "values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)";
         sql = String.format(sql, user.getUsername(), user.getPassword(), user.getNombre(), user.getApellidos(), user.getEmail(),
-                user.getFechaNacimiento(), user.getDireccion(), user.getTelefono(), user.getCelular());
+                user.getFechaNacimiento(), user.getDireccion(), user.getTelefono(), user.getCelular(), user.getTipo());
         return aerolinea.executeUpdate(sql);
     }
 
@@ -381,11 +381,10 @@ public class AerolineaModelo {
         return obj;
     }
 
-    //-Modificar los gets
     private static Usuario toUsuario(ResultSet rs) throws Exception {
         Usuario obj = new Usuario();
         obj.setUsername(rs.getString("username"));
-        obj.setContraseña(rs.getString("password"));
+        obj.setPassword(rs.getString("password"));
         obj.setNombre(rs.getString("nombre"));
         obj.setApellidos(rs.getString("apellidos"));
         obj.setEmail(rs.getString("email"));
@@ -393,6 +392,7 @@ public class AerolineaModelo {
         obj.setDireccion(rs.getString("direccion"));
         obj.setTelefono(rs.getString("telefono"));
         obj.setCelular(rs.getString("celular"));
+        obj.setTipo(rs.getInt("tipo"));
         return obj;
     }
 
@@ -405,7 +405,18 @@ public class AerolineaModelo {
         return obj;
     }
 
-    /*To do:
-    to... de las demas tablas con dudas
-     */
+    public static Usuario loginUsuario(Usuario nuevoU) throws Exception {
+        Usuario miUsuario = new Usuario();
+        try {
+            String sql = "select * from usuarios where username = '%s' and password = '%s';";
+            sql = String.format(sql, nuevoU.getUsername(), nuevoU.getPassword());
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                miUsuario = toUsuario(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener el usuario buscado");
+        }
+        return miUsuario;
+    }
 }

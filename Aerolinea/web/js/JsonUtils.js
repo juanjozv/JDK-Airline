@@ -17,7 +17,7 @@ JsonUtils.revive = function (k, v) {
         return new Viaje(v.codigo, v.fecha, v.dia, v.cantAsientOcup, v.horaSalida, v.horaLlegada, v.precio, v.avion, v.vuelo);
     }
     if(v instanceof Object && v._class == 'Usuario'){
-        return new Usuario(v.username, v.password, v.nombre, v.apellidos, v.email, v.fechaNacimiento, v.direccion, v.telefono, v.celular);
+        return new Usuario(v.username, v.password, v.nombre, v.apellidos, v.email, v.fechaNacimiento, v.direccion, v.telefono, v.celular, v.tipo);
     }
     
     return v;

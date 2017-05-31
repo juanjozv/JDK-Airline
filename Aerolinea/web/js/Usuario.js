@@ -1,12 +1,12 @@
 function Usuario(username, password, nombre, apellidos, email, 
-                fechaNacimiento, direccion, telefono, celular) {
+                fechaNacimiento, direccion, telefono, celular, tipo) {
   this.Usuario(username, password, nombre, apellidos, email, 
-                fechaNacimiento, direccion, telefono, celular);
+                fechaNacimiento, direccion, telefono, celular, tipo);
 }
 
 Usuario.prototype = {
   Usuario: function(username, password, nombre, apellidos, email, 
-                fechaNacimiento, direccion, telefono, celular) {
+                fechaNacimiento, direccion, telefono, celular, tipo) {
     this.username = username;
     this.password = password;
     this.nombre = nombre;
@@ -16,5 +16,6 @@ Usuario.prototype = {
     this.direccion = direccion;
     this.telefono = telefono;
     this.celular = celular;
+    this.tipo = tipo;
   }
 }

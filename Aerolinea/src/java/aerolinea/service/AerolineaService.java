@@ -133,6 +133,30 @@ public class AerolineaService extends HttpServlet {
                     json = gson.toJson(vuelos);
                     out.write(json);
                     break;
+                case "loginUsuarios":
+                    json = request.getParameter("user");
+                    Usuario nuevoUsuario = gson.fromJson(json, Usuario.class);
+                    nuevoUsuario = AerolineaModelo.loginUsuario(nuevoUsuario);
+                    if (nuevoUsuario.getTipo()!=0){
+                        request.getSession().setAttribute("user", nuevoUsuario);
+                        switch(nuevoUsuario.getTipo()){
+                            case 1: // client
+                                //client = Model.clientGet(user.getId());
+                                //request.getSession().setAttribute("user", nuevoUsuario);
+                                //request.getRequestDispatcher("/index.jsp").forward(request, response);
+                                break;
+                            case 2: // manager
+                                break;
+                        }
+                    }
+                    json = gson.toJson(nuevoUsuario); 
+                    out.write(json);
+                    break;
+                case "logoutUsuarios":
+                    request.getSession().removeAttribute("user");
+                    request.getSession().invalidate();
+                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);

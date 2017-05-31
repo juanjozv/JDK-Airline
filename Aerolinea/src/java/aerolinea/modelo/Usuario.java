@@ -10,10 +10,11 @@ public class Usuario implements Jsonable{
     String direccion;
     String telefono;
     String celular;
+    int tipo;
     
     public Usuario() {}
 
-    public Usuario(String username, String password, String nombre, String apellidos, String email, String fechaNacimiento, String direccion, String telefono, String celular) {
+    public Usuario(String username, String password, String nombre, String apellidos, String email, String fechaNacimiento, String direccion, String telefono, String celular, int tipo) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
@@ -23,6 +24,7 @@ public class Usuario implements Jsonable{
         this.direccion = direccion;
         this.telefono = telefono;
         this.celular = celular;
+        this.tipo = tipo;
     }
 
     public String getUsername() {
@@ -37,7 +39,7 @@ public class Usuario implements Jsonable{
         return password;
     }
 
-    public void setContraseña(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -97,4 +99,13 @@ public class Usuario implements Jsonable{
         this.celular = celular;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    
 }

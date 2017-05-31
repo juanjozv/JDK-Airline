@@ -80,12 +80,12 @@
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-                    <input id="telefono" type="text" class="form-control" placeholder="Ingrese su número telefónico de trabajo">
+                    <input id="telefono" type="text" class="form-control" placeholder="Ingrese su número telefónico de trabajo" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                    <input id="celular" type="text" class="form-control" placeholder="Ingrese su número de celular">
+                    <input id="celular" type="text" class="form-control" placeholder="Ingrese su número de celular" autocomplete="off">
                 </div>
                 <br>
                 <div class="input-group">
@@ -276,7 +276,7 @@
         ubicacion = getCleanedString(ubicacion);
         
         var usuarioNuevo = new Usuario(usuario, contrasena, nombre, apellido, email, nacimiento,
-        ubicacion, telefono, celular);
+        ubicacion, telefono, celular, 1);
         
         controlador.agregarUsuario(usuarioNuevo);
         var form = document.getElementById("inicioSesion");
