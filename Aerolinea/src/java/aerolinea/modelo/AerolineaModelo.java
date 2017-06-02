@@ -161,6 +161,23 @@ public class AerolineaModelo {
         }
         return vuelo;
     }
+    
+    public static Viaje getViaje(String codigo) throws Exception { //buscacara un viaje solamente
+        Viaje viaje = new Viaje();
+        try {
+            String sql = "select * from viajes where codigo = '%s';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                viaje = toViaje(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener solamente el viaje");
+        }
+        return viaje;
+    }
+    
+    
 
     /*------------------------------ BÚSQUEDAS -------------------------------*/
     public static Ciudad getCiudadPorNombre(String nombre) throws Exception { //Va a obtener sola mente una ciudad
@@ -395,15 +412,18 @@ public class AerolineaModelo {
         obj.setTipo(rs.getInt("tipo"));
         return obj;
     }
-
-    //Cambiar para que funcione toViaje con get
+    
     private static Tiquete toTiquete(ResultSet rs) throws Exception {
         Tiquete obj = new Tiquete();
         obj.setCodigo(rs.getString("codigo"));
         obj.setPasajero(rs.getString("pasajero"));
-        obj.setViaje(toViaje(rs));
+        obj.setViaje(getViaje(rs.getString("viaje")));
+        obj.setCodigoAsiento(rs.getString("codigoAsiento"));
+        obj.setCodCompra(rs.getString("codCompra"));
         return obj;
     }
+
+   
 
     public static Usuario loginUsuario(Usuario nuevoU) throws Exception {
         Usuario miUsuario = new Usuario();
@@ -419,4 +439,6 @@ public class AerolineaModelo {
         }
         return miUsuario;
     }
+   
+    
 }

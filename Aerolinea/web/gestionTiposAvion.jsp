@@ -28,8 +28,10 @@
         <script type="text/javascript" src="js/TipoAvion.js"></script>
         <script type="text/javascript" src="js/Vuelo.js"></script>
         <script type="text/javascript" src="js/Viaje.js"></script>
-        <script type="text/javascript" src="js/Proxy.js"></script>
         <script type="text/javascript" src="js/Usuario.js"></script>
+        <script type="text/javascript" src="js/Compra.js"></script>
+        <script type="text/javascript" src="js/Tiquete.js"></script>
+        <script type="text/javascript" src="js/Proxy.js"></script>
         <script type="text/javascript" src="js/JsonUtils.js"></script>
         <%@ include file="header.jspf" %>
     </head>

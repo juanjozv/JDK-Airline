@@ -263,3 +263,17 @@ Proxy.usuarioLogout = function(callBack){
     };
     AJAX_req.send();   
 };
+
+Proxy.obtenerViaje = function (codigo, callback) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=obtenerViaje";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var object = JSON.parse(AJAX_req.responseText, JsonUtils.revive);
+            callback(object);
+        }
+    };
+    AJAX_req.send("codigo=" + codigo);
+};

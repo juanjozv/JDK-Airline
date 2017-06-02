@@ -30,7 +30,9 @@ public class AerolineaService extends HttpServlet {
                     .registerSubtype(Avion.class, "Avion")
                     .registerSubtype(Vuelo.class, "Vuelo")
                     .registerSubtype(Viaje.class, "Viaje")
-                    .registerSubtype(Usuario.class, "Usuario");
+                    .registerSubtype(Usuario.class, "Usuario")
+                    .registerSubtype(Compra.class, "Compra")
+                    .registerSubtype(Tiquete.class, "Tiquete");
             Gson gson = new GsonBuilder().registerTypeAdapterFactory(rta).setDateFormat("dd/MM/yyyy").create();
             String json;
             String accion = request.getParameter("action");
@@ -41,6 +43,7 @@ public class AerolineaService extends HttpServlet {
             List<Vuelo> vuelos;
             List<TipoAvion> tipos;
             Vuelo vuelo;
+            Viaje viaje;
             switch (accion) {
                 case "ciudadListAll":
                     ciudades = AerolineaModelo.getCiudadesAll();
@@ -157,6 +160,14 @@ public class AerolineaService extends HttpServlet {
                     request.getSession().invalidate();
                     request.getRequestDispatcher("/index.jsp").forward(request, response);
                     break;
+                
+                case "obtenerViaje":
+                    String codigo = request.getParameter("codigo");
+                    viaje = AerolineaModelo.getViaje(codigo);
+                    json = gson.toJson(viaje);
+                    out.write(json);
+                    break;
+                    
             }
         } catch (Exception e) {
             System.out.println(e);
