@@ -1,11 +1,3 @@
-<%-- 
-    Document   : busqueda
-    Created on : 20/05/2017, 08:50:52 PM
-    Author     : Dani
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -93,9 +85,40 @@
                 <br><br>
                 <center>
                     <div class="btn-group btn-group-lg">
-                        <button type="button" class="btn btn-primary">Comprar</button>
+                        <button type="button" class="btn btn-warning" id="btnVer" onclick="controlador.getSeleccionados();">Ver vuelos seleccionados</button>
                     </div>
                 </center>
+            </div>
+        </div>
+
+        <!-- MODAL VUELOS SELECCIONADOS  -->
+        <div id="vuelosModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="cerrarVuelos" id="close">&times;</span> 
+                    <center><h2>Vuelos seleccionados</h2></center>
+                </div> <br><br>
+                <div class="modal-body">  
+                    <div class="table-responsive">
+                        <table id="vuelosSelec" class="table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Ruta</th>
+                                    <th>Vuelo</th>
+                                    <th>Detalle</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vuelosS"></tbody>
+                        </table>
+                    </div> <br><br>
+                    <center>
+                        <div class="btn-group btn-group-lg">
+                            <button type="button" class="btn btn-success" id="btnComprar" onclick="controlador.comprar();">Comprar</button>
+                        </div>
+                    </center>
+                </div>
             </div>
         </div>
     </body>
@@ -136,33 +159,63 @@
         BusquedaControl: function (modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
-
+            this.busqueda();
+        },
+        busqueda: function () {
+            var modelo = this.modelo;
+            var vista = this.vista;
             var orig = localStorage.getItem('origen');
             var dest = localStorage.getItem('destino');
             var fIda = localStorage.getItem('fechaIda');
             var fReg = localStorage.getItem('fechaRegreso');
             var cantPasajeros = localStorage.getItem('pasajeros');
-
             Proxy.vueloSearch(orig, dest, function (result) {
                 modelo.vueloIda = result;
-            });
-            Proxy.viajeSearch(orig, dest, fIda, cantPasajeros, function (result) {
-                modelo.viajesBuscados = result;
-                vista.listarViajes(modelo.vueloIda, modelo.viajesBuscados, "listaIda");
-                vista.crearDataTable("#tablaIda");
+                Proxy.viajeSearch(orig, dest, fIda, cantPasajeros, function (result) {
+                    modelo.viajesBuscados = result;
+                    vista.listarViajes(modelo.vueloIda, modelo.viajesBuscados, "listaIda");
+                    vista.crearDataTable("#tablaIda");
+                });
             });
             if (fReg != "NA") {
                 Proxy.vueloSearch(dest, orig, function (result) {
                     modelo.vueloRegreso = result;
+                    Proxy.viajeSearch(dest, orig, fReg, cantPasajeros, function (result) {
+                        modelo.viajesBuscados = result;
+                        vista.listarViajes(modelo.vueloRegreso, modelo.viajesBuscados, "listaRegreso");
+                        vista.crearDataTable("#tablaRegreso");
+                    });
                 });
-                Proxy.viajeSearch(dest, orig, fReg, cantPasajeros, function (result) {
-                    modelo.viajesBuscados = result;
-                    vista.listarViajes(modelo.vueloRegreso, modelo.viajesBuscados, "listaRegreso");
-                    vista.crearDataTable("#tablaRegreso");
-                });
+
             } else
                 vista.bloquearTablaRegreso();
 
+        },
+        getSeleccionados: function () {
+            var vista = this.vista;
+            var ida = $('input[name=listaIda]:checked');
+            var regreso = $('input[name=listaRegreso]:checked');
+            var fReg = localStorage.getItem('fechaRegreso');
+            var fIda = localStorage.getItem('fechaIda');
+            if(fReg != "NA" && !regreso.val() || fIda != "NA" && !ida.val())
+                window.alert("Debe seleccionar un vuelo!")
+            else{
+                vista.openModal();
+                vista.showSeleccionados(ida, "Ida");
+                if (fReg != "NA")
+                    vista.showSeleccionados(regreso, "Regreso");   
+            }
+            
+        },
+        comprar: function(){
+            var viajeIda = $('input[name=listaIda]:checked').val();
+            var viajeVuelta = $('input[name=listaRegreso]:checked').val();
+            localStorage.setItem('viajeIda', viajeIda);
+            if(!viajeVuelta)
+                localStorage.setItem('viajeVuelta', "NA");
+            else
+                localStorage.setItem('viajeVuelta', viajeVuelta);
+            location.href = "compra.jsp";
         }
     }
 </script>
@@ -175,6 +228,7 @@
     function cargarPagina(event) {
         modelo = new BusquedaModelo();
         controlador = new BusquedaControl(modelo, window);
+        initModal();
     }
 
     function bloquearTablaRegreso() {
@@ -182,32 +236,33 @@
     }
 
     function crearDataTable(tabla) {
-        var table = $(tabla).DataTable({
+        $(tabla).DataTable({
             bFilter: false,
             lengthChange: false,
             pageLength: 10,
             oLanguage: {
                 sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
-            columns: [{
-                    orderable: false
-                },
-                {
-                    orderable: false
-                },
-                {
-                    orderable: false
-                },
-                {
-                    orderable: true
-                },
-                {
-                    orderable: false
-                }
+            columns: [
+                {orderable: false},
+                {orderable: false},
+                {orderable: false},
+                {orderable: true },
+                {orderable: false}
             ],
             order: [
                 [3, 'asc']
             ]
+        });
+    }
+    
+    function crearMiniDataTable(tabla) {
+        $(tabla).DataTable({
+            bFilter: false,
+            lengthChange: false,
+            ordering: false,
+            info: false,
+            paging: false
         });
     }
 
@@ -230,7 +285,7 @@
         td.appendChild(document.createTextNode(viaje.fecha + " " + viaje.horaSalida + " - " + viaje.horaLlegada));
         tr.appendChild(td);
         td = document.createElement("td");
-        td.appendChild(document.createTextNode(vuelo.distancia + "Km - " + vuelo.duracion +"h"));
+        td.appendChild(document.createTextNode(vuelo.distancia + "Km - " + vuelo.duracion + "h"));
         tr.appendChild(td);
         td = document.createElement("td");
         td.appendChild(document.createTextNode(viaje.precio));
@@ -238,12 +293,49 @@
         radio = document.createElement("input");
         radio.setAttribute("type", "radio");
         radio.setAttribute("name", (lista));
+        radio.setAttribute("value", viaje.codigo);
         td = document.createElement("td");
         td.appendChild(radio);
         tr.appendChild(td);
         listaViajes.appendChild(tr);
     }
-
+        
+    function initModal() {
+        var modal = document.getElementById("vuelosModal");
+        var close = document.getElementsByClassName("cerrarVuelos")[0];
+        crearMiniDataTable("#vuelosSelec"); 
+        
+        close.onclick = function () {
+            modal.style.display = "none";
+        };
+        
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    }
+    
+    function openModal(){
+        var modal = document.getElementById("vuelosModal");
+        modal.style.display = "block";
+        $("#vuelosS").empty();
+    }
+    
+    function showSeleccionados(select, name) {
+        var tr = document.createElement("tr");
+        var vuelo = $(select).parent('td').parents('tr');
+        var vuelosS = document.getElementById("vuelosS");
+        $(document.createTextNode(name)).appendTo(tr);
+        vuelo.find('td').each(function () {
+            $(this).clone().appendTo(tr);
+        });
+        tr.removeChild(tr.lastChild);
+        vuelosS.append(tr);
+    }
+    
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>
+
+
 
