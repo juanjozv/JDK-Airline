@@ -84,14 +84,22 @@
             </div>
         </div>
         <div class="container">
-            <h1 style="color:gray;">Paso 3. Ingrese los datos para la compra</h1> <!--pasar a css-->
-            <br><br>
-            <form class="form-inline">
-                <div class = "input-group">
-
+            <h1 style="color:gray;">Paso 3. Ingrese los datos para el pago</h1> <!--pasar a css-->
+            <br>
+            <form class="form-inline" id="formulario" >
+                <div class="input-group" style="margin: 0 auto;">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
+                    <input id="tarjeta" type="text" class="form-control" style="width:500px;"
+                           placeholder="Ingrese su número de tarjeta">
+                </div>
+                <br><br>
+                <div class="input-group" style="margin: 0 auto;">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="codSeguridas" type="text" class="form-control" style="width:500px;"
+                           placeholder="Ingrese el código de seguridad de la tarjeta">
                 </div>
             </form><br>
-            <div class="btn-group btn-group-lg" id="agregarAsientos">
+            <div class="btn-group btn-group-lg" id="agregarPago">
                 <button type="button" class="btn btn-primary" id="btnSiguiente3">
                     Siguiente</button>
             </div>
