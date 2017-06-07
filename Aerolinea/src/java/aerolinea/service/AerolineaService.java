@@ -11,11 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import aerolinea.modelo.Ciudad;
+/*import aerolinea.modelo.Ciudad;
 import aerolinea.modelo.Avion;
 import aerolinea.modelo.Viaje;
 import aerolinea.modelo.Vuelo;
-import aerolinea.modelo.TipoAvion;
+import aerolinea.modelo.TipoAvion;*/
 
 @WebServlet(name = "AerolineaService", urlPatterns = {"/AerolineaService"})
 public class AerolineaService extends HttpServlet {
@@ -158,7 +158,7 @@ public class AerolineaService extends HttpServlet {
                 case "logoutUsuarios":
                     request.getSession().removeAttribute("user");
                     request.getSession().invalidate();
-                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                    response.sendRedirect("http://localhost:8080/Aerolinea/index.jsp");
                     break;
                 
                 case "obtenerViaje":

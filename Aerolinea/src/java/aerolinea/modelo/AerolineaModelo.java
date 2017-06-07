@@ -177,6 +177,37 @@ public class AerolineaModelo {
         return viaje;
     }
     
+    public static Usuario getUsuario(String username) throws Exception { //buscacara un usuario solamente
+        Usuario usuario = new Usuario();
+        try {
+            String sql = "select * from usuarios where username = '%s';";
+            sql = String.format(sql, username);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                usuario = toUsuario(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener solamente un usuario");
+        }
+        return usuario;
+    }
+    
+    
+    public static Compra getCompra(String codigoCompra) throws Exception { //buscacara una compra solamente
+        Compra compra = new Compra();
+        try {
+            String sql = "select * from compras where codigoCompra = '%s';";
+            sql = String.format(sql, codigoCompra);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                compra = toCompra(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener solamente una compra");
+        }
+        return compra;
+    }
+    
     
 
     /*------------------------------ BÚSQUEDAS -------------------------------*/
@@ -307,10 +338,8 @@ public class AerolineaModelo {
         return aerolinea.executeUpdate(sql);
     }
 
-    //Agregar metodos del usuario all, getUsuario, toUsuario
+    //Agregar metodos del usuario all, getUsuario
     public static int usuarioAdd(Usuario user) throws Exception {
-        //Validar el formato de la fecha
-
         String sql = "insert into usuarios "
                 + "(username, password, nombre, apellidos, email, fechaNacimiento, direccion, telefono, celular, tipo) "
                 + "values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)";
@@ -413,13 +442,24 @@ public class AerolineaModelo {
         return obj;
     }
     
+    private static Compra toCompra(ResultSet rs) throws Exception {
+        Compra obj = new Compra();
+        obj.setCodigoCompra(rs.getString("codigoCompra"));
+        obj.setUsuario(getUsuario(rs.getString("usuario")));
+        obj.setFechaCompra(rs.getString("fechaCompra"));
+        obj.setNumeroTarjeta(rs.getString("numeroTarjeta"));
+        obj.setPrecioTotal(rs.getFloat("precioTotal"));
+        obj.setCodigoSeguridad(rs.getString("codigoSeguridad"));
+        return obj;
+    }
+    
     private static Tiquete toTiquete(ResultSet rs) throws Exception {
         Tiquete obj = new Tiquete();
         obj.setCodigo(rs.getString("codigo"));
         obj.setPasajero(rs.getString("pasajero"));
         obj.setViaje(getViaje(rs.getString("viaje")));
         obj.setCodigoAsiento(rs.getString("codigoAsiento"));
-        obj.setCodCompra(rs.getString("codCompra"));
+        obj.setCodCompra(getCompra(rs.getString("codCompra")));
         return obj;
     }
 
@@ -439,6 +479,23 @@ public class AerolineaModelo {
         }
         return miUsuario;
     }
-   
+    
+    
+    //-------------Para caso de uso COMPRA----------------------------//
+    
+    public static List<Tiquete> getTiquetes(String codViaje) throws Exception { //necesito obtener los asientos de los tiquetes, pero no puedo directamente
+        List<Tiquete> tiquetes = new ArrayList();
+        try {
+            String sql = "select * from tiquete where viaje = '%s';";
+            sql = String.format(sql, codViaje);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            while (rs.next()) {
+                tiquetes.add(toTiquete(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo los tiquetes");
+        }
+        return tiquetes;
+    }
     
 }

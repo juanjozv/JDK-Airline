@@ -56,16 +56,3 @@
             </div>
         </nav>
         <%@ include file="logIn.jsp" %>
-
-<script>
-    function logout(){
-           Proxy.usuarioLogout(
-                function(){
-                    sessionStorage.removeItem("user");
-                    //document.location= "/Aerolinea/index.jsp";
-               });
-    
-    }
-    
-    
-</script>

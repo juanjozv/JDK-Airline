@@ -5,19 +5,17 @@ public class Tiquete implements Jsonable{
     String pasajero;
     Viaje viaje;
     String codigoAsiento;
-    String codCompra;
+    Compra codCompra;
     
     public Tiquete(){}
 
-    public Tiquete(String codigo, String pasajero, Viaje viaje, String codigoAsiento, String codCompra) {
+    public Tiquete(String codigo, String pasajero, Viaje viaje, String codigoAsiento, Compra codCompra) {
         this.codigo = codigo;
         this.pasajero = pasajero;
         this.viaje = viaje;
         this.codigoAsiento = codigoAsiento;
         this.codCompra = codCompra;
     }
-
-    
 
     public String getCodigo() {
         return codigo;
@@ -51,13 +49,13 @@ public class Tiquete implements Jsonable{
         this.codigoAsiento = codigoAsiento;
     }
 
-    public String getCodCompra() {
+    public Compra getCodCompra() {
         return codCompra;
     }
 
-    public void setCodCompra(String codCompra) {
+    public void setCodCompra(Compra codCompra) {
         this.codCompra = codCompra;
     }
+
     
-   
 }

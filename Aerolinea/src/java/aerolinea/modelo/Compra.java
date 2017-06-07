@@ -2,17 +2,21 @@ package aerolinea.modelo;
 
 public class Compra implements Jsonable{
     String codigoCompra;
-    String usuario;
+    Usuario usuario;
     String fechaCompra;
     String numeroTarjeta;
     float precioTotal;
+    String codigoSeguridad;
+    
+    public Compra(){}
 
-    public Compra(String codigoCompra, String usuario, String fechaCompra, String numeroTarjeta, float precioTotal) {
+    public Compra(String codigoCompra, Usuario usuario, String fechaCompra, String numeroTarjeta, float precioTotal, String codigoSeguridad) {
         this.codigoCompra = codigoCompra;
         this.usuario = usuario;
         this.fechaCompra = fechaCompra;
         this.numeroTarjeta = numeroTarjeta;
         this.precioTotal = precioTotal;
+        this.codigoSeguridad = codigoSeguridad;
     }
 
     public String getCodigoCompra() {
@@ -23,11 +27,11 @@ public class Compra implements Jsonable{
         this.codigoCompra = codigoCompra;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -54,5 +58,13 @@ public class Compra implements Jsonable{
     public void setPrecioTotal(float precioTotal) {
         this.precioTotal = precioTotal;
     }
-    
+
+    public String getCodigoSeguridad() {
+        return codigoSeguridad;
+    }
+
+    public void setCodigoSeguridad(String codigoSeguridad) {
+        this.codigoSeguridad = codigoSeguridad;
+    }
+   
 }

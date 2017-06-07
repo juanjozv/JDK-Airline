@@ -152,7 +152,7 @@
         cargarAsientos: function () {
             var modelo = this.modelo;
             var vista = this.vista;
-            var viajeIda = 1;//localStorage.getItem('viajeIda');
+            var viajeIda = localStorage.getItem('viajeIda');
             var viajeVuelta = localStorage.getItem('viajeVuelta');
             Proxy.obtenerViaje(viajeIda, function (result) {
                 modelo.viaje = result;

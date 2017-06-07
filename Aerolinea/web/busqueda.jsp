@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="shortcut icon" href="images/icon.png" />
-        <title> JDK Aerolinea - Búsqueda de Vuelos </title>
+        <title> JDK Aerolinea - B�squeda de Vuelos </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -122,17 +122,9 @@
             </div>
         </div>
     </body>
-    <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
+    <!-- SECCI�N DE CONT�CTENOS - PIE DE P�GINA -->
     <footer id="PgFooter">
-        <div class="container">
-            <h2><b>Detalle de Contacto</b></h2>
-            <div class="footerp">
-                <h3><b>JDK Aerolíneas</b></h3>
-                <p><b>Email id:</b> <a href="#">aerolineasJDK@aerolíneas.com</a></p>
-                <p><b>Números de ayuda(8AM a 10PM):</b> +506-66666666, +506-99999999</p>
-                <p><b>Números Telefónicos: </b> 011-27568832, 9868387223 </p>
-            </div>
-        </div>
+        <%@ include file="footer.jspf" %>
     </footer>
 </html>
 
