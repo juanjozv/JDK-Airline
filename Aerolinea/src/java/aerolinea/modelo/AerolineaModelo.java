@@ -420,6 +420,13 @@ public class AerolineaModelo {
         return aerolinea.executeUpdate(sql);
     }
     
+    public static int modifyCiudad(Ciudad ciudad) throws Exception {
+        String sql = "update Ciudades set nombre='%s', pais='%s', zonaHoraria='%s' "
+                + "where codigo='%s'";
+        sql = String.format(sql, ciudad.getNombre(), ciudad.getPais(), ciudad.getZonaHoraria(), ciudad.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }    
+    
     /*---------------------  TO SOMETHING  ----------------------------*/
     // Inicio de métodos toSomething
     private static Ciudad toCiudades(ResultSet rs) throws Exception {

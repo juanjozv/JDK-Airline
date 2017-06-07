@@ -196,6 +196,18 @@ public class AerolineaService extends HttpServlet {
                     json = gson.toJson(asientos);
                     out.write(json);
                     break;
+                case "ciudadModify":
+                    json = request.getParameter("ciudad");
+                    Ciudad ciudadMod = gson.fromJson(json, Ciudad.class);
+                    int modifiedC = AerolineaModelo.modifyCiudad(ciudadMod);
+                    out.write((modifiedC == 1) ? "0" : "1");
+                    break;
+                case "ciudadSearch":
+                    String ciudadS = request.getParameter("ciudad");
+                    ciudades = AerolineaModelo.getCiudadLike(ciudadS);
+                    json = gson.toJson(ciudades);
+                    out.write(json);
+                    break;
                     
             }
         } catch (Exception e) {

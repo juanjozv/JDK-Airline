@@ -14,4 +14,4 @@ Viaje.prototype = {
     this.avion = avion;
     this.vuelo = vuelo;
   }
-}
+};

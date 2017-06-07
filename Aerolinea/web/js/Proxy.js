@@ -25,10 +25,8 @@ Proxy.getPromo = function (callback) {
             callback(object);
         }
     };
-    AJAX_req.send();//No se si esto debe cambiar
+    AJAX_req.send();
 };
-
-
 
 Proxy.vueloSearch = function (origen, destino, callback) {
     var AJAX_req = new XMLHttpRequest();
@@ -83,7 +81,7 @@ Proxy.getAviones = function (callback) {
             callback(object);
         }
     };
-    AJAX_req.send();//No se si esto debe cambiar
+    AJAX_req.send();
 };
 
 Proxy.getVuelos = function (callback) {
@@ -136,7 +134,8 @@ Proxy.tipoAvionAdd = function (tipoAvion, callBack) {
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     AJAX_req.onreadystatechange = function () {
         if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
-                callBack(0);
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
         }
     };
     AJAX_req.send("tipoAvion=" + jsonTipoAvion);
@@ -202,7 +201,7 @@ Proxy.modifyVuelo = function(vuelo,callBack){
     AJAX_req.send("vuelo=" + jsonVuelo); 
 };
 
-Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
+Proxy.ciudadAdd = function (ciudad/*, imagen*/, callBack) {
     var jsonCiudad = JSON.stringify(ciudad, JsonUtils.replacer);
     var AJAX_req = new XMLHttpRequest();
     url = "/Aerolinea/AerolineaService?action=ciudadAdd";
@@ -210,12 +209,14 @@ Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     AJAX_req.onreadystatechange = function () {
         if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
-                if (parseInt(AJAX_req.responseText)==0){
+             var status = parseInt(AJAX_req.responseText);
+             callBack(status);           
+            /*if (parseInt(AJAX_req.responseText)==0){
                 Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
             }
             else{
                 callBack(1);
-            }
+            }*/
         }
     };
     AJAX_req.send("ciudad=" + jsonCiudad);
@@ -349,4 +350,39 @@ Proxy.avionSearch = function (avion, callback) {
         }
     };
     AJAX_req.send("codigo=" + avion);
+};
+
+Proxy.modifyCiudad = function(ciudad/*, imagen*/,callBack){
+    var jsonCiudad = JSON.stringify(ciudad,JsonUtils.replacer);
+    var AJAX_req = new XMLHttpRequest(); 
+    url="/Aerolinea/AerolineaService?action=ciudadModify";
+    AJAX_req.open("POST", url, true );
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");      
+    AJAX_req.onreadystatechange = function(){
+        if( AJAX_req.readyState === 4 && AJAX_req.status === 200 ){
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+            /*if (parseInt(AJAX_req.responseText)==0){
+                Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
+            }
+            else{
+                callBack(1);
+            }*/
+        } 
+    };
+    AJAX_req.send("ciudad=" + jsonCiudad); 
+};
+
+Proxy.ciudadSearch = function (ciudad, callback) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=ciudadSearch";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var object = JSON.parse(AJAX_req.responseText, JsonUtils.revive);
+            callback(object);
+        }
+    };
+    AJAX_req.send("ciudad=" + ciudad);
 };

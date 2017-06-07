@@ -11,4 +11,4 @@ Compra.prototype = {
     this.precioTotal = precioTotal;
     this.codigoSeguridad = codigoSeguridad;
   }
-}
+};

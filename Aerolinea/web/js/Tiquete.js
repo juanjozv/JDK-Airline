@@ -10,4 +10,4 @@ Tiquete.prototype = {
     this.codigoAsiento = codigoAsiento;
     this.codCompra = codCompra;
   }
-}
+};
