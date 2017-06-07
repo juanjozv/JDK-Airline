@@ -35,7 +35,14 @@
     <body>
         <br><br><br><br>
         <div class="container" id="tiquetesIDA"> <!-- <div class="container" id="paso1"> -->
-            <h1 style="color:gray;">Paso 1. Ingrese la informacion de los tiquetes IDA</h1> <!--pasar a css-->
+            <h1 style="color:gray;">Ingrese la informacion de los tiquetes IDA</h1> <!--pasar a css-->
+            <br>
+            <center>
+                <div class="box">    
+                    <label for="qty">Campos Restantes</label>
+                    <input id="qtyIDA" value="0" />
+                </div>
+            </center>
             <br><br>
             <form class="form-inline" id ="formIDA">
                 <div class="input-group">
@@ -70,7 +77,14 @@
         </div><br>
         
         <div class="container" id="tiquetesVuelta"> <!-- <div class="container" id="paso1"> -->
-            <h1 style="color:gray;">Paso 2. Ingrese la informacion de los tiquetes VUELTA</h1> <!--pasar a css-->
+            <h1 style="color:gray;">Ingrese la informacion de los tiquetes VUELTA</h1> <!--pasar a css-->
+            <br>
+            <center>
+                <div class="box">    
+                    <label for="qty">Campos Restantes</label>
+                    <input id="qtyVUELTA" value="0" />
+                </div>
+            </center>
             <br><br>
             <form class="form-inline" id ="formVUELTA">
                 <div class="input-group">
@@ -105,7 +119,7 @@
         </div><br>
        
         <div class="container" id="paso3">
-            <h1 style="color:gray;">Paso 3. Ingrese los datos para el pago</h1> <!--pasar a css-->
+            <h1 style="color:gray;">Ingrese los datos para el pago</h1> <!--pasar a css-->
             <br>
             <form class="form-inline" id="formulario" >
                 <div class="input-group" style="margin: 0 auto;">
@@ -198,16 +212,22 @@
             if (modelo.asientosIDA.length < modelo.cantPasajeros) {
                 Proxy.obtenerAsientosOcupados(modelo.viajeIda, function (result) {
                     modelo.asientosOcupadosIDA = result;
+                   
                     var ocupado = vista.buscarOcupado(modelo.asientosOcupadosIDA, seat);
-                    if (ocupado) {
+                    var bloqueado = modelo.asientosIDA.find(function (a) {
+                            return a == seat;
+                            });
+                    if(ocupado || bloqueado) {
                         window.alert("Asiento Ocupado");
                     } else {
                         modelo.asientosIDA.push(seat);
                         modelo.pasajerosIDA.push(pasajero);
                         vista.listarAsientosIDA(modelo.asientosIDA, modelo.pasajerosIDA);
+                        vista.modify_qty(-1);
+                        document.getElementById("formIDA").reset();
                     }
-
                 });
+                
             } else {
                 window.alert("Ya se ingresó la cantidad máxima de pasajeros");
             }
@@ -224,30 +244,26 @@
             if (modelo.asientosVUELTA.length < modelo.cantPasajeros) {
                 Proxy.obtenerAsientosOcupados(modelo.viajeVUELTA, function (result) {
                     modelo.asientosOcupadosVUELTA = result;
+                    
                     var ocupado = vista.buscarOcupado(modelo.asientosOcupadosVUELTA, seat);
-                    if (ocupado) {
+                    var bloqueado = modelo.asientosVUELTA.find(function (a) {
+                            return a == seat;
+                            });
+                    if(ocupado || bloqueado) {
                         window.alert("Asiento Ocupado");
                     } else {
                         modelo.asientosVUELTA.push(seat);
                         modelo.pasajerosVUELTA.push(pasajero);
                         vista.listarAsientosVUELTA(modelo.asientosVUELTA, modelo.pasajerosVUELTA);
+                        vista.modify_qtyVUELTA(-1);
+                        document.getElementById("formVUELTA").reset();
                     }
-
-                });
+                    
+                }); 
             } else {
                 window.alert("Ya se ingresó la cantidad máxima de pasajeros");
             }
 
-        },
-
-        //IMPLEMENTAR
-        eliminarAsiento: function (event) {
-            var asiento = event.target.id;
-            var pos = modelo.asientos.indexOf(asiento);
-            if (pos > -1) {
-                modelo.asientos.splice(pos, 1);
-            }
-            vista.listarAsientos(modelo.asientos);
         }
 
     };
@@ -271,6 +287,9 @@
         if(localStorage.getItem('viajeVuelta') == "NA") {
             document.getElementById("tiquetesVuelta").style.display = "none";
         }
+        
+        document.getElementById('qtyIDA').value = modelo.cantPasajeros;
+        document.getElementById('qtyVUELTA').value = modelo.cantPasajeros;
         
     }
 
@@ -332,15 +351,38 @@
         img.src = "images/eliminar.png";
         img.id = asiento;
         img.title = "Eliminar";
-        img.addEventListener("click", function (e) {
-            window.alert("Eliminar");
-        });
+        if(listaAsientos.id == "listaAsientosIDA") {
+            img.addEventListener("click", eliminarAsientoIDA);
+        } else {
+           img.addEventListener("click", eliminarAsientoVUELTA); 
+        }
         img.width = "30";
         img.height = "30";
         td.appendChild(img);
         tr.appendChild(td);
 
         listaAsientos.appendChild(tr);
+    }
+  
+    function eliminarAsientoIDA(event) {
+        var asiento = event.target.id;
+        var pos = modelo.asientosIDA.indexOf(asiento);
+        if (pos > -1) {
+            modelo.asientosIDA.splice(pos, 1);
+            modelo.pasajerosIDA.splice(pos, 1); //magia
+            modify_qty(1);
+        }
+        listarAsientosIDA(modelo.asientosIDA, modelo.pasajerosIDA);
+        }
+    function eliminarAsientoVUELTA(event) {
+        var asiento = event.target.id;
+        var pos = modelo.asientosVUELTA.indexOf(asiento);
+        if (pos > -1) {
+            modelo.asientosVUELTA.splice(pos, 1);
+            modelo.pasajerosVUELTA.splice(pos, 1); //magia
+            modify_qtyVUELTA(1);
+        }
+        listarAsientosVUELTA(modelo.asientosVUELTA, modelo.pasajerosVUELTA);
     }
 
     function cargarAsientosIDA(cantFilas, cantAsientosFila) {
@@ -408,6 +450,7 @@
             event.preventDefault();
         } else {
             controlador.insertarAsientoIDA();
+            
         }
     }
     
@@ -438,6 +481,7 @@
             event.preventDefault();
         } else {
             controlador.insertarAsientoVUELTA();
+            
         }
     }
 
@@ -469,6 +513,33 @@
         }
         return false;
     }
+    
+    function modify_qty(val) {
+        
+        var qty = document.getElementById('qtyIDA').value;
+        var new_qty = parseInt(qty,10) + val;
+
+        if (new_qty < 0) {
+            new_qty = 0;
+        }
+
+        document.getElementById('qtyIDA').value = new_qty;
+        return new_qty;
+    }
+    
+    function modify_qtyVUELTA(val) {
+        
+        var qty = document.getElementById('qtyVUELTA').value;
+        var new_qty = parseInt(qty,10) + val;
+
+        if (new_qty < 0) {
+            new_qty = 0;
+        }
+
+        document.getElementById('qtyVUELTA').value = new_qty;
+        return new_qty;
+    }
+    
 
     document.addEventListener("DOMContentLoaded", cargarPagina);
 </script>
