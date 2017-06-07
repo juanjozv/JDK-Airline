@@ -319,6 +319,39 @@ public class AerolineaModelo {
         }
         return vuelos;
     }
+    
+    public static List<TipoAvion> getTipoAvionBusquedaLike(String codigo) throws Exception {
+        List<TipoAvion> tipos = new ArrayList();
+        try {
+            String sql = "select * from tiposAvion where codigo like '%%%s%%';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+
+            while (rs.next()) {
+                tipos.add(toTipoAvion(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad like");
+        }
+        return tipos;
+    }
+    
+    public static List<Avion> getAvionBusquedaLike(String codigo) throws Exception {
+        List<Avion> aviones = new ArrayList();
+        try {
+            String sql = "select * from aviones where codigo like '%%%s%%';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            while (rs.next()) {
+                aviones.add(toAvion(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad like");
+        }
+        return aviones;
+    }
+    
+    
 
     /*---------------------    AGREGAR         ----------------------------*/
     public static int ciudadAdd(Ciudad ciudad) throws Exception {
@@ -357,8 +390,12 @@ public class AerolineaModelo {
                 vuelo.getDestino().getCodigo(), vuelo.getAvion().getCodigo());
         return aerolinea.executeUpdate(sql);
     }
-
     
+    public static int addAvion(Avion avion) throws Exception {
+        String sql = "insert into aviones (codigo, tipoAvion) values ('%s','%s') ";
+        sql = String.format(sql, avion.getCodigo(), avion.getTipoAvion().getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }    
     
     /*---------------------    MODIFICAR         ----------------------------*/
     public static int modifyVuelo(Vuelo vuelo) throws Exception {
@@ -369,7 +406,26 @@ public class AerolineaModelo {
         return aerolinea.executeUpdate(sql);
     }
 
+    public static int tipoAvionModify(TipoAvion tipo) throws Exception {
+        String sql = "update TiposAvion set annio='%s', marca='%s', modelo='%s', "
+                + "cantidadPasajeros=%d, cantidadFilas=%d, cantidadAsientosFila=%d " + "where codigo='%s'";
+        sql = String.format(sql, tipo.getAnnio(), tipo.getMarca(), tipo.getModelo(), tipo.getCantidadPasajeros(),
+                tipo.getCantidadFilas(), tipo.getCantidadAsientosFila(), tipo.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }
     
+    public static int avionModify(Avion avion) throws Exception {
+        String sql = "update Aviones set tipoAvion='%s' where codigo='%s'";
+        sql = String.format(sql, avion.getTipoAvion().getCodigo(), avion.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }
+    
+    public static int modifyCiudad(Ciudad ciudad) throws Exception {
+        String sql = "update Ciudades set nombre='%s', pais='%s', zonaHoraria='%s' "
+                + "where codigo='%s'";
+        sql = String.format(sql, ciudad.getNombre(), ciudad.getPais(), ciudad.getZonaHoraria(), ciudad.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }    
     
     /*---------------------  TO SOMETHING  ----------------------------*/
     // Inicio de métodos toSomething

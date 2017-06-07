@@ -217,7 +217,6 @@
 
     <script>
         //Control
-
         function IndexControl(modelo, vista) {
             this.IndexControl(modelo, vista);
         }
@@ -234,9 +233,8 @@
                 var vista = this.vista;
                 Proxy.getCiudades(function (result) {
                     modelo.ciudades = result;
-                    vista.cargarCiudades(); //magia
-                }
-                );
+                    vista.cargarCiudades();
+                });
             },
             obtenerPromos: function(){
                 var modelo = this.modelo;
@@ -245,8 +243,7 @@
                     modelo.promos = result;
                     vista.cargarCarousel();
                     vista.agregarEventosCarou();
-                }
-                );
+                });
             },
             pasarDatos: function (origen, destino, fechaIda, fechaRegreso, pasajeros) {
                 /*Esto guarda en el local storage*/
@@ -256,7 +253,7 @@
                 localStorage.setItem('fechaRegreso', fechaRegreso);
                 localStorage.setItem('pasajeros', pasajeros);
             }
-        }
+        };
     </script>
 
     <script>

@@ -18,4 +18,4 @@ Usuario.prototype = {
     this.celular = celular;
     this.tipo = tipo;
   }
-}
+};
