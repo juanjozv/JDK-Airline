@@ -34,55 +34,76 @@
     </head>
     <body>
         <br><br><br><br>
-        <div class="container" id="paso1">
-            <h1 style="color:gray;">Paso 1. Ingrese los nombres de los pasajeros</h1> <!--pasar a css-->
+        <div class="container" id="tiquetesIDA"> <!-- <div class="container" id="paso1"> -->
+            <h1 style="color:gray;">Paso 1. Ingrese la informacion de los tiquetes IDA</h1> <!--pasar a css-->
             <br><br>
-            <form class="form-inline">
-                <div class = "input-group" id="pass">
+            <form class="form-inline" id ="formIDA">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="pasajeroIDA" type="text" class="form-control"  placeholder="Nombre del pasajero">
                 </div>
-            </form><br>
-            <div class="btn-group btn-group-lg" id="agregarPasajeros">
-                <button type="button" class="btn btn-primary" id="btnSiguiente1" onclick="controlador.obtenerNombresPasajeros();">
-                    Siguiente</button>
-            </div>
-        </div><br>
-        <div class="container" id="paso2">
-            <h1 style="color:gray;">Paso 2. Seleccione los asientos deseados</h1> <!--pasar a css-->
-            <br><br>
-            <form class="form-inline">
-                <div class = "input-group">
-                    <span><div class="input-group">
-                            <select id="fila" class="form-control">
-                                <option selected  disabled >Seleccione la fila</option>
-                            </select>
-                        </div></span>
-                    <span><div class="input-group">
-                            <select id="num" class="form-control">
-                                <option disabled selected>Seleccione el número de asiento</option>
-                            </select>
-                        </div></span><br>
-                    <span class = "input-group-btn">
-                        <button id= "addAsiento" class = "btn btn-primary" type = "button">
-                            <i class="glyphicon glyphicon-plus"></i>
-                        </button>
-                    </span>
+                <div class="form-group">
+                    <select id="filaIDA" class="form-control">
+                        <option selected  disabled >Seleccione la fila</option>
+                    </select>
                 </div>
-            </form>
-            <br>
+                <div class="form-group">
+                    <select id="numIDA" class="form-control">
+                        <option disabled selected>Seleccione el número de asiento</option>
+                    </select>
+                </div>
+                <br><br>
+                <div class="btn-group btn-group-lg" id="agregarAsientos">
+                    <button type="button" class="btn btn-primary" id="btnAgregarIDA"> Agregar </button>
+                </div>
+            </form><br><br>
             <center><div class="row">
                     <div class="table-responsive">
-                        <table id="tablaAsientos" class="table-striped">
-                            <thead><tr><th>Asiento</th><th>Eliminar</th></tr></thead>
-                            <tbody id="listaAsientos"></tbody>
+                        <table id="tablaAsientosIDA" class="table-striped">
+                            <thead><tr><th>Asiento</th><th>Pasajero</th><th>Eliminar</th></tr></thead>
+                            <tbody id="listaAsientosIDA"></tbody>
                         </table>
                     </div>
                 </div></center>
             <br>
-            <div class="btn-group btn-group-lg" id="agregarAsientos">
-                <button type="button" class="btn btn-primary" id="btnSiguiente2">
-                    Siguiente</button>
-            </div>
+            
         </div><br>
+        
+        <div class="container" id="tiquetesVuelta"> <!-- <div class="container" id="paso1"> -->
+            <h1 style="color:gray;">Paso 2. Ingrese la informacion de los tiquetes VUELTA</h1> <!--pasar a css-->
+            <br><br>
+            <form class="form-inline" id ="formVUELTA">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="pasajeroVUELTA" type="text" class="form-control"  placeholder="Nombre del pasajero">
+                </div>
+                <div class="form-group">
+                    <select id="filaVUELTA" class="form-control">
+                        <option selected  disabled >Seleccione la fila</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="numVUELTA" class="form-control">
+                        <option disabled selected>Seleccione el número de asiento</option>
+                    </select>
+                </div>
+                <br><br>
+                <div class="btn-group btn-group-lg" id="agregarAsientos">
+                    <button type="button" class="btn btn-primary" id="btnAgregarVUELTA"> Agregar </button>
+                </div>
+            </form><br><br>
+            <center><div class="row">
+                    <div class="table-responsive">
+                        <table id="tablaAsientosVUELTA" class="table-striped">
+                            <thead><tr><th>Asiento</th><th>Pasajero</th><th>Eliminar</th></tr></thead>
+                            <tbody id="listaAsientosVUELTA"></tbody>
+                        </table>
+                    </div>
+                </div></center>
+            <br>
+            
+        </div><br>
+       
         <div class="container" id="paso3">
             <h1 style="color:gray;">Paso 3. Ingrese los datos para el pago</h1> <!--pasar a css-->
             <br>
@@ -112,9 +133,15 @@
     //Modelo
     function CompraModelo() {
         this.CompraModelo();
-        this.asientos = [];
-        this.pasajeros = [];
+        this.asientosIDA = [];
+        this.asientosVUELTA = [];
+        
         this.cantPasajeros = localStorage.getItem('pasajeros');
+        this.viajeIda = localStorage.getItem('viajeIda');
+        this.viajeVuelta = localStorage.getItem('viajeVuelta');
+        
+        this.pasajerosIDA = [];
+        this.pasajerosVUELTA = [];
     }
     CompraModelo.prototype = {
         CompraModelo: function () {}
@@ -125,56 +152,95 @@
     //Control
     function CompraControl(modelo, vista) {
         this.CompraControl(modelo, vista);
-        this.cargarAsientos();
-        this.cargarEspaciosPasajeros();
+        
+        
+        this.cargarAsientosIDA();
+        this.cargarAsientosVUELTA();
+        
+        
     }
 
     CompraControl.prototype = {
         CompraControl: function (modelo, vista) {
             this.modelo = modelo;
             this.vista = vista;
-            vista.crearTablaAsientos();
+            vista.crearTablaAsientosIDA();
+            vista.crearTablaAsientosVUELTA();
         },
-        cargarEspaciosPasajeros: function () {
+        
+        cargarAsientosIDA: function () {
             var modelo = this.modelo;
             var vista = this.vista;
-            vista.crearEspaciosPasajeros(modelo.cantPasajeros);
-        },
-        obtenerNombresPasajeros: function () {
-            var modelo = this.modelo;
-            var vista = this.vista;
-            for (var i = 0; i < modelo.cantPasajeros; i++) {
-                var id = "pass" + i;
-                var pass = document.getElementById(id).value;
-                modelo.pasajeros.push(pass);
-            }
-        },
-        cargarAsientos: function () {
-            var modelo = this.modelo;
-            var vista = this.vista;
-            var viajeIda = localStorage.getItem('viajeIda');
-            var viajeVuelta = localStorage.getItem('viajeVuelta');
-            Proxy.obtenerViaje(viajeIda, function (result) {
+            Proxy.obtenerViaje(modelo.viajeIda, function (result) {
                 modelo.viaje = result;
                 var tipo = modelo.viaje.avion.tipoAvion;
-                vista.cargarAsientos(tipo.cantidadFilas, tipo.cantidadAsientosFila);
+                vista.cargarAsientosIDA(tipo.cantidadFilas, tipo.cantidadAsientosFila);
             });
         },
-        insertarAsiento: function () {
+        
+        cargarAsientosVUELTA: function () {
             var modelo = this.modelo;
             var vista = this.vista;
-            var fila = document.getElementById("fila").value;
-            var num = document.getElementById("num").value;
+            Proxy.obtenerViaje(modelo.viajeVuelta, function (result) {
+                modelo.viaje = result;
+                var tipo = modelo.viaje.avion.tipoAvion;
+                vista.cargarAsientosVUELTA(tipo.cantidadFilas, tipo.cantidadAsientosFila);
+            });
+        },
+        
+        insertarAsientoIDA: function () {
+            var modelo = this.modelo;
+            var vista = this.vista;
+            var fila = document.getElementById("filaIDA").value;
+            var num = document.getElementById("numIDA").value;
             var seat = fila + num;
-            if(modelo.asientos.length < modelo.cantPasajeros){
-                modelo.asientos.push(seat);
-                vista.listarAsientos(modelo.asientos);
-            }else{
+            var pasajero = document.getElementById("pasajeroIDA").value;
+            if (modelo.asientosIDA.length < modelo.cantPasajeros) {
+                Proxy.obtenerAsientosOcupados(modelo.viajeIda, function (result) {
+                    modelo.asientosOcupadosIDA = result;
+                    var ocupado = vista.buscarOcupado(modelo.asientosOcupadosIDA, seat);
+                    if (ocupado) {
+                        window.alert("Asiento Ocupado");
+                    } else {
+                        modelo.asientosIDA.push(seat);
+                        modelo.pasajerosIDA.push(pasajero);
+                        vista.listarAsientosIDA(modelo.asientosIDA, modelo.pasajerosIDA);
+                    }
+
+                });
+            } else {
                 window.alert("Ya se ingresó la cantidad máxima de pasajeros");
             }
-            
-            //Hacer visible paso 2 con display block
+
         },
+        
+        insertarAsientoVUELTA: function () {
+            var modelo = this.modelo;
+            var vista = this.vista;
+            var fila = document.getElementById("filaVUELTA").value;
+            var num = document.getElementById("numVUELTA").value;
+            var seat = fila + num;
+            var pasajero = document.getElementById("pasajeroVUELTA").value;
+            if (modelo.asientosVUELTA.length < modelo.cantPasajeros) {
+                Proxy.obtenerAsientosOcupados(modelo.viajeVUELTA, function (result) {
+                    modelo.asientosOcupadosVUELTA = result;
+                    var ocupado = vista.buscarOcupado(modelo.asientosOcupadosVUELTA, seat);
+                    if (ocupado) {
+                        window.alert("Asiento Ocupado");
+                    } else {
+                        modelo.asientosVUELTA.push(seat);
+                        modelo.pasajerosVUELTA.push(pasajero);
+                        vista.listarAsientosVUELTA(modelo.asientosVUELTA, modelo.pasajerosVUELTA);
+                    }
+
+                });
+            } else {
+                window.alert("Ya se ingresó la cantidad máxima de pasajeros");
+            }
+
+        },
+
+        //IMPLEMENTAR
         eliminarAsiento: function (event) {
             var asiento = event.target.id;
             var pos = modelo.asientos.indexOf(asiento);
@@ -182,8 +248,8 @@
                 modelo.asientos.splice(pos, 1);
             }
             vista.listarAsientos(modelo.asientos);
-        },
-        
+        }
+
     };
 
 </script>
@@ -195,41 +261,72 @@
     function cargarPagina(event) {
         modelo = new CompraModelo();
         controlador = new CompraControl(modelo, window);
-        document.getElementById("btnSiguiente1").addEventListener("click", validarPaso1);
-        document.getElementById("btnSiguiente2").addEventListener("click", validarPaso2);
-        document.getElementById("addAsiento").addEventListener("click", validarAsiento);
-        document.getElementById("btnSiguiente3").addEventListener("click", validarPaso3);
+        
+        document.getElementById("formIDA").reset();
+        document.getElementById("formVUELTA").reset();
+        
+        document.getElementById("btnAgregarIDA").addEventListener("click", validarIDA);
+        document.getElementById("btnAgregarVUELTA").addEventListener("click", validarVUELTA);
+        
+        if(localStorage.getItem('viajeVuelta') == "NA") {
+            document.getElementById("tiquetesVuelta").style.display = "none";
+        }
+        
     }
 
-    function crearTablaAsientos() {
-        var table = $("#tablaAsientos").DataTable({
+    function crearTablaAsientosIDA() {
+        var table = $("#tablaAsientosIDA").DataTable({
             bFilter: false,
             lengthChange: false,
             oLanguage: {
                 sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             },
-            columns: [{orderable: false}, {orderable: false}],
+            columns: [{orderable: false}, {orderable: false}, {orderable: false}],
             info: false,
             paging: false
         });
     }
     
-    
+    function crearTablaAsientosVUELTA() {
+        var table = $("#tablaAsientosVUELTA").DataTable({
+            bFilter: false,
+            lengthChange: false,
+            oLanguage: {
+                sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            columns: [{orderable: false}, {orderable: false}, {orderable: false}],
+            info: false,
+            paging: false
+        });
+    }
 
-    function listarAsientos(asientos) {
-        var listaAsientos = document.getElementById("listaAsientos");
+    function listarAsientosIDA(asientos, pasajeros) {
+        var listaAsientos = document.getElementById("listaAsientosIDA");
         listaAsientos.innerHTML = "";
         for (var i = 0; i < asientos.length; i++) {
-            crearListaAsientos(listaAsientos, asientos[i]);
+            crearListaAsientos(listaAsientos, asientos[i], pasajeros[i]);
+        }
+    }
+    
+    function listarAsientosVUELTA(asientos, pasajeros) {
+        var listaAsientos = document.getElementById("listaAsientosVUELTA");
+        listaAsientos.innerHTML = "";
+        for (var i = 0; i < asientos.length; i++) {
+            crearListaAsientos(listaAsientos, asientos[i], pasajeros[i]);
         }
     }
 
-    function crearListaAsientos(listaAsientos, asiento) {
+    function crearListaAsientos(listaAsientos, asiento, pasajero) {
         var tr = document.createElement("tr");
         var td;
         td = document.createElement("td");
         td.appendChild(document.createTextNode(asiento));
         tr.appendChild(td);
+        
+        td = document.createElement("td");
+        td.appendChild(document.createTextNode(pasajero));
+        tr.appendChild(td);
+        
         td = document.createElement("td");
         img = document.createElement("img");
         img.src = "images/eliminar.png";
@@ -246,11 +343,11 @@
         listaAsientos.appendChild(tr);
     }
 
-    function cargarAsientos(cantFilas, cantAsientosFila) {
+    function cargarAsientosIDA(cantFilas, cantAsientosFila) {
         var abc = 65;
         for (var i = 0; i < cantAsientosFila; i++) {
             var letra = String.fromCharCode(abc);
-            $('#fila').append($('<option>', {
+            $('#filaIDA').append($('<option>', {
                 value: letra,
                 text: letra
             }));
@@ -258,47 +355,44 @@
         }
         for (var i = 0; i < cantFilas; i++) {
             var numero = i + 1;
-            $('#num').append($('<option>', {
+            $('#numIDA').append($('<option>', {
                 value: numero,
                 text: numero
             }));
         }
     }
-
-    function crearEspaciosPasajeros(cant) {
-        for (var i = 0; i < cant; i++) {
-            var idi = 'pass' + i;
-            $('<input/>').attr({type: 'text', id: idi, class: 'form-control', placeholder: 'Ingrese el nombre del pasajero',
-                style: "width: 500px"}).appendTo('#pass');
-            $('#pass').append('<br/>');
-            $('#pass').append('<br/>');
+    
+    function cargarAsientosVUELTA(cantFilas, cantAsientosFila) {
+        var abc = 65;
+        for (var i = 0; i < cantAsientosFila; i++) {
+            var letra = String.fromCharCode(abc);
+            $('#filaVUELTA').append($('<option>', {
+                value: letra,
+                text: letra
+            }));
+            abc++;
+        }
+        for (var i = 0; i < cantFilas; i++) {
+            var numero = i + 1;
+            $('#numVUELTA').append($('<option>', {
+                value: numero,
+                text: numero
+            }));
         }
     }
-
-    function validarPaso1(event) {
+    
+    function validarIDA(event) {
         var error = false;
-        for (var i = 0; i < modelo.cantPasajeros; i++) {
-            var id = "pass" + i;
-            var pass = document.getElementById(id);
-            pass.classList.remove("invalid");
-            if (pass.value.length == 0) {
-                pass.classList.add("invalid");
-                error = true;
-            }
+        var nombre = document.getElementById("pasajeroIDA");
+        var fila = document.getElementById("filaIDA");
+        var num = document.getElementById("numIDA");
+        
+        
+        nombre.classList.remove("invalid");
+        if (nombre.value == "") {
+            nombre.classList.add("invalid");
+            error = true;
         }
-        if (error) {
-            window.alert("Error: Espacios vacios");
-            event.preventDefault();
-        }else{
-            $('#paso1').css("display","none");
-            $('#paso2').css("display","block");
-        }
-    }
-
-    function validarAsiento(event) {
-        var error = false;
-        var fila = document.getElementById("fila");
-        var num = document.getElementById("num");
         fila.classList.remove("invalid");
         if (fila.value == "Seleccione la fila") {
             fila.classList.add("invalid");
@@ -312,25 +406,41 @@
         if (error) {
             window.alert("Error: Espacios vacios");
             event.preventDefault();
-        }else{
-            controlador.insertarAsiento();
+        } else {
+            controlador.insertarAsientoIDA();
         }
-        
     }
     
-    function validarPaso2(event) {
-        if ($("#tablaAsientos").data().count() < modelo.cantPasajeros) {
-            window.alert("Error: Faltan asientos por elegir");
+    function validarVUELTA(event) {
+        var error = false;
+        var nombre = document.getElementById("pasajeroVUELTA");
+        var fila = document.getElementById("filaVUELTA");
+        var num = document.getElementById("numVUELTA");
+        fila.classList.remove("invalid");
+        
+        
+        nombre.classList.remove("invalid");
+        if (nombre.value == "") {
+            nombre.classList.add("invalid");
+            error = true;
+        }
+        if (fila.value == "Seleccione la fila") {
+            fila.classList.add("invalid");
+            error = true;
+        }
+        num.classList.remove("invalid");
+        if (num.value == "Seleccione el número de asiento") {
+            num.classList.add("invalid");
+            error = true;
+        }
+        if (error) {
+            window.alert("Error: Espacios vacios");
             event.preventDefault();
-        }else{
-            
-            
+        } else {
+            controlador.insertarAsientoVUELTA();
         }
-        
     }
-    
-    
-    
+
     function validarPaso3(event) {
         var error = false;
         var tarjeta = document.getElementById("tarjeta");
@@ -349,6 +459,15 @@
             window.alert("Error: Espacios vacios");
             event.preventDefault();
         }
+    }
+
+
+    
+    function buscarOcupado(ocupados, asiento) {
+        for (var i = 0; i < ocupados.length; i++) {
+            if (ocupados[i] == asiento) return true;
+        }
+        return false;
     }
 
     document.addEventListener("DOMContentLoaded", cargarPagina);

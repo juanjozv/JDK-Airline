@@ -483,7 +483,7 @@ public class AerolineaModelo {
     
     //-------------Para caso de uso COMPRA----------------------------//
     
-    public static List<Tiquete> getTiquetes(String codViaje) throws Exception { //necesito obtener los asientos de los tiquetes, pero no puedo directamente
+    public static List<Tiquete> getTiquetesPorViaje(String codViaje) throws Exception { //necesito obtener los asientos de los tiquetes, pero no puedo directamente
         List<Tiquete> tiquetes = new ArrayList();
         try {
             String sql = "select * from tiquete where viaje = '%s';";
@@ -498,4 +498,13 @@ public class AerolineaModelo {
         return tiquetes;
     }
     
+    public static List<String> getAsientosOcupadosPorViaje(String codigoViaje) throws Exception {
+        List<String> asientos = new ArrayList();
+        List<Tiquete> tiquetes = getTiquetesPorViaje(codigoViaje);
+        tiquetes.forEach((miTiquete) -> {
+            asientos.add(miTiquete.getCodigoAsiento());
+        });
+        return asientos;
+    }
+   
 }

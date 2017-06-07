@@ -11,11 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-/*import aerolinea.modelo.Ciudad;
-import aerolinea.modelo.Avion;
-import aerolinea.modelo.Viaje;
-import aerolinea.modelo.Vuelo;
-import aerolinea.modelo.TipoAvion;*/
+
 
 @WebServlet(name = "AerolineaService", urlPatterns = {"/AerolineaService"})
 public class AerolineaService extends HttpServlet {
@@ -165,6 +161,13 @@ public class AerolineaService extends HttpServlet {
                     String codigo = request.getParameter("codigo");
                     viaje = AerolineaModelo.getViaje(codigo);
                     json = gson.toJson(viaje);
+                    out.write(json);
+                    break;
+                    
+                case "obtenerAsientosOcupados":
+                    String codViaje = request.getParameter("codViaje");
+                    List<String> asientos = AerolineaModelo.getAsientosOcupadosPorViaje(codViaje);
+                    json = gson.toJson(asientos);
                     out.write(json);
                     break;
                     
