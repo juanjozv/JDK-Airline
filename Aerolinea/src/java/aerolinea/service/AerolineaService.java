@@ -86,6 +86,24 @@ public class AerolineaService extends HttpServlet {
                     out.write(json);
                     System.out.print(json);
                     break;
+                case "avionModify":
+                    json = request.getParameter("avion");
+                    Avion avion = gson.fromJson(json, Avion.class);
+                    int modAvion = AerolineaModelo.avionModify(avion);
+                    out.write((modAvion == 1) ? "0" : "1");
+                    break;
+                case "avionSearch":
+                    String codAvion = request.getParameter("codigo");
+                    aviones = AerolineaModelo.getAvionBusquedaLike(codAvion);
+                    json = gson.toJson(aviones);
+                    out.write(json);
+                    break;
+                case "avionAdd":
+                    json = request.getParameter("avion");
+                    Avion avionAdd = gson.fromJson(json, Avion.class);
+                    int avionA = AerolineaModelo.addAvion(avionAdd);
+                    out.write((avionA == 1) ? "0" : "1");
+                    break;
                 case "tiposAvionListAll":
                     tipos = AerolineaModelo.getTiposAvionAll();
                     json = gson.toJson(tipos);
@@ -93,12 +111,22 @@ public class AerolineaService extends HttpServlet {
                     System.out.print(json);
                     break;
                 case "tiposAvionSearch":
+                    String tipoAvion = request.getParameter("codigo");
+                    tipos = AerolineaModelo.getTipoAvionBusquedaLike(tipoAvion);
+                    json = gson.toJson(tipos);
+                    out.write(json);
                     break;
                 case "tipoAvionAdd":
                     json = request.getParameter("tipoAvion");
                     TipoAvion tipoAdd = gson.fromJson(json, TipoAvion.class);
                     int inserted = AerolineaModelo.tipoAvionAdd(tipoAdd);
                     out.write((inserted == 1) ? "0" : "1");
+                    break;
+                case "tipoAvionModify":
+                    json = request.getParameter("tipoAvion");
+                    TipoAvion tipoavion = gson.fromJson(json, TipoAvion.class);
+                    int mod = AerolineaModelo.tipoAvionModify(tipoavion);
+                    out.write((mod == 1) ? "0" : "1");
                     break;
                 case "agregarUsuario":
                     json = request.getParameter("usuario");
@@ -123,8 +151,6 @@ public class AerolineaService extends HttpServlet {
                     Ciudad ciudadAdd = gson.fromJson(json, Ciudad.class);
                     int ok = AerolineaModelo.ciudadAdd(ciudadAdd);
                     out.write((ok == 1) ? "0" : "1");
-                    break;
-                case "avionSearch":
                     break;
                 case "vueloCiudadSearch":
                     String ciudadB = request.getParameter("ciudad");
