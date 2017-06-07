@@ -507,13 +507,13 @@
         
         function agregarDescripciones(){
             var spans = document.getElementsByTagName("span");
-            spans[15].append(" Código: ");
-            spans[16].append(" Origen: ");
-            spans[17].append(" Destino: ");
-            spans[18].append(" Distancia: ");
-            spans[19].append(" Duración: ");
-            spans[20].append(" Descuento: ");
-            spans[21].append(" Avión: ");
+            spans[15].append(" Código ");
+            spans[16].append(" Origen ");
+            spans[17].append(" Destino ");
+            spans[18].append(" Distancia ");
+            spans[19].append(" Duración ");
+            spans[20].append(" Descuento ");
+            spans[21].append(" Avión ");
         }
         
         function quitarDescripciones(){

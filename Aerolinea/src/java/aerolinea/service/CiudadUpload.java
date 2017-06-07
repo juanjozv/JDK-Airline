@@ -16,10 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-/**
- *
- * @author Escinf
- */
 @WebServlet(name = "CiudadUpload", urlPatterns = {"/CiudadUpload"})
 @MultipartConfig
 public class CiudadUpload extends HttpServlet {
@@ -35,15 +31,14 @@ public class CiudadUpload extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("DIRECCION = " + getServletContext().getRealPath("/"));
        try {
             final String codigo = new BufferedReader(new InputStreamReader(request.getPart("codigo").getInputStream())).readLine();
             final Part filePart = request.getPart("imagen");
             OutputStream out = null;
             InputStream filecontent = null;
             final PrintWriter writer = response.getWriter();
-            String directory = getServletContext().getRealPath("/")+"images/"+codigo+".png";
-            out = new FileOutputStream(new File(directory));
-            System.out.println(directory);
+            out = new FileOutputStream(new File(getServletContext().getRealPath("/")+"images/"+codigo+".png"));
             filecontent = filePart.getInputStream();
 
             int read = 0;

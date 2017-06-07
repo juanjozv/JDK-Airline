@@ -201,7 +201,7 @@ Proxy.modifyVuelo = function(vuelo,callBack){
     AJAX_req.send("vuelo=" + jsonVuelo); 
 };
 
-Proxy.ciudadAdd = function (ciudad/*, imagen*/, callBack) {
+Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
     var jsonCiudad = JSON.stringify(ciudad, JsonUtils.replacer);
     var AJAX_req = new XMLHttpRequest();
     url = "/Aerolinea/AerolineaService?action=ciudadAdd";
@@ -209,14 +209,12 @@ Proxy.ciudadAdd = function (ciudad/*, imagen*/, callBack) {
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     AJAX_req.onreadystatechange = function () {
         if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
-             var status = parseInt(AJAX_req.responseText);
-             callBack(status);           
-            /*if (parseInt(AJAX_req.responseText)==0){
+                if (parseInt(AJAX_req.responseText)==0){
                 Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
             }
             else{
                 callBack(1);
-            }*/
+            }
         }
     };
     AJAX_req.send("ciudad=" + jsonCiudad);
@@ -352,7 +350,7 @@ Proxy.avionSearch = function (avion, callback) {
     AJAX_req.send("codigo=" + avion);
 };
 
-Proxy.modifyCiudad = function(ciudad/*, imagen*/,callBack){
+Proxy.modifyCiudad = function(ciudad, imagen,callBack){
     var jsonCiudad = JSON.stringify(ciudad,JsonUtils.replacer);
     var AJAX_req = new XMLHttpRequest(); 
     url="/Aerolinea/AerolineaService?action=ciudadModify";
@@ -360,15 +358,13 @@ Proxy.modifyCiudad = function(ciudad/*, imagen*/,callBack){
     AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");      
     AJAX_req.onreadystatechange = function(){
         if( AJAX_req.readyState === 4 && AJAX_req.status === 200 ){
-            var status = parseInt(AJAX_req.responseText);
-            callBack(status);
-            /*if (parseInt(AJAX_req.responseText)==0){
+            if (parseInt(AJAX_req.responseText)==0){
                 Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
             }
             else{
                 callBack(1);
-            }*/
-        } 
+            }
+        }
     };
     AJAX_req.send("ciudad=" + jsonCiudad); 
 };

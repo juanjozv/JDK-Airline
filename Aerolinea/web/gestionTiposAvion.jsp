@@ -439,12 +439,12 @@
         
         function agregarDescripciones() {
             var spans = document.getElementsByTagName("span");
-            spans[15].append(" Código: ");
-            spans[16].append(" Año: ");
-            spans[17].append(" Marca: ");
-            spans[18].append(" Modelo: ");
-            spans[19].append(" Cantidad de filas: ");
-            spans[20].append(" Cantidad de asientos por fila: ");
+            spans[15].append(" Código ");
+            spans[16].append(" Año ");
+            spans[17].append(" Marca ");
+            spans[18].append(" Modelo ");
+            spans[19].append(" Cantidad de filas ");
+            spans[20].append(" Cantidad de asientos por fila ");
         }
 
         function quitarDescripciones() {

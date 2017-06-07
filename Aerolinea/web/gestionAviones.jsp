@@ -382,7 +382,7 @@
         
         function agregarDescripciones() {
             var spans = document.getElementsByTagName("span");
-            spans[15].append(" Código: ");
+            spans[15].append(" Código ");
             spans[16].append(" Tipo de avión ");
         }
 

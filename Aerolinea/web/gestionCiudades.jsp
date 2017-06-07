@@ -162,7 +162,7 @@
                 var vista = this.vista;
                 var ciudad = this.crearCiudad();
                 var imagen = document.getElementById("fileIn").files[0];
-                Proxy.ciudadAdd(ciudad/*, imagen*/, function (status){
+                Proxy.ciudadAdd(ciudad, imagen, function (status){
                     switch(status){
                         case 0:
                             window.alert("Datos agregados");
@@ -178,7 +178,7 @@
                 var vista = this.vista;
                 var ciudad = this.crearCiudad();
                 var imagen = document.getElementById("fileIn").files[0];
-                Proxy.modifyCiudad(ciudad/*, imagen*/, function(status){
+                Proxy.modifyCiudad(ciudad, imagen, function(status){
                     switch(status){
                         case 0: 
                             window.alert("Datos modificados");
@@ -409,11 +409,11 @@
 
         function agregarDescripciones(){
             var spans = document.getElementsByTagName("span");
-            spans[15].append(" Código: ");
-            spans[16].append(" Nombre: ");
-            spans[17].append(" País: ");
-            spans[18].append(" Zona Horaria: ");
-            spans[19].append(" Explorar: ");
+            spans[14].append(" Código ");
+            spans[15].append(" Nombre ");
+            spans[16].append(" País ");
+            spans[17].append(" Zona Horaria ");
+            spans[18].append(" Explorar ");
         }
 
         function quitarDescripciones(){
