@@ -210,7 +210,7 @@ Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
     AJAX_req.onreadystatechange = function () {
         if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
                 if (parseInt(AJAX_req.responseText)==0){
-                Proxy.ciudadAddImagen(ciudad.codigo, imagen, callBack);
+                Proxy.ciudadAddImagen(ciudad.nombre, imagen, callBack);
             }
             else{
                 callBack(1);
@@ -220,7 +220,7 @@ Proxy.ciudadAdd = function (ciudad, imagen, callBack) {
     AJAX_req.send("ciudad=" + jsonCiudad);
 };
 
-Proxy.ciudadAddImagen = function(codigo,imagen,callBack){
+Proxy.ciudadAddImagen = function(nombre,imagen,callBack){
     var AJAX_req = new XMLHttpRequest();  
     url = "/Aerolinea/CiudadUpload";
     AJAX_req.open( "POST", url, true );
@@ -230,7 +230,7 @@ Proxy.ciudadAddImagen = function(codigo,imagen,callBack){
         }
     };
     var formdata = new FormData();
-    formdata.append("codigo", codigo);
+    formdata.append("nombre", nombre);
     formdata.append("imagen", imagen); 
     AJAX_req.send(formdata);    
 };

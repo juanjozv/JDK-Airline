@@ -33,12 +33,12 @@ public class CiudadUpload extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("DIRECCION = " + getServletContext().getRealPath("/"));
        try {
-            final String codigo = new BufferedReader(new InputStreamReader(request.getPart("codigo").getInputStream())).readLine();
+            final String nombre = new BufferedReader(new InputStreamReader(request.getPart("nombre").getInputStream())).readLine();
             final Part filePart = request.getPart("imagen");
             OutputStream out = null;
             InputStream filecontent = null;
             final PrintWriter writer = response.getWriter();
-            out = new FileOutputStream(new File(getServletContext().getRealPath("/")+"images/"+codigo+".png"));
+            out = new FileOutputStream(new File(getServletContext().getRealPath("/")+"images/"+nombre+".jpg"));
             filecontent = filePart.getInputStream();
 
             int read = 0;
