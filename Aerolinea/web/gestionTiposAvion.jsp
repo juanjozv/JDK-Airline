@@ -44,7 +44,7 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarTipoAvion" type="text" class="form-control" placeholder="Buscar tipo de avión por ID">
+                    <input id="buscarTipoAvion" type="text" class="form-control" placeholder="Buscar tipo de avión por ID" autocomplete="off">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button" onclick="controlador.buscarTipoAvion();">
                             <i class="glyphicon glyphicon-search"></i>
@@ -70,7 +70,8 @@
                             <th>Pasajeros</th>
                             <th>Filas</th>
                             <th>Asientos por fila</th>
-                            <th>Modificar / Eliminar</th>
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaTiposAvion"></tbody>
@@ -90,32 +91,32 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idTipoAvion" type="text" class="form-control" placeholder="Ingrese el identificador del tipo de avión">
+                            <input id="idTipoAvion" type="text" class="form-control" placeholder="Ingrese el identificador del tipo de avión" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="añoAvion" type="text" class="form-control" placeholder="Ingrese el año del avión">
+                            <input id="añoAvion" type="text" class="form-control" placeholder="Ingrese el año del avión" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="marcaAvion" type="text" class="form-control" placeholder="Ingrese la marca del avión">
+                            <input id="marcaAvion" type="text" class="form-control" placeholder="Ingrese la marca del avión" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="modeloAvion" type="text" class="form-control" placeholder="Ingrese el modelo del avión">
+                            <input id="modeloAvion" type="text" class="form-control" placeholder="Ingrese el modelo del avión" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="filasAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de filas">
+                            <input id="filasAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de filas" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input id="asientosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de asientos por fila">
+                            <input id="asientosAvion" type="text" class="form-control" placeholder="Ingrese la cantidad de asientos por fila" autocomplete="off">
                         </div>
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarTipoAvion">
@@ -275,6 +276,7 @@
                             {orderable: true},
                             {orderable: true},
                             {orderable: true},
+                            {orderable: false},
                             {orderable: false}
                     ],
                     order: [ [0, 'asc'] ]
@@ -327,7 +329,9 @@
             img.width = "30";
             img.height = "30";
             td.appendChild(img);
-
+            tr.appendChild(td);
+            
+            td = document.createElement("td");
             img = document.createElement("img");
             img.src = "images/eliminar.png";
             img.id = "Eliminar";

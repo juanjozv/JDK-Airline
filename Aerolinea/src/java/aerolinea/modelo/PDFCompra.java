@@ -9,7 +9,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class PDFCompra {
 
-    public static void crearCompraPDF(List<Tiquete> tiquetes) throws DocumentException, MalformedURLException, IOException {
+    public static void crearCompraPDF(List<Tiquete> tiquetes, Compra compra) throws DocumentException, MalformedURLException, IOException {
         Font fnormal = FontFactory.getFont(FontFactory.COURIER, 16);
         Font fbold = FontFactory.getFont(FontFactory.COURIER_BOLD, 16);
         Font ftitle = FontFactory.getFont(FontFactory.COURIER_BOLD, 18);
@@ -42,15 +41,28 @@ public class PDFCompra {
 
             Image img = Image.getInstance("/images/JDK.png");
             document.add(img);
-            Paragraph titulo = new Paragraph("\n \n Tiquetes de compra", ftitle);
+            
+            String codCompra = compra.getCodigoCompra();
+            Paragraph titulo = new Paragraph("JDK AEROLINEA\n", ftitle);
             titulo.setAlignment(Element.ALIGN_CENTER);
             document.add(titulo);
+            
+            String cliente = compra.getUsuario().getNombre() + " " + compra.getUsuario().getApellidos();
+            String total = Float.toString(compra.getPrecioTotal());
+            Paragraph encabezado = new Paragraph("COMPRA #"+ codCompra+ "\n"+
+                    "CLIENTE: "+ cliente+ "\n"+
+                    "TOTAL: $"+ total + "\n", fnormal);
+                    
+            Paragraph subtitulo = new Paragraph("\n \n TIQUETES COMPRADOS \n", ftitle);
+            subtitulo.setAlignment(Element.ALIGN_CENTER);
+            document.add(subtitulo);
             PdfPTable tabla = new PdfPTable(1);
-            tabla.setTotalWidth(document.getPageSize().getWidth() - 90);
             Paragraph txt, seat;
             PdfPCell celda;
-            Paragraph space = new Paragraph("\n\n------------------------------------------------------\n");
+            Paragraph space = new Paragraph("\n------------------------------------------------------\n");
+            document.add(space);
             for (int i = 0; i < tiquetes.size(); i++) {
+                tabla.setTotalWidth(document.getPageSize().getWidth() - 90);
                 Tiquete tiquete = tiquetes.get(i);
                 String vuelo = tiquete.getViaje().getVuelo().getCodigo();
                 String fecha = tiquete.getViaje().getFecha();
@@ -66,8 +78,9 @@ public class PDFCompra {
                         + "ASIENTO" + asiento, fnormal);
                 celda = new PdfPCell(txt);
                 tabla.addCell(celda);
+                document.add(tabla);
+                document.add(space);
             }
-            document.add(tabla);
             document.close();
             System.out.println("PDF generado correctamente");
         } catch (DocumentException documentException) {

@@ -550,6 +550,13 @@ table.table-striped thead tr {background-color: #2e6da4; color: #ffffff; }
 table.table-striped tbody tr:nth-child(odd) {background: #d9d9d9;}
 table.table-striped tbody tr:nth-child(even) {background: #f2f2f2;}
 table.table-striped tbody tr:hover {background: #cccccc;}
+
+#tablaAsientosVUELTA, #tablaAsientosIDA{
+     width: 70% !important;
+}
+#tablaAviones{width: 50% !important;}
+#tablaTiposAvion, #tablaRutas, #tablaHorarios{width: 85% !important;}
+#tablaCiudades{width: 75% !important;}
 /*-------------------------------TABLES ---------------------------------*/
 
 
@@ -558,7 +565,7 @@ table.table-striped tbody tr:hover {background: #cccccc;}
 
 /******************************** LA CAJITA DE PASAJEROS **************************/
 #qtyIDA, #qtyVUELTA {
-	font-size: 2.4em;
+	font-size: 20px;
 	background-color: transparent;
 	text-align: center;
 	border-width: 0;
@@ -577,10 +584,9 @@ table.table-striped tbody tr:hover {background: #cccccc;}
         -webkit-border-radius: 12px;
         border-radius: 12px; 
         -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
-        padding: .8em .8em 1em;
-        width: 8em;
+        /*padding: .8em .8em 1em;*/
+        width: 10em;
         margin: 0 auto;	
-        -webkit-box-shadow: 0px 0px 12px 0px #000;
         
   
 }

@@ -45,7 +45,7 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarRuta" type="text" class="form-control" placeholder = "Buscar ruta por ciudad">
+                    <input id="buscarRuta" type="text" class="form-control" placeholder = "Buscar ruta por ciudad" autocomplete="off">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button" onclick ="controlador.buscarRuta();">
                             <i class="glyphicon glyphicon-search"></i>
@@ -71,7 +71,8 @@
                             <th>Duración</th>
                             <th>Descuento</th>
                             <th>Avión</th>
-                            <th>Modificar / Eliminar</th>
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaRutas"></tbody>
@@ -91,7 +92,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="codigo" type="text" class="form-control" placeholder="Ingrese el identificador de la ruta">
+                            <input id="codigo" type="text" class="form-control" placeholder="Ingrese el identificador de la ruta" autocomplete="off">
                         </div>
                         <br>                        
                         <div class="input-group">
@@ -110,17 +111,17 @@
                         <br>              
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-road"></i></span>
-                            <input id="distancia" type="text" class="form-control" placeholder="Ingrese la distancia de la ruta">
+                            <input id="distancia" type="text" class="form-control" placeholder="Ingrese la distancia de la ruta" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            <input id="duracion" type="text" class="form-control" placeholder="Ingrese la duración de la ruta">
+                            <input id="duracion" type="text" class="form-control" placeholder="Ingrese la duración de la ruta" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-                            <input id="descuento" type="text" class="form-control" placeholder="Ingrese el descuento de la ruta (Opcional)">
+                            <input id="descuento" type="text" class="form-control" placeholder="Ingrese el descuento de la ruta (Opcional)" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
@@ -312,6 +313,7 @@
                         {orderable: true },
                         {orderable: true },
                         {orderable: false},
+                        {orderable: false},
                         {orderable: false}
                     ],
                     order: [ [0, 'asc'] ]
@@ -364,7 +366,9 @@
             img.width = "30";
             img.height = "30";
             td.appendChild(img);
-
+            tr.appendChild(td);
+            
+            td = document.createElement("td");
             img = document.createElement("img");
             img.src = "images/eliminar.png";
             img.id = "Eliminar";

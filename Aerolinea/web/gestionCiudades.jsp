@@ -44,7 +44,7 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarCiudad" type="text" class="form-control" placeholder="Buscar ciudad por ID">
+                    <input id="buscarCiudad" type="text" class="form-control" placeholder="Buscar ciudad por ID" autocomplete="off">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button" onclick ="controlador.buscarCiudad();">
                             <i class="glyphicon glyphicon-search"></i>
@@ -67,7 +67,8 @@
                             <th>Nombre</th>
                             <th>País</th>
                             <th>Zona Horaria</th>
-                            <th>Modificar / Eliminar</th>
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaCiudades"></tbody>
@@ -87,29 +88,29 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="codigo" type="text" class="form-control" placeholder="Ingrese el código de la ciudad">
+                            <input id="codigo" type="text" class="form-control" placeholder="Ingrese el código de la ciudad" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="nombre" type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad">
+                            <input id="nombre" type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="pais" type="text" class="form-control" placeholder="Ingrese el país">
+                            <input id="pais" type="text" class="form-control" placeholder="Ingrese el país" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
-                            <input id="zonaHoraria" type="text" class="form-control" placeholder="Ingrese la zona horaria">
+                            <input id="zonaHoraria" type="text" class="form-control" placeholder="Ingrese la zona horaria" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group ">
                             <span class="input-group-addon btn btn-default btn-file">
                                 <i class="glyphicon glyphicon-open-file"></i>&nbsp Explorar<input type="file" accept="image/*" id="fileIn" onchange="act();" hidden>
                             </span>
-                            <input id="imagen" type="text"  class="form-control" placeholder="Seleccione una imagen de la ciudad" readonly disabled>
+                            <input id="imagen" type="text" class="form-control" placeholder="Seleccione una imagen de la ciudad" readonly disabled autocomplete="off">
                         </div>
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarCiudad">
@@ -263,6 +264,7 @@
                             {orderable: true},
                             {orderable: true},
                             {orderable: true},
+                            {orderable: false},
                             {orderable: false}
                     ],
                     order: [ [0, 'asc'] ]
@@ -306,8 +308,10 @@
             img.width = "30";
             img.height = "30";
             td.appendChild(img);
-
-            var img = document.createElement("img");
+            tr.appendChild(td);
+            
+            td = document.createElement("td");
+            img = document.createElement("img");
             img.src = "images/eliminar.png";
             img.id = "Eliminar";
             img.title = "Eliminar";

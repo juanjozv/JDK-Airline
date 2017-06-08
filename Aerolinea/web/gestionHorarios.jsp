@@ -42,7 +42,7 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar avión por ID">
+                    <input id="buscarAvion" type="text" class="form-control" placeholder="Buscar avión por ID" autocomplete="off">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -67,7 +67,8 @@
                             <th>Hora salida</th>
                             <th>Hora llegada</th>
                             <th>Precio</th>
-                            <th>Modificar/Eliminar</th>
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaHorarios">
@@ -88,7 +89,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idHorario" type="text" class="form-control" placeholder="Ingrese el identificador del horario">
+                            <input id="idHorario" type="text" class="form-control" placeholder="Ingrese el identificador del horario" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
@@ -110,7 +111,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                            <input id="salidaHorario" type="text" class="form-control" placeholder="Ingrese la hora de salida HH:mm">
+                            <input id="salidaHorario" type="text" class="form-control" placeholder="Ingrese la hora de salida HH:mm" autocomplete="off">
                         </div>
                         <br>
                         <center><div class="btn-group btn-group-lg" id="registrarHorario">
@@ -208,27 +209,15 @@
                 oLanguage: {
                     sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 },
-                columns: [{
-                        orderable: true
-                    },
-                    {
-                        orderable: false
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: true
-                    },
-                    {
-                        orderable: false
-                    }
+                columns: [
+                    {orderable: true},
+                    {orderable: false},
+                    {orderable: true},
+                    {orderable: true},
+                    {orderable: true},
+                    {orderable: true},
+                    {orderable: false},
+                    {orderable: false}
                 ],
                 order: [
                     [5, 'asc']
@@ -279,7 +268,9 @@
             img.width = "30";
             img.height = "30";
             td.appendChild(img);
-
+            tr.appendChild(td);
+            
+            td = document.createElement("td");
             img = document.createElement("img");
             img.src = "images/eliminar.png";
             img.id = "Eliminar";

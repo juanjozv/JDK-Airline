@@ -39,15 +39,14 @@
             <br>
             <center>
                 <div class="box">    
-                    <label for="qty">Campos Restantes</label>
-                    <input id="qtyIDA" value="0" />
+                    <label for="qty">Espacios Restantes</label><input id="qtyIDA" value="0" />
                 </div>
             </center>
             <br><br>
             <form class="form-inline" id ="formIDA">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="pasajeroIDA" type="text" class="form-control"  placeholder="Nombre del pasajero">
+                    <input id="pasajeroIDA" type="text" class="form-control"  placeholder="Nombre del pasajero" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <select id="filaIDA" class="form-control">
@@ -81,7 +80,7 @@
             <br>
             <center>
                 <div class="box">    
-                    <label for="qty">Campos Restantes</label>
+                    <label for="qty">Espacios Restantes</label>
                     <input id="qtyVUELTA" value="0" />
                 </div>
             </center>
@@ -89,7 +88,7 @@
             <form class="form-inline" id ="formVUELTA">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="pasajeroVUELTA" type="text" class="form-control"  placeholder="Nombre del pasajero">
+                    <input id="pasajeroVUELTA" type="text" class="form-control"  placeholder="Nombre del pasajero" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <select id="filaVUELTA" class="form-control">
@@ -131,7 +130,7 @@
                 <div class="input-group" style="margin: 0 auto;">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input id="codSeguridad" type="text" class="form-control" style="width:500px;"
-                           placeholder="Ingrese el código de seguridad de la tarjeta">
+                           placeholder="Ingrese el código de seguridad de la tarjeta" autocomplete="off">
                 </div>
             </form><br>
             <div class="btn-group btn-group-lg" id="agregarPago">

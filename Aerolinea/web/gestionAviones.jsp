@@ -33,7 +33,7 @@
         <script type="text/javascript" src="js/Tiquete.js"></script>
         <script type="text/javascript" src="js/Proxy.js"></script>
         <script type="text/javascript" src="js/JsonUtils.js"></script>
-        
+
         <%@ include file="header.jspf" %>
 
     </head>
@@ -44,7 +44,7 @@
             <br><br>  
             <form class="form-inline">
                 <div class = "input-group input-group-lg">
-                    <input id="buscar" type="text" class="form-control" placeholder="Buscar avión por ID">
+                    <input id="buscar" type="text" class="form-control" placeholder="Buscar avión por ID" autocomplete="off">
                     <span class = "input-group-btn">
                         <button class = "btn btn-default" type = "button" onclick="controlador.buscarAvion();">
                             <i class="glyphicon glyphicon-search"></i>
@@ -65,7 +65,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Tipo de avión</th>
-                            <th>Modificar/Eliminar
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="listaAviones"></tbody>
@@ -85,7 +86,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
-                            <input id="idAvion" type="text" class="form-control" placeholder="Ingrese el identificador del avión">
+                            <input id="idAvion" type="text" class="form-control" placeholder="Ingrese el identificador del avión" autocomplete="off">
                         </div>
                         <br>
                         <div class="input-group">
@@ -246,7 +247,7 @@
         }
 
         function crearTablaAviones() {
-            if (!$.fn.dataTable.isDataTable('#tablaAviones') ){
+            if (!$.fn.dataTable.isDataTable('#tablaAviones')) {
                 $("#tablaAviones").DataTable({
                     bFilter: false,
                     lengthChange: false,
@@ -255,11 +256,12 @@
                         sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                     },
                     columns: [
-                            {orderable: true },
-                            {orderable: true },
-                            {orderable: false}
+                        {orderable: true},
+                        {orderable: true},
+                        {orderable: true},
+                        {orderable: false}
                     ],
-                    order: [ [0, 'asc'] ]
+                    order: [[0, 'asc']]
                 });
             }
         }
@@ -268,7 +270,7 @@
             var listaAviones = document.getElementById("listaAviones");
             listaAviones.innerHTML = "";
             for (var i = 0; i < aviones.length; i++) {
-                listarAvion(aviones[i],listaAviones);
+                listarAvion(aviones[i], listaAviones);
             }
         }
 
@@ -294,7 +296,9 @@
             img.width = "30";
             img.height = "30";
             td.appendChild(img);
+            tr.appendChild(td);
 
+            td = document.createElement("td");
             img = document.createElement("img");
             img.src = "images/eliminar.png";
             img.id = "Eliminar";
@@ -326,7 +330,7 @@
             codigo.disabled = true;
             document.getElementById("tipoAvion").value = avion.tipoAvion.codigo;
         }
-        
+
         function cargarTipos() {
             for (var i = 0; i < modelo.tipos.length; i++) {
                 var cod = modelo.tipos[i].codigo;
@@ -336,22 +340,22 @@
                     text: opcion
                 }));
             }
-        }      
-        
-        function registrar(){
+        }
+
+        function registrar() {
             var btn = document.getElementById("btnRegistrarAvion");
-            if(btn.innerText === "Modificar")  
+            if (btn.innerText === "Modificar")
                 controlador.modificarAvion();
-            if(btn.innerText === "Agregar")     
+            if (btn.innerText === "Agregar")
                 controlador.agregarAvion();
         }
-        
-        function recargar(){
-            var modal = document.getElementById("registrarAvionModal");            
+
+        function recargar() {
+            var modal = document.getElementById("registrarAvionModal");
             controlador.obtenerAviones();
-            modal.style.display = "none";           
+            modal.style.display = "none";
         }
-        
+
         function validar(event) {
             var codigo = document.getElementById("idAvion");
             var tipoAvion = document.getElementById("tipoAvion");
@@ -374,12 +378,12 @@
                 event.preventDefault();
             }
         }
-        
-        function quitarInvalid(){
+
+        function quitarInvalid() {
             document.getElementById("idAvion").classList.remove("invalid");
-            document.getElementById("tipoAvion").classList.remove("invalid");           
+            document.getElementById("tipoAvion").classList.remove("invalid");
         }
-        
+
         function agregarDescripciones() {
             var spans = document.getElementsByTagName("span");
             spans[15].append(" Código ");
