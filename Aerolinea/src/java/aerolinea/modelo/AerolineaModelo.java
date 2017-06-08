@@ -162,7 +162,7 @@ public class AerolineaModelo {
         return vuelo;
     }
     
-    public static Viaje getViaje(String codigo) throws Exception { //buscacara un viaje solamente
+    public static Viaje getViaje(String codigo) throws Exception {
         Viaje viaje = new Viaje();
         try {
             String sql = "select * from viajes where codigo = '%s';";
@@ -177,7 +177,7 @@ public class AerolineaModelo {
         return viaje;
     }
     
-    public static Usuario getUsuario(String username) throws Exception { //buscacara un usuario solamente
+    public static Usuario getUsuario(String username) throws Exception {
         Usuario usuario = new Usuario();
         try {
             String sql = "select * from usuarios where username = '%s';";
