@@ -135,8 +135,8 @@
                 </div>
             </form><br>
             <div class="btn-group btn-group-lg" id="agregarPago">
-                <button type="button" class="btn btn-primary" id="btnSiguiente3">
-                    Siguiente</button>
+                <button type="button" class="btn btn-primary" id="btnPago">
+                    Ver compra</button>
             </div>
         </div>
     </body>
@@ -284,12 +284,16 @@
         document.getElementById("btnAgregarIDA").addEventListener("click", validarIDA);
         document.getElementById("btnAgregarVUELTA").addEventListener("click", validarVUELTA);
         
+        document.getElementById("btnPago").addEventListener("click", validarPago);
+        
         if(localStorage.getItem('viajeVuelta') == "NA") {
             document.getElementById("tiquetesVuelta").style.display = "none";
         }
         
         document.getElementById('qtyIDA').value = modelo.cantPasajeros;
         document.getElementById('qtyVUELTA').value = modelo.cantPasajeros;
+        
+        
         
     }
 
@@ -485,7 +489,7 @@
         }
     }
 
-    function validarPaso3(event) {
+    function validarPago(event) {
         var error = false;
         var tarjeta = document.getElementById("tarjeta");
         var codigo = document.getElementById("codSeguridad");
@@ -502,6 +506,8 @@
         if (error) {
             window.alert("Error: Espacios vacios");
             event.preventDefault();
+        } else {
+            
         }
     }
 

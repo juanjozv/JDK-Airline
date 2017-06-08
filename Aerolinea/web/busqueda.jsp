@@ -186,6 +186,7 @@
             },
             getSeleccionados: function () {
                 var vista = this.vista;
+                
                 var ida = $('input[name=listaIda]:checked');
                 var regreso = $('input[name=listaRegreso]:checked');
                 var fReg = localStorage.getItem('fechaRegreso');
@@ -198,6 +199,8 @@
                     if (fReg != "NA")
                         vista.showSeleccionados(regreso, "Regreso");   
                 }
+                
+                
 
             },
             comprar: function(){
@@ -208,7 +211,24 @@
                     localStorage.setItem('viajeVuelta', "NA");
                 else
                     localStorage.setItem('viajeVuelta', viajeVuelta);
-                location.href = "compra.jsp";
+                
+                Proxy.usuarioGet(function (result){
+                    modelo.usuario = result;
+                    if(modelo.usuario != null) {
+                        location.href = "compra.jsp";
+                    }
+                    else {
+                        var m2 = document.getElementById('vuelosModal');
+                        m2.style.display = "none";
+                        
+                        var modal = document.getElementById('loginModal');
+                        modal.style.display = "block";
+                        
+                        
+                    }
+                });
+                
+                
             }
         }
     </script>
@@ -324,6 +344,8 @@
             tr.removeChild(tr.lastChild);
             vuelosS.append(tr);
         }
+        
+        
 
         document.addEventListener("DOMContentLoaded", cargarPagina);
     </script>

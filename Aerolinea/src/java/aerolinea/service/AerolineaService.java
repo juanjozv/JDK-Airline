@@ -209,6 +209,11 @@ public class AerolineaService extends HttpServlet {
                     out.write(json);
                     break;
                     
+                case "obtenerCliente":
+                    Usuario miUsuario = (Usuario)request.getSession().getAttribute("user");
+                    json = gson.toJson(miUsuario); 
+                    out.write(json);
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);
