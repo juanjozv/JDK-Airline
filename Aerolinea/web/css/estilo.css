@@ -1,8 +1,34 @@
 body {
-    background-color: white;
     font-family: 'Lato', serif;
+    background-image: url("../images/sky.jpg");
+    background-repeat: repeat-y;
+    background-size: 100% 100%;
 }
 
+#index{
+    background-image: none;
+}
+#contbusqueda{
+    background-image: url("../images/sky.jpg");
+    background-size: 100% 100%;
+    color: white;
+    border-radius: 5px;
+}
+.paginate_button{
+    color: white !important;
+    background-color: white !important;
+}
+
+#tablaCiudades_paginate{
+    align-self: center;
+}
+.paginate_active {
+    color: #fff !important;
+}
+
+#busquedaForm{
+    color: white !important;
+}
 .glyphicon, .fa {
     color: #2e6da4;
 }
@@ -557,6 +583,9 @@ table.table-striped tbody tr:hover {background: #cccccc;}
 #tablaAviones{width: 50% !important;}
 #tablaTiposAvion, #tablaRutas, #tablaHorarios{width: 85% !important;}
 #tablaCiudades{width: 75% !important;}
+#tablaIda, #tablaRegreso{
+    width: 80% !important;
+}
 /*-------------------------------TABLES ---------------------------------*/
 
 

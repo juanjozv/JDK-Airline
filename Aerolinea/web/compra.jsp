@@ -34,7 +34,7 @@
     </head>
     <body>
         <br><br><br><br>
-        <div class="container" id="tiquetesIDA"> <!-- <div class="container" id="paso1"> -->
+        <div class="container" id="tiquetesIDA" style="width: 50%; background-color: white; border-radius: 5px;"> <!-- <div class="container" id="paso1"> -->
             <h1 style="color:gray;">Ingrese la informacion de los tiquetes de ida</h1> <!--pasar a css-->
             <br>
             <center>
@@ -76,7 +76,7 @@
 
         </div><br>
 
-        <div class="container" id="tiquetesVuelta"> <!-- <div class="container" id="paso1"> -->
+        <div class="container" id="tiquetesVuelta" style="width: 50%; background-color: white; border-radius: 5px;"> <!-- <div class="container" id="paso1"> -->
             <h1 style="color:gray;">Ingrese la informacion de los tiquetes de vuelta </h1> <!--pasar a css-->
             <br>
             <center>
@@ -118,7 +118,7 @@
 
         </div><br>
 
-        <div class="container" id="paso3">
+        <div class="container" id="paso3" style="width: 50%; background-color: white; border-radius: 5px;">
             <h1 style="color:gray;">Ingrese los datos para el pago</h1> <!--pasar a css-->
             <br>
             <form class="form-inline" id="formulario" >
@@ -136,7 +136,7 @@
             </form><br>
             <div class="btn-group btn-group-lg" id="agregarPago">
                 <button type="button" class="btn btn-primary" id="btnPago">Ver compra</button>
-            </div>
+            </div><br><br>
         </div>
 
         <!-- MODAL CONFIRMACION  -->
@@ -167,8 +167,12 @@
                 </div>
             </div>
         </div>
-    </body>
-
+    </body><br>
+        <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
+    <footer id="PgFooter">
+        <%@ include file="footer.jspf" %>
+    </footer>
+    
     <script>
         //Modelo
         function CompraModelo() {

@@ -41,7 +41,7 @@
 
     </head>
 
-    <body>
+    <body id="index">
 
         <!--BARRA DE MENÚ-->
         <%@ include file="header.jspf" %>
@@ -64,15 +64,16 @@
                 </a>
             </div>
         <!--</div>-->
-
+        
         <!-- FORMULARIO DE BÚSQUEDA DE VUELO -->
         <div class="bs-docs-featurette" id="divBusqueda">
+            <br><br>
             <div class="container" id="contbusqueda">
                 <h2 id="busquedaForm">Elija los vuelos de su preferencia </h2><br>
                 <form class="form-horizontal" id="formulario" action="javascript:doSubmit();">
                     <center><div class="radio">
-                            <label class="radio-inline"><input type="radio" name="optradio" id="radioIR" checked="checked"> Ida y regreso</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" id="radioID"> Solo Ida</label>
+                            <h3 class="radio-inline"><input type="radio" name="optradio" id="radioIR" checked="checked"> Ida y regreso</h3>
+                            <h3 class="radio-inline"><input type="radio" name="optradio" id="radioID"> Solo Ida</h3>
                         </div></center><br><br>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i> Origen: </span>
@@ -113,7 +114,7 @@
                     <div class="btn-group btn-group-lg" id="buscarLimpiar">
                         <button type="submit" class="btn btn-primary" id="btnBuscar">Buscar</button>
                         <button type="reset" class="btn btn-warning" id="btnReset">Limpiar</button>
-                    </div>
+                    </div><br><br>
                 </form>
             </div>
         </div>

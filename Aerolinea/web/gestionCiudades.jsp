@@ -256,6 +256,7 @@
                     bFilter: false,
                     lengthChange: false,
                     pageLength: 10,
+                    info: false,
                     oLanguage: {
                         sUrl: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                     },
