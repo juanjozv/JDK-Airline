@@ -168,11 +168,11 @@
             </div>
         </div>
     </body><br>
-        <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
+    <!-- SECCIÓN DE CONTÁCTENOS - PIE DE PÁGINA -->
     <footer id="PgFooter">
         <%@ include file="footer.jspf" %>
     </footer>
-    
+
     <script>
         //Modelo
         function CompraModelo() {
@@ -186,6 +186,13 @@
 
             this.pasajerosIDA = [];
             this.pasajerosVUELTA = [];
+
+            this.compraRealizada = 0;
+            this.tiqueteRealizado = 0;
+
+            this.usuarioActual;
+
+            this.miViaje;
         }
         CompraModelo.prototype = {
             CompraModelo: function () {}
@@ -200,6 +207,7 @@
             this.cargarAsientosVUELTA();
             this.obtenerViajeIda();
             this.obtenerViajeVuelta();
+            this.obtenerUsuario();
         }
 
         CompraControl.prototype = {
@@ -307,6 +315,75 @@
                 Proxy.obtenerViaje(modelo.viajeVuelta, function (result) {
                     modelo.precioVuelta = result.precio;
                 });
+            },
+
+            obtenerViaje: function (codigo) {
+                Proxy.obtenerViaje(codigo, function (result) {
+                    modelo.miViaje = result;
+                });
+            },
+
+            obtenerUsuario: function () {
+                Proxy.usuarioGet(function (result) {
+                    modelo.usuarioActual = result;
+                });
+            },
+
+            commitCompraIDAVUELTA: function (nuevCompra) {
+                var modelo = this.modelo;
+                var vista = this.vista;
+                Proxy.agregarCompra(nuevCompra, function (result) {
+                    modelo.compraRealizada = result;
+
+                    Proxy.obtenerViaje(modelo.viajeIda, function (result) {
+                        modelo.miViaje = result;
+                        var viaje = modelo.miViaje;
+
+                        for (var i = 0; i < modelo.asientosIDA.length; i++) {
+                            var passenger = modelo.pasajerosIDA[i]; //magia
+                            var asiento = modelo.asientosIDA[i];
+                            var miTiquete = new Tiquete(passenger, viaje, asiento);
+                            Proxy.agregarTiquete(miTiquete, function (result) {
+                                modelo.tiqueteRealizado = result;
+                            });
+                        }
+                    });
+
+                    Proxy.obtenerViaje(modelo.viajeVuelta, function (result) {
+                        modelo.miViaje = result;
+                        var viaje = modelo.miViaje;
+
+                        for (var i = 0; i < modelo.asientosVUELTA.length; i++) {
+                            var passenger2 = modelo.pasajerosVUELTA[i]; //magia
+                            var asiento2 = modelo.asientosVUELTA[i];
+                            var miTiquete2 = new Tiquete(passenger2, viaje, asiento2);
+                            Proxy.agregarTiquete(miTiquete2, function (result) {
+                                modelo.tiqueteRealizado = result;
+                            });
+                        }
+                    });
+                });
+            },
+
+            commitCompraIDA: function (nuevCompra) {
+                var modelo = this.modelo;
+                var vista = this.vista;
+                Proxy.agregarCompra(nuevCompra, function (result) {
+                    modelo.compraRealizada = result;
+                    Proxy.obtenerViaje(modelo.viajeIda, function (result) {
+                        modelo.miViaje = result;
+                        var viaje = modelo.miViaje;
+
+                        for (var i = 0; i < modelo.asientosIDA.length; i++) {
+                            var passenger = modelo.pasajerosIDA[i]; //magia
+                            var asiento = modelo.asientosIDA[i];
+                            var miTiquete = new Tiquete(passenger, viaje, asiento);
+                            Proxy.agregarTiquete(miTiquete, function (result) {
+                                modelo.tiqueteRealizado = result;
+                            });
+                        }
+                    });
+                });
             }
         };
     </script>
@@ -335,6 +412,8 @@
             document.getElementById('qtyIDA').value = modelo.cantPasajeros;
             document.getElementById('qtyVUELTA').value = modelo.cantPasajeros;
             initModal();
+
+            document.getElementById('btnAceptar').addEventListener("click", realizarCompra);
         }
 
         function initModal() {
@@ -611,6 +690,31 @@
             var total = subtotalIda + subtotalVuelta;
             monto.innerText = "Total: " + total;
             modal.style.display = "block";
+        }
+
+        function realizarCompra() { //asignar a boton de comprar
+            var username = modelo.usuarioActual;
+            var numTar = document.getElementById("tarjeta").value;
+            var codSegu = document.getElementById("codSeguridad").value;
+            var precio = (modelo.precioIda * modelo.asientosIDA.length) + (modelo.precioVuelta * modelo.asientosVUELTA.length);
+            var miCompra = new Compra(username, "yyyy-mm-dd", numTar, precio, codSegu);
+
+            if (modelo.viajeVuelta != "NA") {
+                if (modelo.asientosIDA.length > 0 && modelo.asientosVUELTA.length > 0) {
+                    controlador.commitCompraIDAVUELTA(miCompra);
+
+
+                } else {
+                    window.alert("Error, no hay datos para comprar");
+                }
+            } else {
+                if (modelo.asientosIDA.length > 0) {
+                    controlador.commitCompraIDA(miCompra);
+
+                } else {
+                    window.alert("Error, no hay datos para comprar");
+                }
+            }
         }
 
         document.addEventListener("DOMContentLoaded", cargarPagina);

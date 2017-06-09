@@ -1,10 +1,9 @@
-function Compra(codigoCompra, usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad) {
-  this.Compra(codigoCompra, usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad);
+function Compra(usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad) {
+  this.Compra(usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad);
 }
 
 Compra.prototype = {
-  Compra: function(codigoCompra, usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad) {
-    this.codigoCompra = codigoCompra;
+  Compra: function(usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad) {
     this.usuario = usuario;
     this.fechaCompra = fechaCompra;
     this.numeroTarjeta = numeroTarjeta;

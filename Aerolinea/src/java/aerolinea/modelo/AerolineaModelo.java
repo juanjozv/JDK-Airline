@@ -3,9 +3,11 @@ package aerolinea.modelo;
 import aerolinea.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AerolineaModelo {
@@ -563,4 +565,93 @@ public class AerolineaModelo {
         return asientos;
     }
    
+    public static List<Viaje> getViajeLike(String codigo) throws Exception {
+        List<Viaje> viajes = new ArrayList();
+        try {
+            String sql = "select * from viajes where codigo like '%%%s%%';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            while (rs.next()) {
+                viajes.add(toViaje(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad like");
+        }
+        return viajes;
+    }
+
+    public static int addViaje(Viaje viaje) throws Exception {
+        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
+        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
+        String sql = "insert into Viajes "
+                + "(codigo, fecha, dia, cantAsientOcup, horaSalida, horaLlegada, precio, avion, vuelo) "
+                + "values ('%s','%s','%s',%d,'%s','%s',%.2f,'%s','%s') ";
+        sql = String.format(sql, viaje.getCodigo(), formatoFecha, viaje.getDia(), viaje.getCantAsientOcup(),
+                viaje.getHoraSalida(), viaje.getHoraLlegada(), viaje.getPrecio(),
+                viaje.getAvion().getCodigo(), viaje.getVuelo().getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }  
+    
+    public static int modifyViaje(Viaje viaje) throws Exception {
+        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
+        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
+        String sql = "update Viajes set fecha='%s', dia='%s', horaSalida='%s', "
+                + "horaLlegada='%s', precio=%.2f, avion='%s', vuelo='%s' "
+                + "where codigo='%s'";
+        sql = String.format(sql, formatoFecha, viaje.getDia(), viaje.getHoraSalida(), viaje.getHoraLlegada(), 
+                viaje.getPrecio(), viaje.getAvion().getCodigo(),viaje.getVuelo().getCodigo(),viaje.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }       
+    
+    /*---------------------    ELIMINAR         ----------------------------*/
+    public static int deleteViaje(String codigo) throws Exception {
+        String sql = "delete from Viajes where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }   
+    
+    
+    
+    
+    
+    //----Inserts------//
+    public static int agregarCompra(Compra miCompra) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String mifecha = dateFormat.format(date);
+        System.out.println(mifecha);
+        String sql = "insert into compras "
+                + "(usuario, fechaCompra, numeroTarjeta, precioTotal, codigoSeguridad) "
+                + "values ('%s', '%s', '%s', %.2f, '%s')";
+        sql = String.format(sql, miCompra.getUsuario().getUsername(), mifecha, miCompra.getNumeroTarjeta(),
+                miCompra.getPrecioTotal(), miCompra.getCodigoSeguridad());
+        return aerolinea.executeUpdate(sql);
+    }
+    
+    public static int getCantCompras() throws Exception {
+        int total = 0;
+        try {
+            String sql = "select count(codigoCompra) from compras;";
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error contando las filas");
+        }
+        return total;
+    }
+
+    public static int agregarTiquete(Tiquete miTiquete) throws Exception {
+        int codCompra = getCantCompras();
+        String sql = "insert into tiquete "
+                + "(pasajero, viaje, codigoAsiento, codCompra) "
+                + "values ('%s', '%s', '%s', %d);";
+        sql = String.format(sql, miTiquete.getPasajero(), miTiquete.getViaje().getCodigo(), miTiquete.getCodigoAsiento(),
+                codCompra);
+        System.out.println(sql);
+        return aerolinea.executeUpdate(sql);
+    }
 }

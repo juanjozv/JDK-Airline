@@ -222,9 +222,7 @@
                         m2.style.display = "none";
                         
                         var modal = document.getElementById('loginModal');
-                        modal.style.display = "block";
-                        
-                        
+                        modal.style.display = "block";                        
                     }
                 });
                 

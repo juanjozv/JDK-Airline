@@ -9,13 +9,12 @@ public class Tiquete implements Jsonable{
     
     public Tiquete(){}
 
-    public Tiquete(String codigo, String pasajero, Viaje viaje, String codigoAsiento, Compra codCompra) {
-        this.codigo = codigo;
+    public Tiquete(String pasajero, Viaje viaje, String codigoAsiento) {
         this.pasajero = pasajero;
         this.viaje = viaje;
         this.codigoAsiento = codigoAsiento;
-        this.codCompra = codCompra;
     }
+
 
     public String getCodigo() {
         return codigo;

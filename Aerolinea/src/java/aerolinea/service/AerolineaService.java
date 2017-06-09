@@ -214,6 +214,44 @@ public class AerolineaService extends HttpServlet {
                     json = gson.toJson(miUsuario); 
                     out.write(json);
                     break;
+                
+                case "viajeAdd":
+                    json = request.getParameter("viaje");
+                    Viaje viajeAdd = gson.fromJson(json, Viaje.class);
+                    int addV = AerolineaModelo.addViaje(viajeAdd);
+                    out.write((addV == 1) ? "0" : "1");
+                    break;
+                 case "viajeModify":
+                    json = request.getParameter("viaje");
+                    Viaje viajeMod = gson.fromJson(json, Viaje.class);
+                    int modifiedV = AerolineaModelo.modifyViaje(viajeMod);
+                    out.write((modifiedV == 1) ? "0" : "1");
+                    break;
+                 case "deleteViaje":
+                    String codigoV = request.getParameter("codigo");
+                    int deleteV = AerolineaModelo.deleteViaje(codigoV);
+                    out.write((deleteV == 1) ? "0" : "1");
+                    break;                    
+                case "viajeSearch":
+                    String viajeS = request.getParameter("viaje");
+                    viajes = AerolineaModelo.getViajeLike(viajeS);
+                    json = gson.toJson(viajes);
+                    out.write(json);
+                    break;   
+                 
+                case "addCompra":
+                    json = request.getParameter("compra");
+                    Compra miCompra = gson.fromJson(json, Compra.class);
+                    int incertado = AerolineaModelo.agregarCompra(miCompra);
+                    out.write((incertado == 1) ? "0" : "1");
+                    break;
+                    
+                case "addTiquete":
+                    json = request.getParameter("tiquete");
+                    Tiquete miTiquete = gson.fromJson(json, Tiquete.class);
+                    int incertadosss = AerolineaModelo.agregarTiquete(miTiquete);
+                    out.write((incertadosss == 1) ? "0" : "1");
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);

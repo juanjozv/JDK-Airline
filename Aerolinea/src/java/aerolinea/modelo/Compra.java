@@ -10,14 +10,15 @@ public class Compra implements Jsonable{
     
     public Compra(){}
 
-    public Compra(String codigoCompra, Usuario usuario, String fechaCompra, String numeroTarjeta, float precioTotal, String codigoSeguridad) {
-        this.codigoCompra = codigoCompra;
+    public Compra(Usuario usuario, String fechaCompra, String numeroTarjeta, float precioTotal, String codigoSeguridad) {
         this.usuario = usuario;
         this.fechaCompra = fechaCompra;
         this.numeroTarjeta = numeroTarjeta;
         this.precioTotal = precioTotal;
         this.codigoSeguridad = codigoSeguridad;
     }
+
+    
 
     public String getCodigoCompra() {
         return codigoCompra;

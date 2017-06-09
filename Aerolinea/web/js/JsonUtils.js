@@ -7,23 +7,23 @@ JsonUtils.revive = function (k, v) {
     if(v instanceof Object && v._class == 'TipoAvion'){
         return new TipoAvion(v.codigo, v.annio, v.marca, v.modelo, v.cantidadPasajeros, v.cantidadFilas, v.cantidadAsientosFila);
     }
-    if(v instanceof Object && v._class == 'Avion'){
+    if(v instanceof Object && v._class == 'Avion') {
         return new Avion(v.codigo, v.tipoAvion);
     }
-    if(v instanceof Object && v._class == 'Vuelo') {
+    if(v instanceof Object && v._class == 'Vuelo'){
         return new Vuelo(v.codigo, v.origen, v.destino, v.distancia, v.duracion, v.descuento, v.avion);
     }
-    if(v instanceof Object && v._class == 'Viaje'){
+    if(v instanceof Object && v._class == 'Viaje')  {
         return new Viaje(v.codigo, v.fecha, v.dia, v.cantAsientOcup, v.horaSalida, v.horaLlegada, v.precio, v.avion, v.vuelo);
     }
-    if(v instanceof Object && v._class == 'Usuario'){
+    if(v instanceof Object && v._class == 'Usuario') {
         return new Usuario(v.username, v.password, v.nombre, v.apellidos, v.email, v.fechaNacimiento, v.direccion, v.telefono, v.celular, v.tipo);
     }
-    if(v instanceof Object && v._class == 'Compra') {
-        return new Compra(v.codigoCompra, v.usuario, v.tiquete, v.fechaCompra, v.numeroTarjeta, v.precioTotal, v.codigoSeguridad);
+    if(v instanceof Object && v._class == 'Compra')  {
+        return new Compra(v.usuario, v.fechaCompra, v.numeroTarjeta, v.precioTotal, v.codigoSeguridad);
     }
     if(v instanceof Object && v._class == 'Tiquete') {
-        return new Tiquete(v.codigo, v.pasajero, v.viaje, v.codigoAsiento, v.codCompra);
+        return new Tiquete(v.pasajero, v.viaje, v.codigoAsiento);
     }
     
     return v;

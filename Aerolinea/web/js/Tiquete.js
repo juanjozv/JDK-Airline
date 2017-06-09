@@ -1,13 +1,11 @@
-function Tiquete(codigo, pasajero, viaje, codCompra) {
-  this.Tiquete(codigo, pasajero, viaje, codCompra);
+function Tiquete(pasajero, viaje, codigoAsiento) {
+  this.Tiquete(pasajero, viaje, codigoAsiento);
 }
 
 Tiquete.prototype = {
-  Tiquete: function(codigo, pasajero, viaje, codigoAsiento, codCompra) {
-    this.codigo = codigo;
+  Tiquete: function(pasajero, viaje, codigoAsiento) {
     this.pasajero = pasajero;
     this.viaje = viaje;
     this.codigoAsiento = codigoAsiento;
-    this.codCompra = codCompra;
   }
 };
