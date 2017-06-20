@@ -195,6 +195,20 @@
                     }
                 });
             },
+            eliminarTipoAvion: function(codigo){
+                var vista = this.vista;
+                Proxy.deleteTipoAvion(codigo, function(status){
+                    switch(status){
+                        case 0: 
+                            window.alert("Datos eliminados");
+                            vista.recargar();
+                            break;  
+                        case 1:
+                            window.alert("Error");
+                            break;
+                    }
+                });     
+            },
             buscarTipoAvion: function () {
                 var vista = this.vista;
                 var tipo = document.getElementById("buscarTipoAvion").value;
@@ -337,7 +351,7 @@
             img.id = "Eliminar";
             img.title = "Eliminar";
             img.addEventListener("click", function (e) {
-                window.alert("Eliminar");
+                eliminarTipoAvion(tipo.codigo);
             });
             img.width = "30";
             img.height = "30";
@@ -368,6 +382,10 @@
             document.getElementById("asientosAvion").value = tipo.cantidadAsientosFila;
         }
 
+        function eliminarTipoAvion(codigo){
+            controlador.eliminarTipoAvion(codigo);
+        }   
+        
         function registrar(){
             var btn = document.getElementById("btnRegistrarTipoAvion");
             if(btn.innerText === "Modificar")  

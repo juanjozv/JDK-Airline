@@ -1,4 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,6 +32,7 @@
         <script type="text/javascript" src="js/Viaje.js"></script>
         <script type="text/javascript" src="js/Proxy.js"></script>
         <script type="text/javascript" src="js/JsonUtils.js"></script>
+        <script type="text/javascript" src="js/jspdf.debug.js"></script>
         <%@ include file="header.jspf" %>
     </head>
     <body>
@@ -193,6 +196,9 @@
             this.usuarioActual;
 
             this.miViaje;
+            this.tiquetes = [];
+
+            this.tickets = [];
         }
         CompraModelo.prototype = {
             CompraModelo: function () {}
@@ -332,9 +338,9 @@
             commitCompraIDAVUELTA: function (nuevCompra) {
                 var modelo = this.modelo;
                 var vista = this.vista;
+
                 Proxy.agregarCompra(nuevCompra, function (result) {
                     modelo.compraRealizada = result;
-
                     Proxy.obtenerViaje(modelo.viajeIda, function (result) {
                         modelo.miViaje = result;
                         var viaje = modelo.miViaje;
@@ -343,6 +349,7 @@
                             var passenger = modelo.pasajerosIDA[i]; //magia
                             var asiento = modelo.asientosIDA[i];
                             var miTiquete = new Tiquete(passenger, viaje, asiento);
+                            modelo.tickets.push(miTiquete);
                             Proxy.agregarTiquete(miTiquete, function (result) {
                                 modelo.tiqueteRealizado = result;
                             });
@@ -357,12 +364,14 @@
                             var passenger2 = modelo.pasajerosVUELTA[i]; //magia
                             var asiento2 = modelo.asientosVUELTA[i];
                             var miTiquete2 = new Tiquete(passenger2, viaje, asiento2);
+                            modelo.tickets.push(miTiquete2);
                             Proxy.agregarTiquete(miTiquete2, function (result) {
                                 modelo.tiqueteRealizado = result;
                             });
                         }
                     });
                 });
+
             },
 
             commitCompraIDA: function (nuevCompra) {
@@ -385,6 +394,7 @@
                     });
                 });
             }
+
         };
     </script>
 
@@ -419,7 +429,12 @@
         function initModal() {
             var modal = document.getElementById("confirmacionModal");
             var close = document.getElementsByClassName("cerrarConfirmacion")[0];
+            var cancelar = document.getElementById("btnCancelar");
+            
             close.onclick = function () {
+                modal.style.display = "none";
+            };
+            cancelar.onclick = function () {
                 modal.style.display = "none";
             };
             window.onclick = function (event) {
@@ -684,15 +699,15 @@
             cantIda.innerText = "Cantidad Asientos Ida: " + modelo.asientosIDA.length;
             var subtotalIda = modelo.precioIda * modelo.asientosIDA.length;
             var subtotalVuelta = modelo.precioVuelta * modelo.asientosVUELTA.length;
-            montoIda.innerText = "Subtotal: " + subtotalIda; //Precio viaje ida (proxy) * modelo.asientosIDA.length;
+            montoIda.innerText = "Subtotal: " + subtotalIda;
             cantVuelta.innerText = "Cantidad Asientos Vuelta: " + modelo.asientosVUELTA.length;
-            montoVuelta.innerText = "Subtotal: " + subtotalVuelta;//Precio viaje vuelta (proxy) * modelo.asientosVUELTA.length;
+            montoVuelta.innerText = "Subtotal: " + subtotalVuelta;
             var total = subtotalIda + subtotalVuelta;
             monto.innerText = "Total: " + total;
             modal.style.display = "block";
         }
 
-        function realizarCompra() { //asignar a boton de comprar
+        function realizarCompra() {
             var username = modelo.usuarioActual;
             var numTar = document.getElementById("tarjeta").value;
             var codSegu = document.getElementById("codSeguridad").value;
@@ -702,7 +717,9 @@
             if (modelo.viajeVuelta != "NA") {
                 if (modelo.asientosIDA.length > 0 && modelo.asientosVUELTA.length > 0) {
                     controlador.commitCompraIDAVUELTA(miCompra);
-
+                    window.alert("Compra realizada");
+                    imprimeTiquete(modelo.tickets);
+                    location.href = "index.jsp";
 
                 } else {
                     window.alert("Error, no hay datos para comprar");
@@ -710,12 +727,44 @@
             } else {
                 if (modelo.asientosIDA.length > 0) {
                     controlador.commitCompraIDA(miCompra);
+                    window.alert("Compra realizada");
+                    imprimeTiquete(modelo.tickets);
+                    location.href = "index.jsp";
 
                 } else {
                     window.alert("Error, no hay datos para comprar");
                 }
             }
         }
+
+        function imprimeTiquete(tiquetes) {
+            var doc = new jsPDF();
+            var n = tiquetes.length - 1;
+
+            for (var i = 0; i < tiquetes.length; i++) {
+                var info = " Nombre: " + tiquetes[i].pasajero +
+                        "\n Vuelo: " + tiquetes[i].viaje.vuelo.codigo +
+                        "\n Fecha: " + tiquetes[i].viaje.fecha +
+                        "\n Hora: " + tiquetes[i].viaje.horaSalida +
+                        "\n Origen: " + tiquetes[i].viaje.vuelo.origen.nombre +
+                        "\n Destino: " + tiquetes[i].viaje.vuelo.destino.nombre +
+                        "\n Asiento: " + tiquetes[i].codigoAsiento;
+
+                createPDF(doc, info, n);
+                info = "";
+                n--;
+            }
+            doc.save('Compra.pdf');
+        }
+
+        function createPDF(doc, info, n) {
+
+            doc.text(50, 20, 'JDK Airlines - TU COMPRA DE TIQUETES');
+            doc.text(50, 40, info);
+            if (n > 0)
+                doc.addPage();
+        }
+
 
         document.addEventListener("DOMContentLoaded", cargarPagina);
     </script>

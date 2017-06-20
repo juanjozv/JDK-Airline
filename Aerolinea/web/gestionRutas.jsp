@@ -225,6 +225,20 @@
                     }                    
                 });               
             },
+            eliminarRuta: function(codigo){
+                var vista = this.vista;
+                Proxy.deleteRuta(codigo, function(status){
+                    switch(status){
+                        case 0: 
+                            window.alert("Datos eliminados");
+                            vista.recargar();
+                            break;  
+                        case 1:
+                            window.alert("Error");
+                            break;
+                    }
+                });     
+            },
             buscarRuta: function(){
                 var vista = this.vista;
                 var ciudad = document.getElementById("buscarRuta").value;
@@ -374,7 +388,7 @@
             img.id = "Eliminar";
             img.title = "Eliminar";
             img.addEventListener("click", function (e) {
-                window.alert("Eliminar");
+                eliminarRuta(ruta.codigo);
             });
             img.width = "30";
             img.height = "30";
@@ -403,6 +417,10 @@
             document.getElementById("duracion").value = vuelo.duracion;
             document.getElementById("descuento").value = vuelo.descuento;
             document.getElementById("selAvion").value = vuelo.avion.codigo;     
+        }
+
+        function eliminarRuta(codigo){
+            controlador.eliminarRuta(codigo);
         }
         
         function cargarCiudades() {

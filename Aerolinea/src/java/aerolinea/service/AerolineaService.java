@@ -237,21 +237,39 @@ public class AerolineaService extends HttpServlet {
                     viajes = AerolineaModelo.getViajeLike(viajeS);
                     json = gson.toJson(viajes);
                     out.write(json);
-                    break;   
-                 
+                    break;                
                 case "addCompra":
                     json = request.getParameter("compra");
                     Compra miCompra = gson.fromJson(json, Compra.class);
                     int incertado = AerolineaModelo.agregarCompra(miCompra);
                     out.write((incertado == 1) ? "0" : "1");
-                    break;
-                    
+                    break;                   
                 case "addTiquete":
                     json = request.getParameter("tiquete");
                     Tiquete miTiquete = gson.fromJson(json, Tiquete.class);
                     int incertadosss = AerolineaModelo.agregarTiquete(miTiquete);
                     out.write((incertadosss == 1) ? "0" : "1");
                     break;
+                 case "deleteAvion":
+                    String codigoA = request.getParameter("codigo");
+                    int deleteA = AerolineaModelo.deleteAvion(codigoA);
+                    out.write((deleteA == 1) ? "0" : "1");
+                    break;  
+                case "deleteCiudad":
+                    String codigoC = request.getParameter("codigo");
+                    int deleteC = AerolineaModelo.deleteCiudad(codigoC);
+                    out.write((deleteC == 1) ? "0" : "1");
+                    break;  
+                case "deleteRuta":
+                    String codigoR = request.getParameter("codigo");
+                    int deleteR = AerolineaModelo.deleteRuta(codigoR);
+                    out.write((deleteR == 1) ? "0" : "1");
+                    break;  
+                case "deleteTipoAvion":
+                    String codigoT = request.getParameter("codigo");
+                    int deleteT = AerolineaModelo.deleteTipoAvion(codigoT);
+                    out.write((deleteT == 1) ? "0" : "1");
+                    break;                      
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -191,6 +191,20 @@
                         }
                 });               
             },
+            eliminarCiudad: function(codigo){
+                var vista = this.vista;
+                Proxy.deleteCiudad(codigo, function(status){
+                    switch(status){
+                        case 0: 
+                            window.alert("Datos eliminados");
+                            vista.recargar();
+                            break;  
+                        case 1:
+                            window.alert("Error");
+                            break;
+                    }
+                });     
+            },
             buscarCiudad: function(){
                 var vista = this.vista;
                 var ciudad = document.getElementById("buscarCiudad").value;
@@ -317,7 +331,7 @@
             img.id = "Eliminar";
             img.title = "Eliminar";
             img.addEventListener("click", function (e) {
-                window.alert("Eliminar");
+                eliminarCiudad(ciudad.codigo);
             });
             img.width = "30";
             img.height = "30";
@@ -344,6 +358,10 @@
             document.getElementById("nombre").value = ciudad.nombre;
             document.getElementById("pais").value = ciudad.pais;
             document.getElementById("zonaHoraria").value = ciudad.zonaHoraria;     
+        }
+        
+        function eliminarCiudad(codigo){
+            controlador.eliminarCiudad(codigo);
         }
         
         function registrar(){

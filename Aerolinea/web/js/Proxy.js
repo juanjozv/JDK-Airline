@@ -473,7 +473,6 @@ Proxy.deleteViaje = function (codigo, callBack) {
     AJAX_req.send("codigo=" + codigo);
 };
 
-
 Proxy.horarioSearch = function (viaje, callback) {
     var AJAX_req = new XMLHttpRequest();
     url = "/Aerolinea/AerolineaService?action=viajeSearch";
@@ -486,4 +485,60 @@ Proxy.horarioSearch = function (viaje, callback) {
         }
     };
     AJAX_req.send("viaje=" + viaje);
+};
+
+Proxy.deleteAvion = function (codigo, callBack) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=deleteAvion";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        }
+    };
+    AJAX_req.send("codigo=" + codigo);
+};
+
+Proxy.deleteCiudad = function (codigo, callBack) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=deleteCiudad";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        }
+    };
+    AJAX_req.send("codigo=" + codigo);
+};
+
+Proxy.deleteRuta = function (codigo, callBack) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=deleteRuta";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        }
+    };
+    AJAX_req.send("codigo=" + codigo);
+};
+
+Proxy.deleteTipoAvion = function (codigo, callBack) {
+    var AJAX_req = new XMLHttpRequest();
+    url = "/Aerolinea/AerolineaService?action=deleteTipoAvion";
+    AJAX_req.open("POST", url, true);
+    AJAX_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    AJAX_req.onreadystatechange = function () {
+        if (AJAX_req.readyState === 4 && AJAX_req.status === 200) {
+            var status = parseInt(AJAX_req.responseText);
+            callBack(status);
+        }
+    };
+    AJAX_req.send("codigo=" + codigo);
 };

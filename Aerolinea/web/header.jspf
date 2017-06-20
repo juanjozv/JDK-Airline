@@ -36,7 +36,7 @@
                             <li><a><span href="" class="glyphicon glyphicon-user"></span>&nbsp <%=user.getUsername()%> </a></li>
                             
                             <% if(user.getTipo() == 2) { //acmon%>
-                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestiones Admin.<span class="caret"></span></a>
+                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestiones<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                       <li><a href="gestionRutas.jsp">Rutas</a></li>
                                       <li><a href="gestionHorarios.jsp">Horarios</a></li>
@@ -44,7 +44,7 @@
                                       <li><a href="gestionAviones.jsp">Aviones</a></li>
                                       <li><a href="gestionCiudades.jsp">Ciudades</a></li>
                                     </ul>
-                                </li>
+                             
                             <%}%>
                             <li><a  href="/Aerolinea/AerolineaService?action=logoutUsuarios" ><span class="glyphicon glyphicon-log-out" id="logOut"></span>&nbsp Cerrar Sesión </a></li>
                             <p id="login">

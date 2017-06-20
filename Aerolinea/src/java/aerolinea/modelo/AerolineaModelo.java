@@ -83,7 +83,6 @@ public class AerolineaModelo {
         return vuelos;
     }
 
-    //->Crear el getViajesBusqueda all y getViaje
     public static List<Viaje> getViajesAll() throws Exception {
         List<Viaje> viajes;
         viajes = new ArrayList();
@@ -100,7 +99,7 @@ public class AerolineaModelo {
     }
 
     /*--------------------------OBTENER SÓLO UNO------------------------------*/
-    public static Ciudad getCiudad(String codigo) throws Exception { //Va a obtener sola mente una ciudad
+    public static Ciudad getCiudad(String codigo) throws Exception {
         Ciudad ciudad = new Ciudad();
         try {
             String sql = "select * from ciudades "
@@ -117,7 +116,7 @@ public class AerolineaModelo {
         return ciudad;
     }
 
-    public static TipoAvion getTipoAvion(String codigo) throws Exception { //Va a obtener sola mente un tipoAvion
+    public static TipoAvion getTipoAvion(String codigo) throws Exception { 
         TipoAvion tipo = new TipoAvion();
         try {
             String sql = "select * from tiposAvion "
@@ -133,7 +132,7 @@ public class AerolineaModelo {
         return tipo;
     }
 
-    public static Avion getAvion(String codigo) throws Exception { //Va a obtener sola mente un Avion
+    public static Avion getAvion(String codigo) throws Exception {
         Avion avion = new Avion();
         try {
             String sql = "select * from aviones "
@@ -149,7 +148,7 @@ public class AerolineaModelo {
         return avion;
     }
 
-    public static Vuelo getVuelo(String codigo) throws Exception { //buscacara un vuelo solamente
+    public static Vuelo getVuelo(String codigo) throws Exception {
         Vuelo vuelo = new Vuelo();
         try {
             String sql = "select * from vuelos where codigo = '%s';";
@@ -193,9 +192,8 @@ public class AerolineaModelo {
         }
         return usuario;
     }
-    
-    
-    public static Compra getCompra(String codigoCompra) throws Exception { //buscacara una compra solamente
+       
+    public static Compra getCompra(String codigoCompra) throws Exception {
         Compra compra = new Compra();
         try {
             String sql = "select * from compras where codigoCompra = '%s';";
@@ -209,11 +207,24 @@ public class AerolineaModelo {
         }
         return compra;
     }
-    
-    
 
+    public static Usuario loginUsuario(Usuario nuevoU) throws Exception {
+        Usuario miUsuario = new Usuario();
+        try {
+            String sql = "select * from usuarios where username = '%s' and password = '%s';";
+            sql = String.format(sql, nuevoU.getUsername(), nuevoU.getPassword());
+            ResultSet rs = aerolinea.executeQuery(sql);
+            if (rs.next()) {
+                miUsuario = toUsuario(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en obtener el usuario buscado");
+        }
+        return miUsuario;
+    }
+    
     /*------------------------------ BÚSQUEDAS -------------------------------*/
-    public static Ciudad getCiudadPorNombre(String nombre) throws Exception { //Va a obtener sola mente una ciudad
+    public static Ciudad getCiudadPorNombre(String nombre) throws Exception {
         Ciudad ciudad = new Ciudad();
         try {
             String sql = "select * from ciudades "
@@ -286,7 +297,7 @@ public class AerolineaModelo {
         return result;
     }
     
-    public static List<Ciudad> getCiudadLike(String nombre) throws Exception { //Va a obtener sola mente una ciudad
+    public static List<Ciudad> getCiudadLike(String nombre) throws Exception {
         List<Ciudad> ciudades = new ArrayList();
         
         try {
@@ -352,9 +363,22 @@ public class AerolineaModelo {
         }
         return aviones;
     }
-    
-    
 
+    public static List<Viaje> getViajeLike(String codigo) throws Exception {
+        List<Viaje> viajes = new ArrayList();
+        try {
+            String sql = "select * from viajes where codigo like '%%%s%%';";
+            sql = String.format(sql, codigo);
+            ResultSet rs = aerolinea.executeQuery(sql);
+            while (rs.next()) {
+                viajes.add(toViaje(rs));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error obteniendo solamente una ciudad like");
+        }
+        return viajes;
+    }    
+    
     /*---------------------    AGREGAR         ----------------------------*/
     public static int ciudadAdd(Ciudad ciudad) throws Exception {
         String sql = "insert into ciudades "
@@ -373,7 +397,6 @@ public class AerolineaModelo {
         return aerolinea.executeUpdate(sql);
     }
 
-    //Agregar metodos del usuario all, getUsuario
     public static int usuarioAdd(Usuario user) throws Exception {
         String sql = "insert into usuarios "
                 + "(username, password, nombre, apellidos, email, fechaNacimiento, direccion, telefono, celular, tipo) "
@@ -398,6 +421,19 @@ public class AerolineaModelo {
         sql = String.format(sql, avion.getCodigo(), avion.getTipoAvion().getCodigo());
         return aerolinea.executeUpdate(sql);
     }    
+
+    public static int addViaje(Viaje viaje) throws Exception {
+        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
+        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
+        String sql = "insert into Viajes "
+                + "(codigo, fecha, dia, cantAsientOcup, horaSalida, horaLlegada, precio, avion, vuelo) "
+                + "values ('%s','%s','%s',%d,'%s','%s',%.2f,'%s','%s') ";
+        sql = String.format(sql, viaje.getCodigo(), formatoFecha, viaje.getDia(), viaje.getCantAsientOcup(),
+                viaje.getHoraSalida(), viaje.getHoraLlegada(), viaje.getPrecio(),
+                viaje.getAvion().getCodigo(), viaje.getVuelo().getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }  
     
     /*---------------------    MODIFICAR         ----------------------------*/
     public static int modifyVuelo(Vuelo vuelo) throws Exception {
@@ -429,8 +465,50 @@ public class AerolineaModelo {
         return aerolinea.executeUpdate(sql);
     }    
     
+    public static int modifyViaje(Viaje viaje) throws Exception {
+        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
+        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
+        String sql = "update Viajes set fecha='%s', dia='%s', horaSalida='%s', "
+                + "horaLlegada='%s', precio=%.2f, avion='%s', vuelo='%s' "
+                + "where codigo='%s'";
+        sql = String.format(sql, formatoFecha, viaje.getDia(), viaje.getHoraSalida(), viaje.getHoraLlegada(), 
+                viaje.getPrecio(), viaje.getAvion().getCodigo(),viaje.getVuelo().getCodigo(),viaje.getCodigo());
+        return aerolinea.executeUpdate(sql);
+    }    
+    
+    /*---------------------    ELIMINAR         ----------------------------*/
+    public static int deleteViaje(String codigo) throws Exception {
+        String sql = "delete from Viajes where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }    
+
+    public static int deleteAvion(String codigo) throws Exception {
+        String sql = "delete from Aviones where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }   
+
+    public static int deleteCiudad(String codigo) throws Exception {
+        String sql = "delete from Ciudades where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }   
+    
+    public static int deleteRuta(String codigo) throws Exception {
+        String sql = "delete from Vuelos where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }   
+ 
+    public static int deleteTipoAvion(String codigo) throws Exception {
+        String sql = "delete from TiposAvion where codigo='%s'";
+        sql = String.format(sql, codigo);
+        return aerolinea.executeUpdate(sql);
+    }
+    
     /*---------------------  TO SOMETHING  ----------------------------*/
-    // Inicio de métodos toSomething
     private static Ciudad toCiudades(ResultSet rs) throws Exception {
         Ciudad obj = new Ciudad();
         obj.setCodigo(rs.getString("codigo"));
@@ -520,25 +598,7 @@ public class AerolineaModelo {
         obj.setCodCompra(getCompra(rs.getString("codCompra")));
         return obj;
     }
-
-   
-
-    public static Usuario loginUsuario(Usuario nuevoU) throws Exception {
-        Usuario miUsuario = new Usuario();
-        try {
-            String sql = "select * from usuarios where username = '%s' and password = '%s';";
-            sql = String.format(sql, nuevoU.getUsername(), nuevoU.getPassword());
-            ResultSet rs = aerolinea.executeQuery(sql);
-            if (rs.next()) {
-                miUsuario = toUsuario(rs);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error en obtener el usuario buscado");
-        }
-        return miUsuario;
-    }
-    
-    
+      
     //-------------Para caso de uso COMPRA----------------------------//
     
     public static List<Tiquete> getTiquetesPorViaje(String codViaje) throws Exception { //necesito obtener los asientos de los tiquetes, pero no puedo directamente
@@ -563,60 +623,8 @@ public class AerolineaModelo {
             asientos.add(miTiquete.getCodigoAsiento());
         });
         return asientos;
-    }
-   
-    public static List<Viaje> getViajeLike(String codigo) throws Exception {
-        List<Viaje> viajes = new ArrayList();
-        try {
-            String sql = "select * from viajes where codigo like '%%%s%%';";
-            sql = String.format(sql, codigo);
-            ResultSet rs = aerolinea.executeQuery(sql);
-            while (rs.next()) {
-                viajes.add(toViaje(rs));
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error obteniendo solamente una ciudad like");
-        }
-        return viajes;
-    }
+    } 
 
-    public static int addViaje(Viaje viaje) throws Exception {
-        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
-        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
-        String sql = "insert into Viajes "
-                + "(codigo, fecha, dia, cantAsientOcup, horaSalida, horaLlegada, precio, avion, vuelo) "
-                + "values ('%s','%s','%s',%d,'%s','%s',%.2f,'%s','%s') ";
-        sql = String.format(sql, viaje.getCodigo(), formatoFecha, viaje.getDia(), viaje.getCantAsientOcup(),
-                viaje.getHoraSalida(), viaje.getHoraLlegada(), viaje.getPrecio(),
-                viaje.getAvion().getCodigo(), viaje.getVuelo().getCodigo());
-        return aerolinea.executeUpdate(sql);
-    }  
-    
-    public static int modifyViaje(Viaje viaje) throws Exception {
-        SimpleDateFormat delUsuario = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat miFormato = new SimpleDateFormat("yyyy-MM-dd");
-        String formatoFecha = miFormato.format(delUsuario.parse(viaje.getFecha()));
-        String sql = "update Viajes set fecha='%s', dia='%s', horaSalida='%s', "
-                + "horaLlegada='%s', precio=%.2f, avion='%s', vuelo='%s' "
-                + "where codigo='%s'";
-        sql = String.format(sql, formatoFecha, viaje.getDia(), viaje.getHoraSalida(), viaje.getHoraLlegada(), 
-                viaje.getPrecio(), viaje.getAvion().getCodigo(),viaje.getVuelo().getCodigo(),viaje.getCodigo());
-        return aerolinea.executeUpdate(sql);
-    }       
-    
-    /*---------------------    ELIMINAR         ----------------------------*/
-    public static int deleteViaje(String codigo) throws Exception {
-        String sql = "delete from Viajes where codigo='%s'";
-        sql = String.format(sql, codigo);
-        return aerolinea.executeUpdate(sql);
-    }   
-    
-    
-    
-    
-    
-    //----Inserts------//
     public static int agregarCompra(Compra miCompra) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();

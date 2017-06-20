@@ -181,6 +181,20 @@
                     }
                 });
             },
+            eliminarAvion: function(codigo){
+                var vista = this.vista;
+                Proxy.deleteAvion(codigo, function(status){
+                    switch(status){
+                        case 0: 
+                            window.alert("Datos eliminados");
+                            vista.recargar();
+                            break;  
+                        case 1:
+                            window.alert("Error");
+                            break;
+                    }
+                });     
+            },
             buscarAvion: function () {
                 var vista = this.vista;
                 var avion = document.getElementById("buscar").value;
@@ -304,7 +318,7 @@
             img.id = "Eliminar";
             img.title = "Eliminar";
             img.addEventListener("click", function (e) {
-                window.alert("Eliminar");
+                eliminarAvion(avion.codigo);
             });
             img.width = "30";
             img.height = "30";
@@ -331,6 +345,10 @@
             document.getElementById("tipoAvion").value = avion.tipoAvion.codigo;
         }
 
+        function eliminarAvion(codigo){
+            controlador.eliminarAvion(codigo);
+        }
+        
         function cargarTipos() {
             for (var i = 0; i < modelo.tipos.length; i++) {
                 var cod = modelo.tipos[i].codigo;
